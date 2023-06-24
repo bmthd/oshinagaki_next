@@ -16,7 +16,7 @@ const getRedirectUrl = () => {
     response_type: "code",
     client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
     redirect_uri:
-      "https://vercel.com/bmthd/oshinagaki-front/api/auth/callback/twitter",
+      "https://oshinagaki-front.vercel.app/api/auth/callback/twitter",
     scope: "offline.access%20users.read%20follows.read",
     state: "state",
     code_challenge: "challenge",
@@ -26,7 +26,7 @@ const getRedirectUrl = () => {
   const queryString = Object.entries(params)
     .map(
       ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value || "")}`
+        `${key}=${value}`
     )
     .join("&");
 
