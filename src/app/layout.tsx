@@ -4,21 +4,9 @@ import { Footer, Header } from "@/components/layouts";
 import { ReactNode } from "react";
 import { RecoilRoot } from "recoil";
 import "./global.css";
+import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
-import { SessionProvider } from "next-auth/react"
-
-export const metadata = {
-  title: "コミケお品書きツイートまとめサイト",
-  description:"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-  keywords:"コミックマーケット, お品書き, 新刊情報, サークル情報",
-  language:"ja",
-  "og:url": "https://oshinagaki.bmth.dev",
-  "og:type": "website",
-  "og:title": "コミケお品書きツイートまとめサイト",
-  "og:description":"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-  "og:image": "https://oshinagaki.bmth.dev/ogp.png",
-  "twitter:card": "summary_large_image",
-}
+import { SessionProvider } from "next-auth/react";
 
 const font = BIZ_UDPGothic({
   weight: "400",
@@ -30,16 +18,29 @@ const font = BIZ_UDPGothic({
   subsets: ["latin"],
 });
 
+export const metadata: Metadata = {
+  title: "コミケお品書きツイートまとめサイト",
+  description:
+    "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+  keywords: "コミックマーケット, お品書き, 新刊情報, サークル情報",
+  twitter: {
+    card: "summary_large_image",
+  },
+  
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja" className={font.className}>
-      <body>
-        <Header />
-        <div className="w-main mx-auto">
-          <RecoilRoot>{children}</RecoilRoot>
-        </div>
-        <Footer />
-      </body>
-    </html>
+    <SessionProvider>
+      <RecoilRoot>
+        <html lang="ja" className={font.className}>
+          <body>
+            <Header />
+            <div className="w-main mx-auto">{children}</div>
+            <Footer />
+          </body>
+        </html>
+      </RecoilRoot>
+    </SessionProvider>
   );
 }

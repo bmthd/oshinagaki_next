@@ -27,6 +27,21 @@ const LatestEvent = () => {
   );
 }
 
+export const metadata = {
+  title: "コミケお品書きツイートまとめサイト",
+  description:
+    "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+  keywords: "コミックマーケット, お品書き, 新刊情報, サークル情報",
+  language: "ja",
+  "og:url": "https://oshinagaki.bmth.dev",
+  "og:type": "website",
+  "og:title": "コミケお品書きツイートまとめサイト",
+  "og:description":
+    "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+  "og:image": "https://oshinagaki.bmth.dev/ogp.png",
+  "twitter:card": "summary_large_image",
+};
+
 const Home =() => {
   const event: Event = {
     id: "C97",
