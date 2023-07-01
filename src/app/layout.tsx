@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="ja" className={font.className}>
           <body>
             <Header />
-            <div className="w-main mx-auto">{children}</div>
+            <div className="lg:w-main max-lg:w-auto mx-auto">{children}</div>
             <Footer />
           </body>
         </html>

@@ -1,11 +1,9 @@
 import Head from "next/head";
 import { LinkButton } from "@/components/common/LinkButton";
 import { FaTwitter } from "react-icons/fa";
-import Link from "next/link";
 import { BlockListForm } from "@/components/BlockListForm";
-import { Day, Event, Hall } from "types/dbTypes";
-import events from "events";
-
+import { fetchDays, fetchEvents, fetchHalls, fetchLatestEvent, fetchSpaceCount } from "@/services/eventService";
+import { Event } from "@prisma/client";
 function ComiketHistory() {
   const now = new Date();
   const year = now.getFullYear() - 2014;
@@ -17,12 +15,17 @@ function ComiketHistory() {
   );
 }
 
-const LatestEvent = () => {
-  const eventName = "C97";
-  const circleCount = 100;
+const LatestEvent = (
+  props: {
+    event: Event;
+    circleCount: number;
+  }
+) => {
+  const { event, circleCount } = props;
+  
   return (
     <p>
-      最新イベント: {eventName} 掲載数: {circleCount}
+      最新イベント: {event.eventName} 掲載数: {circleCount}
     </p>
   );
 }
@@ -42,29 +45,12 @@ export const metadata = {
   "twitter:card": "summary_large_image",
 };
 
-const Home =() => {
-  const event: Event = {
-    id: "C97",
-    startDate: new Date(),
-    lastDate: new Date(),
-    url: "https://example.com",
-    eventName: "コミックマーケット97",
-  };
-  const events: Event[] = [event];
-  const days: Day[] = [
-    { id: 1, dayCount: 1 },
-    { id: 2, dayCount: 2 },
-  ];
-  const halls: Hall[] = [
-    { id: "east1", name: "東1" },
-    { id: "east2", name: "東2" },
-    { id: "east3", name: "東3" },
-    { id: "east4", name: "東4" },
-    { id: "east5", name: "東5" },
-    { id: "east6", name: "東6" },
-    { id: "west1", name: "西1" },
-    { id: "west2", name: "西2" },
-  ];
+const Home = async () => {
+  const event = await fetchLatestEvent();
+  const events = await fetchEvents();
+  const days = await fetchDays(event!.id);
+  const halls = await fetchHalls(event!.id);
+  const circleCount = await fetchSpaceCount(event!.id);
   return (
     <>
       <Head>
@@ -74,18 +60,18 @@ const Home =() => {
       <div className="container">
         <div className="row">
           <ComiketHistory />
-          <LatestEvent />
+          <LatestEvent event={event!} circleCount={circleCount} />
         </div>
         <div className="max-w-md m-auto">
           <div className="row">
             <div className="col-12">
-              <LinkButton href={`/event/${event.id}/lanking`}>
-                {event.id} 話題のサークル
+              <LinkButton href={`/event/${event!.id}/lanking`}>
+                {event!.id} 話題のサークル
               </LinkButton>
             </div>
 
             <div className="col-12">
-              <LinkButton href="/recent">{event.id} 最新のお品書き</LinkButton>
+              <LinkButton href="/recent">{event!.id} 最新のお品書き</LinkButton>
             </div>
 
             <div className="col-12">
@@ -99,7 +85,7 @@ const Home =() => {
           <p className="text-center">壁サークル一覧</p>
           {/* <!-- 		壁サークルとは？ --> */}
 
-          <div className="flex">
+          <div className="flex justify-around">
             {days.map((day) => {
               return (
                 <div key={day.id} className="col-6 text-center">
@@ -112,7 +98,7 @@ const Home =() => {
                           className="d-flex justify-content-center"
                         >
                           <LinkButton
-                            href={`/event/${event.id}/day/${day.dayCount}/wall/${hall.id}`}
+                            href={`/event/${event!.id}/day/${day.dayCount}/wall/${hall.id}`}
                           >
                             {hall.name}ホール
                           </LinkButton>
@@ -124,11 +110,11 @@ const Home =() => {
               );
             })}
           </div>
-          <BlockListForm event={event} />
+          {/* <BlockListForm event={event!} days={days} /> */}
 
           <div className="row">
-            <LinkButton href={`/event/${event.id}/block_list`}>
-              {event.id} ブロック別まとめ一覧
+            <LinkButton href={`/event/${event!.id}/block_list`}>
+              {event!.id} ブロック別まとめ一覧
             </LinkButton>
           </div>
 

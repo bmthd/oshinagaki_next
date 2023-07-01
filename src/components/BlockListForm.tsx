@@ -1,26 +1,29 @@
-"use client"
+'use client';
 
 import { useState } from "react";
 import { LinkButton } from "./common/LinkButton";
-import { Day, District, Event } from "types/dbTypes";
+import {Event } from "@prisma/client";
+import { fetchDays } from "@/services/eventService";
 
 // 全サークル一覧の選択フォームを表示するコンポーネント
-interface Props {
-  event: Event;
-}
 
-export const BlockListForm = (props:Props) => {
+
+export const BlockListForm = async ({event,days}:{event:Event,days:any}) => {
     const [selectedDistrict,setSelectedDistrict] = useState(0);
     const [selectedDayCount,setSelectedDayCount] = useState("1");
     const [selectedBlock,setSelectedBlock] = useState("A");
-    const days:Day[] = [{ id: 1, dayCount: 1 }, { id: 2, dayCount: 2 }];
-    // const districts = event.district;
-    const districts:District[] = [{ id: 1, name: "東123ホール",halls:["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-		"Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ"], }, { id: 2, name: "東456ホール", halls:["シ",
-		"ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "パ", "ヒ", "ピ", "フ",
-		"プ", "ヘ", "ペ", "ホ", "ポ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ"]}, { id: 3, name: "東789ホール",halls:["あ", "い", "う", "え", "お", "か", "き", "く", "け",
-		"こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ",
-		"ふ", "へ", "ほ", "ま", "み", "む", "め"] }];
+
+    const districts =
+    [{id:0,
+      name:"東123", halls:["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
+        "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ"],},
+      {id:1,name:"東456", halls: ["シ",
+        "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "パ", "ヒ", "ピ", "フ",
+        "プ", "ヘ", "ペ", "ホ", "ポ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ"],},
+      {id:2,name:"西12",halls: ["あ", "い", "う", "え", "お", "か", "き", "く", "け",
+        "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ",
+        "ふ", "へ", "ほ", "ま", "み", "む", "め"]
+    }];
 
     return (
       <div>
@@ -56,7 +59,14 @@ export const BlockListForm = (props:Props) => {
             ブロック
           </label>
           <select className="select-block" id="block" name="block">
-
+            {districts[selectedDistrict].halls.map((hall) => {
+              return (
+                <option key={hall} value={hall} onSelect={() => setSelectedBlock(hall)}>
+                  {hall}ホール
+                </option>
+              );
+            }
+            )}
           </select>
           <LinkButton href={"/"} > Go</LinkButton>
         </form>

@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource DATABASE_URL {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Block {
+  id      Int     @id @default(autoincrement())
+  name    String?
+  eventId String? @map("event_id")
+  hallId  String @map("hall_id")
+  isWall  Boolean @map("is_wall")
+
+  event Event?  @relation(fields: [eventId], references: [id])
+  hall  Hall    @relation(fields: [hallId], references: [id])
+  spaces Space[]
+
+  @@map("block")
+}
+
+model Circle {
+  id        Int     @id @default(autoincrement())
+  author    String?
+  hpUrl     String? @map("hp_url")
+  name      String?
+  pixivUrl  String? @map("pixiv_url")
+  twitterId String? @map("twitter_id")
+  spaces     Space[]
+
+  @@map("circle")
+}
+
+model Day {
+  id       Int     @id @default(autoincrement())
+  dayCount Int    @map("day_count")
+  eventId  String? @map("event_id")
+
+  event Event?  @relation(fields: [eventId], references: [id])
+  spaces Space[]
+
+  @@map("day")
+}
+
+model Event {
+  id        String    @id
+  eventName String?  @map("event_name")
+  venueId   Int?   @map("venue_id")
+  lastDate  DateTime? @map("last_date")
+  startDate DateTime? @map("start_date")
+  url       String?
+
+  blocks Block[]
+  days   Day[]
+  venue  Venue?  @relation(fields: [venueId], references: [id])
+
+  @@map("event")
+}
+
+model FfUser {
+  id          String     @id
+  follower    Boolean    @default(false)
+  following   Boolean    @default(false)
+  name        String?
+  twitterid   String?   @map("twitter_id")
+  loginUser   LoginUser? @relation(fields: [loginUserId], references: [id]) 
+  loginUserId String?
+
+  @@map("ff_user")
+}
+
+model Hall {
+  id    String  @id
+  name  String  @unique
+  use  Boolean
+  blocks Block[]
+
+  @@map("hall")
+}
+
+model LoginUser {
+  id              String    @id
+  displayedName   String?  @map("displayed_name")
+  name            String?
+  profileImageUrl String? @map("profile_image_url")
+  lastUpdate      DateTime? @map("last_update")
+
+  ffUsers FfUser[]
+
+  @@map("login_user")
+}
+
+model Space {
+  id            Int     @id @default(autoincrement())
+  ab            String?
+  genre         String?
+  spaceNumber   Int    @map("space_number")
+  webcatalogUrl String? @map("webcatalog_url")
+  blockId       Int?   @map("block_id")
+  circleId      Int?  @map("circle_id")
+  dayId         Int?   @map("day_id")
+
+  block  Block?  @relation(fields: [blockId], references: [id])
+  circle Circle? @relation(fields: [circleId], references: [id])
+  day    Day?    @relation(fields: [dayId], references: [id])
+  tweets  Tweet[]
+
+  @@map("space")
+}
+
+model Tweet {
+  id         Int       @id @default(autoincrement())
+  text       String?
+  spaceId    Int?     @map("space_id")
+  url        String?
+  authorName String? @map("author_name")
+  authorId   String? @map("author_id")
+  createdAt  DateTime? @map("created_at")
+  favs       Int
+  retweets   Int
+  error      Boolean
+
+  space Space? @relation(fields: [spaceId], references: [id])
+
+  @@map("tweet")
+}
+
+model Venue {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  events Event[]
+
+  @@map("venue")
+}

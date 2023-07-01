@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { BiChevronUp } from "react-icons/bi";
-import { FaChevronUp } from "react-icons/fa";
 
 export const PageTopButton = () => {
   return (
@@ -11,43 +9,3 @@ export const PageTopButton = () => {
     </a>
   );
 };
-
-// #page-top {
-//     display: block;
-//     font-weight: bold;
-//     padding: 0.7em;
-//     text-align: center;
-//     background: #fff; /*背景色*/
-//     color: #666; /*文字色*/
-//     transition: 0.3s;
-//     width: 64px;
-//     height: 64px;
-//     position: fixed;
-//     right: 10px;
-//     bottom: 10px;
-//     background: #0097fc;
-//     opacity: 0.6;
-//     border-radius: 50%;
-//   }
-//   /***マウスオーバー時***/
-//   #page-top:hover {
-//     background: #666; /*背景色*/
-//     color: #fff; /*文字色*/
-//   }
-//   /* Font Awesome */
-//   #page-top::before {
-//     font-family: "Font Awesome 5 Free";
-//     font-weight: 900;
-//     content: "\f106";
-//     font-size: 50px;
-//     color: #ffffff;
-//     position: absolute;
-//     width: 36px;
-//     height: 22px;
-//     top: -5px;
-//     bottom: 0;
-//     right: 0;
-//     left: 0;
-//     margin: auto;
-//     text-align: center;
-//   }

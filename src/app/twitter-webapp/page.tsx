@@ -1,8 +1,11 @@
-import { H2 } from "@/components/common/H2";
-import { LinkButton } from "@/components/common/LinkButton";
-import { FaTwitter } from "react-icons/fa";
+"use client";
 
-const page = () => {
+import { H2, LinkButton } from "@/components/common";
+import { FaTwitter } from "react-icons/fa";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+const Page = () => {
+  const { data: session } = useSession();
   return (
     <>
       <H2>フォロワーのお品書き取得ツール</H2>
@@ -12,13 +15,18 @@ const page = () => {
         </p>
       </div>
       <div className="text-center">
-        <LinkButton href="/twitter-webapp/login">
-          <FaTwitter size={24} />
-          Twitterでログイン
-        </LinkButton>
+        {!session ? (
+          <LinkButton onClick={() => signIn("twitter")}>
+            <FaTwitter size={24} />
+            Twitterでログイン
+          </LinkButton>
+        ) : (
+          <LinkButton onClick={() => signOut()}>サインアウト</LinkButton>
+        )}
       </div>
+      <div></div>
     </>
   );
 };
 
-export default page;
+export default Page;
