@@ -1,7 +1,7 @@
 import { fetchEvent } from "@/services/eventService";
 
-const Page = async ({params}:{params:{event_id:string}}) => {
-    const event = await fetchEvent(params.event_id);
+const Page = async ({params}:{params:{eventId:string}}) => {
+    const event = await fetchEvent(params.eventId);
 
     return (
       <>
