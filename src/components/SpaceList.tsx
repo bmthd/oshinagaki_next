@@ -1,6 +1,5 @@
-import { Block, Circle, Day } from "@prisma/client";
 import { LinkButton } from "@/components/common";
-import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
+import { SpacesQueryResult } from "@/services/eventService";
 import { SpaceInfo } from "./SpaceInfo";
 
 export const SpaceList = ({ spaces }: { spaces: SpacesQueryResult }) => {
