@@ -1,12 +1,13 @@
 "use client";
 
 import { Footer, Header } from "@/components/layouts";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import "./global.css";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from "recoil";
+import { ErrorBoundary } from "react-error-boundary";
 
 const font = BIZ_UDPGothic({
   weight: "400",
@@ -35,7 +36,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="ja" className={font.className}>
           <body>
             <Header />
-            <div className="lg:w-main max-lg:w-auto mx-auto">{children}</div>
+            <ErrorBoundary fallback={<div>存在しないページです。</div>}>
+              <Suspense fallback={<div>loading...</div>}>
+                <div className="lg:w-main max-lg:w-auto mx-auto">
+                  {children}
+                </div>
+              </Suspense>
+            </ErrorBoundary>
             <Footer />
           </body>
         </html>

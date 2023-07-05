@@ -118,6 +118,8 @@ const Home = async () => {
             </LinkButton>
           </div>
 
+          <BlockListForm event={event!} days={days} />
+
           <div className="text-center">過去のイベント一覧</div>
           <ul>
             {events.map((e) => {

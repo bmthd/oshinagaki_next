@@ -13,14 +13,29 @@ export const BlockListForm = async ({event,days}:{event:Event,days:any}) => {
     const [selectedDayCount,setSelectedDayCount] = useState("1");
     const [selectedBlock,setSelectedBlock] = useState("A");
 
+    const handleDistrictChange = (e:any) => {
+        setSelectedDistrict(e.target.value);
+    }
+
+    const handleDayCountChange = (e:any) => {
+        setSelectedDayCount(e.target.value);
+    }
+
+    const handleBlockChange = (e:any) => {
+        setSelectedBlock(e.target.value);
+    }
+
+    const url = `/event/${event.id}/day/${selectedDayCount}/block/${selectedBlock}`;
+
+
     const districts =
     [{id:0,
-      name:"東123", halls:["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
+      name:"東123", blocks:["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ"],},
-      {id:1,name:"東456", halls: ["シ",
+      {id:1,name:"東456", blocks: ["シ",
         "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "パ", "ヒ", "ピ", "フ",
         "プ", "ヘ", "ペ", "ホ", "ポ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ"],},
-      {id:2,name:"西12",halls: ["あ", "い", "う", "え", "お", "か", "き", "く", "け",
+      {id:2,name:"西12",blocks: ["あ", "い", "う", "え", "お", "か", "き", "く", "け",
         "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ",
         "ふ", "へ", "ほ", "ま", "み", "む", "め"]
     }];
@@ -59,16 +74,16 @@ export const BlockListForm = async ({event,days}:{event:Event,days:any}) => {
             ブロック
           </label>
           <select className="select-block" id="block" name="block">
-            {districts[selectedDistrict].halls.map((hall) => {
+            {districts[selectedDistrict].blocks.map((block) => {
               return (
-                <option key={hall} value={hall} onSelect={() => setSelectedBlock(hall)}>
-                  {hall}ホール
+                <option key={block} value={block} onSelect={() => setSelectedBlock(block)}>
+                  {block}
                 </option>
               );
             }
             )}
           </select>
-          <LinkButton href={"/"} > Go</LinkButton>
+          <LinkButton href={url} > Go</LinkButton>
         </form>
       </div>
     );
