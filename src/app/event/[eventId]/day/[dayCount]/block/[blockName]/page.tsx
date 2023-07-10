@@ -19,7 +19,7 @@ export const dynamic = 'auto'
 
 export const dynamicParams = true;
 
-export const revaridate = 86400;
+export const revalidate = 86400;
 
 export const generateStaticParams = async ({
   params: { eventId, dayCount},
