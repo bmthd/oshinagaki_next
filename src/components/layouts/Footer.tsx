@@ -1,5 +1,5 @@
-import { PageTopButton } from "@/components/common";
-import { TextLink } from "../common/TextLink";
+import { TextLink } from "@/components/common";
+import { PageTopButton } from "./PageTopButton";
 
 export const Footer = () => {
   return (

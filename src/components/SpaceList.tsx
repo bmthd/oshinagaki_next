@@ -1,39 +1,113 @@
-import { LinkButton } from "@/components/common";
-import { SpacesQueryResult } from "@/services/eventService";
-import { SpaceInfo } from "./SpaceInfo";
+import { H2, H3, TextLink, TwitterCard } from "@/components/common";
+import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
 
+/**
+ * スペース情報を表示するコンポーネント
+ * 受け取った情報をもとにサークル情報を表示する
+ *
+ * @param データベース上のスペースオブジェクト
+ */
 export const SpaceList = ({ spaces }: { spaces: SpacesQueryResult }) => {
-  return (
-    <>
-      <SpaceHeader spaces={spaces} />
-      {spaces.map((space) => {
-        <SpaceInfo space={space} />;
-      })}
-    </>
-  );
+	return (
+		<ul
+			className="grid xl:grid-cols-4 max-xl:grid-cols-2 max-md:grid-cols-1 gap-2
+    border-dashed border-4 rounded-md border-blue-500 bg-blue-100">
+			{spaces.map((space) => {
+				return <SpaceInfo key={space.id} space={space} />;
+			})}
+		</ul>
+	);
 };
 
-const SpaceHeader = ({ spaces }: { spaces: SpacesQueryResult }) => {
-  return (
-    <>
-      <ul className="grid lg:grid-cols-4 max-lg:grid-cols-2">
-        {spaces.map((space) => {
-          const link = `#${space.spaceNumber}${space.ab}`;
-          const circleName = `${space.block?.name} ${space.spaceNumber} ${
-            space.ab
-          } ${space.circle?.name ? space.circle?.name : ""}`;
-          return (
-            <li key={space.id} className="col-span-1">
-              <LinkButton
-                href={link}
-                className="btn btn-info btn-block btn-sm m-1 font-weight-bold"
-              >
-                {circleName}
-              </LinkButton>
-            </li>
-          );
-        })}
-      </ul>
-    </>
-  );
+/**
+ * 1スペース分の情報を表示するコンポーネント
+ * @param param0
+ * @returns
+ */
+const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
+	const circle = space.circle;
+	const block = space.block;
+	const day = space.day;
+
+	const circleName = circle?.name ? (
+		<TextLink href={`/circle/${circle!.id}`} className="font-bold whitespace-pre-wrap">
+			{circle!.name}
+		</TextLink>
+	) : (
+		<p>データなし</p>
+	);
+
+	const author = circle?.author ? <span>{circle!.author}</span> : <span>データなし</span>;
+
+	const webcatalogUrl = space.webcatalogUrl && (
+		<TextLink href={space.webcatalogUrl} target="_blank" className="whitespace-pre-wrap">
+			WEBカタログ
+		</TextLink>
+	);
+
+	const pixivUrl = circle?.pixivUrl && (
+		<TextLink href={circle!.pixivUrl} target="_blank" className="whitespace-pre-wrap">
+			Pixiv
+		</TextLink>
+	);
+
+	const hpUrl = circle?.hpUrl && (
+		<TextLink href={circle!.hpUrl} target="_blank" className="whitespace-pre-wrap">
+			ホームページ
+		</TextLink>
+	);
+
+	const tweet = space.tweets[0];
+
+	const title = `${day?.dayCount}日目${block?.hall.name}${block?.name}-${space.spaceNumber}${space.ab}`;
+
+	const circleInfo = !circle ? (
+		<span>サークルデータなし</span>
+	) : (
+		<>
+			<H3>サークル名</H3>
+			{circleName}
+
+			<H3>執筆者名</H3>
+			{author}
+
+			<H3>リンク</H3>
+			{!space.webcatalogUrl && !circle.pixivUrl && !circle.hpUrl ? (
+				<span>データなし</span>
+			) : (
+				<div className="flex flex-col">
+					{webcatalogUrl}
+					{pixivUrl}
+					{hpUrl}
+				</div>
+			)}
+
+			<H3>お品書き</H3>
+			{tweet ? (
+				<div className="flex justify-center">
+					<TwitterCard tweet={tweet} />
+				</div>
+			) : circle.twitterId ? (
+				<>
+					<a href={`https://twitter.com/${space.circle?.twitterId}`} target="_blank">
+						{`@${space.circle?.twitterId}`}
+					</a>
+					<p>このサークルはまだお品書きを公開していないようです。</p>
+				</>
+			) : (
+				<span>データなし</span>
+			)}
+		</>
+	);
+
+	return (
+		<li>
+			<div className="m-4">
+				<H2 id={`${space.spaceNumber}${space.ab}`}>
+					<span className="whitespace-pre-wrap">{title}</span>
+				</H2>
+				{circleInfo}
+			</div>
+		</li>
+	);
 };

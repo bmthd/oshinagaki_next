@@ -35,7 +35,7 @@ module.exports = {
         },
       },
       width:{
-        main: "960px",
+        main: "1280px",
       }
     },
   },
