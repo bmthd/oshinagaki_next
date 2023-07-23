@@ -32,6 +32,7 @@
     "react-icons": "^4.9.0",
     "recoil": "^0.7.7",
     "scale": "^0.0.7",
+    "server-only": "^0.0.1",
     "tailwindcss": "3.3.2",
     "twitter-api-sdk": "^1.2.1",
     "typescript": "5.1.3"

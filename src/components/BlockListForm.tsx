@@ -168,7 +168,7 @@ export const BlockListForm = ({ event, days }: { event: Event; days: Day[] }) =>
 	];
 
 	return (
-		<div>
+		<>
 			<H2>ブロック一覧</H2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="day" aria-label="日にち">
@@ -210,6 +210,6 @@ export const BlockListForm = ({ event, days }: { event: Event; days: Day[] }) =>
 			</form>
 			<LinkButton href={url}> 選択したブロックに移動</LinkButton>
 			<LinkButton href={`/event/${event.id}/block_list`}>{event.id} ブロック一覧</LinkButton>
-		</div>
+		</>
 	);
 };

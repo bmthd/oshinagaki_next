@@ -2,32 +2,32 @@ import prisma, { Prisma } from "@/lib/prisma";
 import { cache } from "react";
 import "server-only";
 
-export const fetchEvent = async (id: string) => {
+export const fetchEvent = cache(async (id: string) => {
 	const event = await prisma.event.findUniqueOrThrow({
 		where: { id },
 	});
 	return event;
-};
+});
 
-export const fetchEvents = async () => {
+export const fetchEvents = cache(async () => {
 	const events = await prisma.event.findMany({
 		orderBy: {
 			startDate: "desc",
 		},
 	});
 	return events;
-};
+});
 
-export const fetchLatestEvent = async () => {
+export const fetchLatestEvent = cache(async () => {
 	const event = await prisma.event.findFirstOrThrow({
 		orderBy: {
 			startDate: "desc",
 		},
 	});
 	return event;
-};
+});
 
-export const fetchDay = async (eventId: string, dayCount: number) => {
+export const fetchDay = cache(async (eventId: string, dayCount: number) => {
 	const day = await prisma.day.findFirstOrThrow({
 		where: {
 			event: {
@@ -37,9 +37,9 @@ export const fetchDay = async (eventId: string, dayCount: number) => {
 		},
 	});
 	return day;
-};
+});
 
-export const fetchDays = async (eventId: string) => {
+export const fetchDays = cache(async (eventId: string) => {
 	const days = await prisma.day.findMany({
 		where: {
 			event: {
@@ -48,18 +48,18 @@ export const fetchDays = async (eventId: string) => {
 		},
 	});
 	return days;
-};
+});
 
-export const fetchHall = async (hallId: string) => {
+export const fetchHall = cache(async (hallId: string) => {
 	const hall = await prisma.hall.findUniqueOrThrow({
 		where: {
 			id: hallId,
 		},
 	});
 	return hall;
-};
+});
 
-export const fetchHalls = async (eventId: string) => {
+export const fetchHalls = cache(async (eventId: string) => {
 	const halls = await prisma.hall.findMany({
 		where: {
 			blocks: {
@@ -76,9 +76,9 @@ export const fetchHalls = async (eventId: string) => {
 		},
 	});
 	return halls;
-};
+});
 
-export const fetchBlock = async (eventId: string, blockName: string) => {
+export const fetchBlock = cache(async (eventId: string, blockName: string) => {
 	const block = await prisma.block.findFirstOrThrow({
 		where: {
 			event: {
@@ -88,9 +88,9 @@ export const fetchBlock = async (eventId: string, blockName: string) => {
 		},
 	});
 	return block;
-};
+});
 
-export const fetchBlocks = async (eventId: string) => {
+export const fetchBlocks = cache(async (eventId: string) => {
 	const blocks = await prisma.block.findMany({
 		where: {
 			event: {
@@ -99,9 +99,9 @@ export const fetchBlocks = async (eventId: string) => {
 		},
 	});
 	return blocks;
-};
+});
 
-export const fetchSpaceCount = async (eventId: string) => {
+export const fetchSpaceCount = cache(async (eventId: string) => {
 	const count = await prisma.space.count({
 		where: {
 			day: {
@@ -112,7 +112,7 @@ export const fetchSpaceCount = async (eventId: string) => {
 		},
 	});
 	return count;
-};
+});
 
 export const fetchSpaces = cache(
 	async (eventId: string, dayCount: number, blockName: string, pageNumber = 1, pageSize = 38) => {
@@ -151,26 +151,24 @@ export const fetchSpaces = cache(
 	}
 );
 
-export const fetchSpaceCountByBlock = async (
-	eventId: string,
-	dayCount: number,
-	blockName: string
-) => {
-	const count = await prisma.space.count({
-		where: {
-			day: {
-				event: {
-					id: eventId,
+export const fetchSpaceCountByBlock = cache(
+	async (eventId: string, dayCount: number, blockName: string) => {
+		const count = await prisma.space.count({
+			where: {
+				day: {
+					event: {
+						id: eventId,
+					},
+					dayCount: dayCount,
 				},
-				dayCount: dayCount,
+				block: {
+					name: blockName,
+				},
 			},
-			block: {
-				name: blockName,
-			},
-		},
-	});
-	return count;
-};
+		});
+		return count;
+	}
+);
 
 export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpaces>;
 export type SpaceQueryResult = SpacesQueryResult[number];
