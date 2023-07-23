@@ -33,3 +33,22 @@ export const fetchBlockNames = async (eventId: string) => {
 	});
 	return blocks.map((block) => block.name);
 };
+
+export const fetchHallIds = async (eventId: string) => {
+	const halls = await prisma.hall.findMany({
+		where: {
+			blocks: {
+				some: {
+					event: {
+						id: eventId,
+					},
+				},
+			},
+			use: true,
+		},
+		select: {
+			id: true,
+		},
+	});
+	return halls.map((hall) => hall.id);
+};
