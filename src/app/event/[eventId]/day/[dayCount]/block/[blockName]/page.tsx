@@ -2,7 +2,7 @@ import { BlockListForm } from "@/components/BlockListForm";
 import { WallList } from "@/components/WallList";
 import { H2 } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
-import { fetchBlock, fetchDay, fetchDays, fetchEvent } from "@/services/eventService";
+import { fetchEvent } from "@/services/eventService";
 import { fetchBlockNames } from "@/services/slugService";
 import { Suspense } from "react";
 import { SpacesContainer } from "../_component/SpacesContainer";
@@ -18,15 +18,12 @@ export const generateMetadata = async ({
 }: {
 	params: { eventId: string; dayCount: string; blockName: string };
 }) => {
+	const eventId = params.eventId;
 	const dayCount = parseInt(params.dayCount);
-	const [event, day, block] = await Promise.all([
-		fetchEvent(params.eventId),
-		fetchDay(params.eventId, dayCount),
-		fetchBlock(params.eventId, params.blockName),
-	]);
+	const event = await fetchEvent(eventId);
 	const blockName = decodeURIComponent(params.blockName);
-	const pageTitle = `${event.id} ${day.dayCount}日目ブロック\"${block?.name}\"お品書きまとめ`;
-	const description = `${event.eventName} ${day.dayCount}日目ブロック\"${block?.name}\"のサークル一覧です。`;
+	const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
+	const description = `${event.eventName} ${dayCount}日目ブロック\"${blockName}\"のサークル一覧です。`;
 	return {
 		title: pageTitle,
 		description: description,
@@ -63,15 +60,9 @@ const Page = async ({
 	const size = convertToNumber(searchParams!.size!) || 38;
 	const dayCount = parseInt(params.dayCount);
 	const blockName = decodeURIComponent(params.blockName);
-	const [event, days, day, block] = await Promise.all([
-		fetchEvent(params.eventId),
-		fetchDays(params.eventId),
-		fetchDay(params.eventId, dayCount),
-		fetchBlock(params.eventId, blockName),
-		,
-	]);
+	const eventId = params.eventId;
 
-	const pageTitle = `${event.id} ${day.dayCount}日目ブロック\"${block?.name}\"お品書きまとめ`;
+	const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 
 	return (
 		<>
@@ -87,8 +78,8 @@ const Page = async ({
 					/>
 				</Suspense>
 				<div className="max-w-md mx-auto">
-					<WallList event={event} />
-					<BlockListForm event={event} days={days} />
+					<WallList eventId={eventId} />
+					<BlockListForm eventId={eventId} />
 				</div>
 			</div>
 		</>

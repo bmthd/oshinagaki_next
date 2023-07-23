@@ -114,7 +114,7 @@ export const fetchSpaceCount = async (eventId: string) => {
 	return count;
 };
 
-export const fetchSpaces = cache(
+export const fetchSpacesByBlock = cache(
 	async (eventId: string, dayCount: number, blockName: string, pageNumber = 1, pageSize = 38) => {
 		const spaces = await prisma.space.findMany({
 			where: {
@@ -151,26 +151,106 @@ export const fetchSpaces = cache(
 	}
 );
 
-export const fetchSpaceCountByBlock = async (
-	eventId: string,
-	dayCount: number,
-	blockName: string
-) => {
-	const count = await prisma.space.count({
-		where: {
-			day: {
-				event: {
-					id: eventId,
+export const fetchSpacesByHall = cache(
+	async (eventId: string, dayCount: number, hallId: string, pageNumber = 1, pageSize = 38) => {
+		const { blockName, start, end } = generateWallParams(hallId);
+		const spaces = await prisma.space.findMany({
+			where: {
+				day: {
+					event: {
+						id: eventId,
+					},
+					dayCount: dayCount,
 				},
-				dayCount: dayCount,
+				block: {
+					name: blockName,
+				},
+				spaceNumber: {
+					gte: start,
+					lte: end,
+				},
 			},
-			block: {
-				name: blockName,
+			include: {
+				block: {
+					include: {
+						hall: true,
+					},
+				},
+				circle: true,
+				day: true,
+				tweets: {
+					orderBy: {
+						createdAt: "desc",
+					},
+					take: 1,
+				},
 			},
-		},
-	});
-	return count;
+			orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
+			skip: (pageNumber - 1) * pageSize,
+			take: pageSize,
+		});
+		return spaces;
+	}
+);
+
+const generateWallParams = (hallId: string): { blockName: string; start: number; end: number } => {
+	const blockInfo: { [key: string]: { blockName: string; start: number; end: number } } = {
+		east1: { blockName: "A", start: 1, end: 37 },
+		east2: { blockName: "A", start: 38, end: 54 },
+		east3: { blockName: "A", start: 55, end: 99 },
+		east4: { blockName: "シ", start: 1, end: 37 },
+		east5: { blockName: "シ", start: 38, end: 54 },
+		east6: { blockName: "シ", start: 55, end: 99 },
+		west1: { blockName: "め", start: 1, end: 99 },
+		west2: { blockName: "あ", start: 1, end: 99 },
+	};
+
+	const { blockName, start, end } = blockInfo[hallId];
+
+	if (!blockName) {
+		throw new Error("Invalid hallId");
+	}
+
+	return { blockName, start, end };
 };
 
-export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpaces>;
+export const fetchSpaceCountByBlock = cache(
+	async (eventId: string, dayCount: number, blockName: string) => {
+		const count = await prisma.space.count({
+			where: {
+				day: {
+					event: {
+						id: eventId,
+					},
+					dayCount: dayCount,
+				},
+				block: {
+					name: blockName,
+				},
+			},
+		});
+		return count;
+	}
+);
+
+export const fetchSpaceCountByHall = cache(
+	async (eventId: string, dayCount: number, hallId: string) => {
+		const count = await prisma.space.count({
+			where: {
+				day: {
+					event: {
+						id: eventId,
+					},
+					dayCount: dayCount,
+				},
+				block: {
+					hallId: hallId,
+				},
+			},
+		});
+		return count;
+	}
+);
+
+export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpacesByBlock>;
 export type SpaceQueryResult = SpacesQueryResult[number];
