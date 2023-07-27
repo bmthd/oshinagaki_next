@@ -20,6 +20,8 @@ model Block {
   spaces Space[]
 
   @@map("block")
+  @@index([eventId])
+  @@index([hallId])
 }
 
 model Circle {
@@ -43,6 +45,7 @@ model Day {
   spaces Space[]
 
   @@map("day")
+  @@index([eventId])
 }
 
 model Event {
@@ -58,6 +61,7 @@ model Event {
   venue  Venue?  @relation(fields: [venueId], references: [id])
 
   @@map("event")
+  @@index([venueId])
 }
 
 model FfUser {
@@ -70,6 +74,7 @@ model FfUser {
   loginUserId String?
 
   @@map("ff_user")
+  @@index([loginUserId])
 }
 
 model Hall {
@@ -109,6 +114,9 @@ model Space {
   tweets  Tweet[]
 
   @@map("space")
+  @@index([blockId])
+  @@index([circleId])
+  @@index([dayId])
 }
 
 model Tweet {
@@ -126,6 +134,7 @@ model Tweet {
   space Space? @relation(fields: [spaceId], references: [id])
 
   @@map("tweet")
+  @@index([spaceId])
 }
 
 model Venue {

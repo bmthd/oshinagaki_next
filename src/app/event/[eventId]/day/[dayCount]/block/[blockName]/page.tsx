@@ -68,7 +68,7 @@ const Page = async ({
 		<>
 			<div className="m-2">
 				<H2>{pageTitle}</H2>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense key={`page=${page}size=${size}`} fallback={<div>Loading...</div>}>
 					<SpacesContainer
 						eventId={params.eventId}
 						dayCount={dayCount}
