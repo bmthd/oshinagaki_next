@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC, HTMLAttributes } from "react";
+import { HTMLAttributes } from "react";
 
 type Props = {
   current: number;
@@ -18,7 +18,7 @@ type Props = {
  * @param param0
  * @return
  */
-export const Pagenation: FC<Props> = ({ current, total, ...props }) => {
+export const Pagenation = ({ current, total, ...props }: Props) => {
   const pathname = usePathname();
   if (total === 1) {
     return <></>;

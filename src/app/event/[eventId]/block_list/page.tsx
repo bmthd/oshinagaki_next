@@ -1,4 +1,4 @@
-import { H2, LinkButton } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components/common";
 import { fetchBlocks, fetchDays } from "@/services/eventService";
 import { fetchEventIds } from "@/services/slugService";
 
@@ -16,7 +16,7 @@ const page = async ({ params }: { params: { eventId: string } }) => {
   const pageTitle = `${eventId}のブロック一覧`;
   return (
     <>
-      <H2>{pageTitle}</H2>
+      <TitleHeading>{pageTitle}</TitleHeading>
       <div className="border-dashed border-4 rounded-md border-blue-500 bg-blue-100">
         {days.map((day) => {
           return (

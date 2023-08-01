@@ -1,4 +1,4 @@
-import { TwitterWidgets } from "./_components/TwitterWidgets";
+import { TwitterWidgets } from "./_components";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
