@@ -189,6 +189,7 @@ export const fetchSpacesByHall = cache(
 			skip: (pageNumber - 1) * pageSize,
 			take: pageSize,
 		});
+		console.log(spaces);
 		return spaces;
 	}
 );
@@ -213,6 +214,69 @@ const generateWallParams = (hallId: string): { blockName: string; start: number;
 
 	return { blockName, start, end };
 };
+
+export const fetchSpacesByLanking = cache(
+	async (eventId: string, pageNumber: number, pageSize: number) => {
+		const spaces = await prisma.space.findMany({
+			where: {
+				day: {
+					event: {
+						id: eventId,
+					},
+				},
+			},
+			include: {
+				block: {
+					include: {
+						hall: true,
+					},
+				},
+				circle: true,
+				day: true,
+				tweets: {
+					orderBy: {
+						createdAt: "desc",
+					},
+					take: 1,
+				},
+			},
+			orderBy: {
+				tweets: {
+					//take1したtweetのretweetsで並び替える
+					//retweetが多い順に並び替える
+				},
+			},
+			skip: (pageNumber - 1) * pageSize,
+			take: pageSize,
+		});
+		return spaces;
+	}
+);
+
+export const fetchSpacesByCircle = cache(async (circleId: number) => {
+	const spaces = await prisma.space.findMany({
+		where: {
+			circleId: circleId,
+		},
+		include: {
+			block: {
+				include: {
+					hall: true,
+				},
+			},
+			circle: true,
+			day: true,
+			tweets: {
+				orderBy: {
+					createdAt: "desc",
+				},
+				take: 1,
+			},
+		},
+		orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
+	});
+	return spaces;
+});
 
 export const fetchSpaceCountByBlock = cache(
 	async (eventId: string, dayCount: number, blockName: string) => {
@@ -251,6 +315,19 @@ export const fetchSpaceCountByHall = cache(
 		return count;
 	}
 );
+
+export const fetchSpaceCountByEvent = cache(async (eventId: string) => {
+	const count = await prisma.space.count({
+		where: {
+			day: {
+				event: {
+					id: eventId,
+				},
+			},
+		},
+	});
+	return count;
+});
 
 export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpacesByBlock>;
 export type SpaceQueryResult = SpacesQueryResult[number];

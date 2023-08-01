@@ -1,10 +1,7 @@
-"use client";
 import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
 import { Breadcrumb } from "./Breadcrumb";
 
 export const Header = () => {
-	const segments = useSelectedLayoutSegments();
 	const title = (
 		<>
 			<span>コミケお品書きツイート</span>
@@ -20,7 +17,7 @@ export const Header = () => {
 					</Link>
 				</h1>
 			</header>
-			<Breadcrumb segments={segments} />
+			<Breadcrumb />
 		</>
 	);
 };

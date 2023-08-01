@@ -1,8 +1,9 @@
-export { H2 } from "./H2";
-export { H3 } from "./H3";
+export { DotHeading } from "./DotHeading";
 export { LinkButton } from "./LinkButton";
 export { Pagenation } from "./Pagenation";
+export { Section } from "./Section";
 export { SelectBox } from "./SelectBox";
 export { ShareButtons } from "./ShareButtons";
 export { TextLink } from "./TextLink";
+export { TitleHeading } from "./TitleHeading";
 export { TwitterCard } from "./TwitterCard";

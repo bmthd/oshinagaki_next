@@ -1,13 +1,15 @@
-import { BlockListForm } from "@/components/BlockListForm";
+import { SpacesContainer } from "@/app/event/[eventId]/_components";
+import { BlockListFormContainer } from "@/components/BlockListFormContainer";
 import { WallList } from "@/components/WallList";
-import { H2 } from "@/components/common";
+import { TitleHeading } from "@/components/common";
+import { Section } from "@/components/common/Section";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent } from "@/services/eventService";
 import { fetchBlockNames } from "@/services/slugService";
+import { Metadata } from "next";
 import { Suspense } from "react";
-import { SpacesContainer } from "../_component/SpacesContainer";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "auto";
 
 export const dynamicParams = true;
 
@@ -17,11 +19,13 @@ export const generateMetadata = async ({
 	params,
 }: {
 	params: { eventId: string; dayCount: string; blockName: string };
-}) => {
-	const eventId = params.eventId;
-	const dayCount = parseInt(params.dayCount);
+}): Promise<Metadata> => {
+	const [eventId, dayCount, blockName] = [
+		params.eventId,
+		parseInt(params.dayCount),
+		decodeURIComponent(params.blockName),
+	];
 	const event = await fetchEvent(eventId);
-	const blockName = decodeURIComponent(params.blockName);
 	const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 	const description = `${event.eventName} ${dayCount}日目ブロック\"${blockName}\"のサークル一覧です。`;
 	return {
@@ -54,35 +58,36 @@ const Page = async ({
 	searchParams,
 }: {
 	params: { eventId: string; dayCount: string; blockName: string };
-	searchParams?: { page?: string; size?: string };
+	searchParams?: { page?: "string"; size?: string };
 }) => {
+	const [eventId, dayCount, blockName] = [
+		params.eventId,
+		parseInt(params.dayCount),
+		decodeURIComponent(params.blockName),
+	];
 	const page = convertToNumber(searchParams!.page!) || 1;
 	const size = convertToNumber(searchParams!.size!) || 38;
-	const dayCount = parseInt(params.dayCount);
-	const blockName = decodeURIComponent(params.blockName);
-	const eventId = params.eventId;
+	const suspenseKey = `${eventId}-${dayCount}-${blockName}-${page}-${size}`;
 
 	const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 
 	return (
-		<>
-			<div className="m-2">
-				<H2>{pageTitle}</H2>
-				<Suspense key={`page=${page}size=${size}`} fallback={<div>Loading...</div>}>
-					<SpacesContainer
-						eventId={params.eventId}
-						dayCount={dayCount}
-						blockName={blockName}
-						page={page}
-						size={size}
-					/>
-				</Suspense>
-				<div className="max-w-md mx-auto">
-					<WallList eventId={eventId} />
-					<BlockListForm eventId={eventId} />
-				</div>
+		<Section className="m-2">
+			<TitleHeading>{pageTitle}</TitleHeading>
+			<Suspense key={suspenseKey} fallback={<div>Loading...</div>}>
+				<SpacesContainer
+					eventId={params.eventId}
+					dayCount={dayCount}
+					blockName={blockName}
+					page={page}
+					size={size}
+				/>
+			</Suspense>
+			<div className="max-w-md mx-auto">
+				<WallList eventId={eventId} />
+				<BlockListFormContainer eventId={eventId} />
 			</div>
-		</>
+		</Section>
 	);
 };
 export default Page;

@@ -1,13 +1,20 @@
-import { H2, LinkButton } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components/common";
 import { fetchDays, fetchEvent, fetchHalls } from "@/services/eventService";
 
+/**
+ * 受け取ったイベントの壁サークル一覧ページへのリンクを表示する
+ * 日付ごとにホールを表示する
+ * 生成するリンクのURL: /event/[eventId]/wall[hallId]
+ * @param param0
+ * @returns
+ */
 export const WallList = async ({ eventId }: { eventId: string }) => {
 	const event = await fetchEvent(eventId);
 	const days = await fetchDays(eventId);
 	const halls = await fetchHalls(eventId);
 	return (
 		<>
-			<H2>壁サークル一覧</H2>
+			<TitleHeading>壁サークル一覧</TitleHeading>
 			{/* <!-- 		壁サークルとは？ --> */}
 
 			<div className="flex justify-around">

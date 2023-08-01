@@ -1,5 +1,6 @@
-import { H2, H3, TextLink, TwitterCard } from "@/components/common";
+import { DotHeading, TextLink, TitleHeading, TwitterCard } from "@/components/common";
 import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
+import { Section } from "../../../../components/common/Section";
 
 /**
  * スペース情報を表示するコンポーネント
@@ -40,19 +41,19 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 	const author = circle?.author ? <span>{circle!.author}</span> : <span>データなし</span>;
 
 	const webcatalogUrl = space.webcatalogUrl && (
-		<TextLink href={space.webcatalogUrl} target="_blank" className="whitespace-pre-wrap">
+		<TextLink href={space.webcatalogUrl} className="whitespace-pre-wrap">
 			WEBカタログ
 		</TextLink>
 	);
 
 	const pixivUrl = circle?.pixivUrl && (
-		<TextLink href={circle!.pixivUrl} target="_blank" className="whitespace-pre-wrap">
+		<TextLink href={circle!.pixivUrl} className="whitespace-pre-wrap">
 			Pixiv
 		</TextLink>
 	);
 
 	const hpUrl = circle?.hpUrl && (
-		<TextLink href={circle!.hpUrl} target="_blank" className="whitespace-pre-wrap">
+		<TextLink href={circle!.hpUrl} className="whitespace-pre-wrap">
 			ホームページ
 		</TextLink>
 	);
@@ -65,13 +66,13 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 		<span>サークルデータなし</span>
 	) : (
 		<>
-			<H3>サークル名</H3>
+			<DotHeading>サークル名</DotHeading>
 			{circleName}
 
-			<H3>執筆者名</H3>
+			<DotHeading>執筆者名</DotHeading>
 			{author}
 
-			<H3>リンク</H3>
+			<DotHeading>リンク</DotHeading>
 			{!space.webcatalogUrl && !circle.pixivUrl && !circle.hpUrl ? (
 				<span>データなし</span>
 			) : (
@@ -82,7 +83,7 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 				</div>
 			)}
 
-			<H3>お品書き</H3>
+			<DotHeading>お品書き</DotHeading>
 			{tweet ? (
 				<div className="flex justify-center">
 					<TwitterCard tweet={tweet} />
@@ -103,10 +104,10 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 	return (
 		<li>
 			<div className="m-4">
-				<H2 id={`${space.spaceNumber}${space.ab}`}>
+				<TitleHeading id={`${space.spaceNumber}${space.ab}`}>
 					<span className="whitespace-pre-wrap">{title}</span>
-				</H2>
-				{circleInfo}
+				</TitleHeading>
+				<Section>{circleInfo}</Section>
 			</div>
 		</li>
 	);

@@ -1,11 +1,12 @@
-import { BlockListForm } from "@/components/BlockListForm";
+import { BlockListFormContainer } from "@/components/BlockListFormContainer";
 import { WallList } from "@/components/WallList";
-import { H2 } from "@/components/common";
+import { TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
-import { fetchDay, fetchEvent, fetchHall } from "@/services/eventService";
+import { fetchEvent, fetchHall } from "@/services/eventService";
 import { fetchHallIds } from "@/services/slugService";
+import { Metadata } from "next";
 import { Suspense } from "react";
-import { SpacesContainer } from "../../block/_component/SpacesContainer";
+import { SpacesContainer } from "../../../../_components/SpacesContainer";
 
 export const dynamic = "force-dynamic";
 
@@ -17,15 +18,15 @@ export const generateMetadata = async ({
 	params,
 }: {
 	params: { eventId: string; dayCount: string; hallId: string };
-}) => {
-	const dayCount = parseInt(params.dayCount);
-	const [event, day, hall] = await Promise.all([
-		fetchEvent(params.eventId),
-		fetchDay(params.eventId, dayCount),
-		fetchHall(params.hallId),
-	]);
-	const pageTitle = `${event.id} ${day.dayCount}日目${hall?.name}お品書きまとめ`;
-	const description = `${event.eventName} ${day.dayCount}日目${hall?.name}のサークル一覧です。`;
+}): Promise<Metadata> => {
+	const [eventId, dayCount, hallId] = [
+		params.eventId,
+		parseInt(params.dayCount),
+		decodeURIComponent(params.hallId),
+	];
+	const [event, hall] = await Promise.all([fetchEvent(eventId), fetchHall(hallId)]);
+	const pageTitle = `${eventId} ${dayCount}日目${hall?.name}お品書きまとめ`;
+	const description = `${event.eventName} ${dayCount}日目${hall?.name}のサークル一覧です。`;
 	return {
 		title: pageTitle,
 		description: description,
@@ -54,21 +55,16 @@ const Page = async ({
 }) => {
 	const page = convertToNumber(searchParams!.page!) || 1;
 	const size = convertToNumber(searchParams!.size!) || 38;
-	const dayCount = parseInt(params.dayCount);
-	const [eventId, hallId] = [params.eventId, params.hallId];
-	const [event, day, hall] = await Promise.all([
-		fetchEvent(eventId),
-		fetchDay(eventId, dayCount),
-		fetchHall(hallId),
-	]);
-
-	const pageTitle = `${event.id} ${day.dayCount}日目${hall?.name}お品書きまとめ`;
+	const [eventId, dayCount, hallId] = [params.eventId, parseInt(params.dayCount), params.hallId];
+	const hall = await fetchHall(hallId);
+	const suspenseKey = `${eventId}-${dayCount}-${hallId}-${page}-${size}`;
+	const pageTitle = `${eventId} ${dayCount}日目${hall?.name}ホール壁サークルお品書きまとめ`;
 
 	return (
 		<>
 			<div className="m-2">
-				<H2>{pageTitle}</H2>
-				<Suspense fallback={<div>Loading...</div>}>
+				<TitleHeading>{pageTitle}</TitleHeading>
+				<Suspense key={suspenseKey} fallback={<div>Loading...</div>}>
 					<SpacesContainer
 						eventId={eventId}
 						dayCount={dayCount}
@@ -79,7 +75,7 @@ const Page = async ({
 				</Suspense>
 				<div className="max-w-md mx-auto">
 					<WallList eventId={eventId} />
-					<BlockListForm eventId={eventId} />
+					<BlockListFormContainer eventId={eventId} />
 				</div>
 			</div>
 		</>

@@ -1,25 +1,10 @@
-import { BlockListForm } from "@/components/BlockListForm";
+import { BlockListFormContainer } from "@/components/BlockListFormContainer";
 import { EventList } from "@/components/EventList";
 import { WallList } from "@/components/WallList";
-import { LinkButton } from "@/components/common/LinkButton";
+import { LinkButton } from "@/components/common";
 import { fetchLatestEvent, fetchSpaceCount } from "@/services/eventService";
 import { Event } from "@prisma/client";
 import { FaTwitter } from "react-icons/fa";
-
-export const metadata = {
-	title: "コミケお品書きツイートまとめサイト",
-	description:
-		"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-	keywords: "コミックマーケット, お品書き, 新刊情報, サークル情報",
-	language: "ja",
-	"og:url": "https://oshinagaki.bmth.dev",
-	"og:type": "website",
-	"og:title": "コミケお品書きツイートまとめサイト",
-	"og:description":
-		"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-	"og:image": "https://oshinagaki.bmth.dev/ogp.png",
-	"twitter:card": "summary_large_image",
-};
 
 const ComiketHistory = () => {
 	const now = new Date();
@@ -59,7 +44,7 @@ const Home = async () => {
 				<LinkButton href="/recent">{eventId} 最新のお品書き</LinkButton>
 				<TwitterWebAppLink />
 				<WallList eventId={eventId} />
-				<BlockListForm eventId={eventId} />
+				<BlockListFormContainer eventId={eventId} />
 				<EventList />
 			</div>
 		</>

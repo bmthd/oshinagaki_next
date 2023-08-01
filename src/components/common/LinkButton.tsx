@@ -1,33 +1,36 @@
 import Link from "next/link";
 
-type Props = {
-  href?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
-  className?: string;
+type LinkProps = {
+	href: string;
+	children: React.ReactNode;
+	className?: string;
 };
 
-export const LinkButton = ({ href, onClick, children, className }: Props) => {
-  const classNameDefault = `bg-primary hover:bg-primary-dark inline-flex items-center text-white font-bold font-md rounded-md p-4 m-2 ${className}`;
-  const blank = href?.startsWith("http");
+type ButtonProps = {
+	onClick: () => void;
+	children: React.ReactNode;
+	className?: string;
+};
 
-  if (!href)
-    return (
-      <button
-        className={classNameDefault}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    );
+type Props = LinkProps | ButtonProps;
 
-  return (
-    <Link
-      href={href}
-      className={classNameDefault}
-      target={blank ? "_blank" : undefined}
-    >
-      {children}
-    </Link>
-  );
+export const LinkButton = ({ children, className, ...props }: Props) => {
+	const mergedClassName = `bg-primary hover:bg-primary-dark inline-flex items-center text-white font-bold font-md rounded-md p-4 m-2 ${className}`;
+
+	const { href, onClick } = props as LinkProps & ButtonProps;
+
+	if (!href) {
+		return (
+			<button className={mergedClassName} onClick={onClick}>
+				{children}
+			</button>
+		);
+	} else {
+		const blank = href?.startsWith("http");
+		return (
+			<Link href={href} className={mergedClassName} target={blank ? "_blank" : undefined}>
+				{children}
+			</Link>
+		);
+	}
 };

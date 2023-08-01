@@ -1,4 +1,4 @@
-import { BlockListForm } from "@/components/BlockListForm";
+import { BlockListFormContainer } from "@/components/BlockListFormContainer";
 import { WallList } from "@/components/WallList";
 import { fetchEvent } from "@/services/eventService";
 import { fetchEventIds } from "@/services/slugService";
@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { eventId: string } }) => {
 	return (
 		<div className="max-w-md m-auto">
 			<WallList eventId={eventId} />
-			<BlockListForm eventId={eventId} />
+			<BlockListFormContainer eventId={eventId} />
 		</div>
 	);
 };
