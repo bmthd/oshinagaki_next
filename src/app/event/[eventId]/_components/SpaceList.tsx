@@ -1,6 +1,5 @@
-import { DotHeading, TextLink, TitleHeading, TwitterCard } from "@/components/common";
+import { DotHeading, Section, TextLink, TitleHeading, TwitterCard } from "@/components/common";
 import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
-import { Section } from "../../../../components/common/Section";
 
 /**
  * スペース情報を表示するコンポーネント

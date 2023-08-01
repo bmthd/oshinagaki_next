@@ -5,11 +5,11 @@ import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
 export const Provider = ({ children }: { children: ReactNode }) => {
-	return (
-		<>
-			<JotaiProvider>
-				<SessionProvider>{children}</SessionProvider>
-			</JotaiProvider>
-		</>
-	);
+  return (
+    <>
+      <JotaiProvider>
+        <SessionProvider>{children}</SessionProvider>
+      </JotaiProvider>
+    </>
+  );
 };

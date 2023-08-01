@@ -7,49 +7,49 @@ import { ErrorBoundary } from "react-error-boundary";
 import "./global.css";
 
 const font = BIZ_UDPGothic({
-	weight: "400",
-	style: "normal",
-	display: "swap",
-	preload: true,
-	fallback: ["sans-serif"],
-	adjustFontFallback: true,
-	subsets: ["latin"],
+  weight: "400",
+  style: "normal",
+  display: "swap",
+  preload: true,
+  fallback: ["sans-serif"],
+  adjustFontFallback: true,
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-	title: "コミケお品書きツイートまとめサイト",
-	description:
-		"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-	keywords: "コミックマーケット, お品書き, 新刊情報, サークル情報",
-	openGraph: {
-		url: "https://oshinagaki.bmth.dev",
-		title: "コミケお品書きツイートまとめサイト",
-		description:
-			"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-		images: [],
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: "コミケお品書きツイートまとめサイト",
-		description:
-			"コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
-	},
+  title: "コミケお品書きツイートまとめサイト",
+  description:
+    "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+  keywords: "コミックマーケット, お品書き, 新刊情報, サークル情報",
+  openGraph: {
+    url: "https://oshinagaki.bmth.dev",
+    title: "コミケお品書きツイートまとめサイト",
+    description:
+      "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+    images: [],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "コミケお品書きツイートまとめサイト",
+    description:
+      "コミックマーケットのお品書きツイートをまとめて掲載しています。新刊情報やサークル情報を一覧で確認できます。",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-	return (
-		<Provider>
-			<html lang="ja" className={font.className}>
-				<body>
-					<Header />
-					<ErrorBoundary fallback={<div>存在しないページです。</div>}>
-						<Suspense fallback={<div>loading...</div>}>
-							<div className="lg:w-main max-lg:w-auto lg:mx-auto max-lg:m-4">{children}</div>
-						</Suspense>
-					</ErrorBoundary>
-					<Footer />
-				</body>
-			</html>
-		</Provider>
-	);
+  return (
+    <Provider>
+      <html lang="ja" className={font.className}>
+        <body>
+          <Header />
+          <ErrorBoundary fallback={<div>存在しないページです。</div>}>
+            <Suspense fallback={<div>loading...</div>}>
+              <div className="lg:w-main max-lg:w-auto lg:mx-auto max-lg:m-4">{children}</div>
+            </Suspense>
+          </ErrorBoundary>
+          <Footer />
+        </body>
+      </html>
+    </Provider>
+  );
 }

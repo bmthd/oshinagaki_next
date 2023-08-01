@@ -1,14 +1,14 @@
 "use client";
 
-import { H2, LinkButton } from "@/components/common";
-import { FaTwitter } from "react-icons/fa";
+import { LinkButton, TitleHeading } from "@/components/common";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { FaTwitter } from "react-icons/fa";
 
 const Page = () => {
   const { data: session } = useSession();
   return (
     <>
-      <H2>フォロワーのお品書き取得ツール</H2>
+      <TitleHeading>フォロワーのお品書き取得ツール</TitleHeading>
       <div className="text-left">
         <p>
           あなたのTwitterでフォローしているサークル、またはフォローされているサークルのお品書きを自動でまとめます。

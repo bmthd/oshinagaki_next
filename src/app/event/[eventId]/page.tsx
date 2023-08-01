@@ -4,10 +4,10 @@ import { fetchEvent } from "@/services/eventService";
 import { fetchEventIds } from "@/services/slugService";
 
 export const generateStaticParams = async () => {
-	const eventIds = await fetchEventIds();
-	return eventIds.map((eventId) => ({
-		eventId: eventId,
-	}));
+  const eventIds = await fetchEventIds();
+  return eventIds.map((eventId) => ({
+    eventId: eventId,
+  }));
 };
 
 /**
@@ -17,14 +17,14 @@ export const generateStaticParams = async () => {
  * @returns
  */
 const page = async ({ params }: { params: { eventId: string } }) => {
-	const event = await fetchEvent(params.eventId);
-	const eventId = event.id;
+  const event = await fetchEvent(params.eventId);
+  const eventId = event.id;
 
-	return (
-		<div className="max-w-md m-auto">
-			<WallList eventId={eventId} />
-			<BlockListFormContainer eventId={eventId} />
-		</div>
-	);
+  return (
+    <div className="max-w-md m-auto">
+      <WallList eventId={eventId} />
+      <BlockListFormContainer eventId={eventId} />
+    </div>
+  );
 };
 export default page;

@@ -4,15 +4,15 @@ import { fetchDayCounts } from "@/services/slugService";
 export const dynamic = "force-dynamic";
 
 export const generateStaticParams = async ({
-	params: { eventId },
+  params: { eventId },
 }: {
-	params: { eventId: string };
+  params: { eventId: string };
 }) => {
-	const dayCounts = await fetchDayCounts(eventId);
-	return dayCounts.map((dayCount) => ({
-		eventId: eventId,
-		dayCount: dayCount.toString(),
-	}));
+  const dayCounts = await fetchDayCounts(eventId);
+  return dayCounts.map((dayCount) => ({
+    eventId: eventId,
+    dayCount: dayCount.toString(),
+  }));
 };
 
 /**
@@ -23,14 +23,14 @@ export const generateStaticParams = async ({
  * @returns
  */
 const Page = async ({ params }: { params: { eventId: string; dayCount: string } }) => {
-	const dayCount = parseInt(params.dayCount);
-	const event = await fetchEvent(params.eventId);
-	const day = await fetchDay(params.eventId, dayCount);
-	return (
-		<>
-			<span>{event?.eventName}</span>
-			<span>{day?.dayCount}日目</span>
-		</>
-	);
+  const dayCount = parseInt(params.dayCount);
+  const event = await fetchEvent(params.eventId);
+  const day = await fetchDay(params.eventId, dayCount);
+  return (
+    <>
+      <span>{event?.eventName}</span>
+      <span>{day?.dayCount}日目</span>
+    </>
+  );
 };
 export default Page;

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { FaTwitter, FaFacebook, FaLine, FaClipboard } from "react-icons/fa";
@@ -16,12 +16,8 @@ export const ShareButtons = () => {
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     title
   )}&url=${encodeURIComponent(url)}`;
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    url
-  )}`;
-  const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
-    url
-  )}`;
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(title + " " + url);

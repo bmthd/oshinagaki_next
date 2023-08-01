@@ -15,8 +15,7 @@ const getRedirectUrl = () => {
   const params = {
     response_type: "code",
     client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
-    redirect_uri:
-      "https://oshinagaki-front.vercel.app/api/auth/callback/twitter",
+    redirect_uri: "https://oshinagaki-front.vercel.app/api/auth/callback/twitter",
     scope: "offline.access%20users.read%20follows.read",
     state: "state",
     code_challenge: "challenge",
@@ -24,10 +23,7 @@ const getRedirectUrl = () => {
   };
 
   const queryString = Object.entries(params)
-    .map(
-      ([key, value]) =>
-        `${key}=${value}`
-    )
+    .map(([key, value]) => `${key}=${value}`)
     .join("&");
 
   const redirectUrl = `${auth_url}?${queryString}`;
