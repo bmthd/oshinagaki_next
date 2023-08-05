@@ -2,18 +2,18 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 type Props = {
-  href?: string;
-  onClick?: () => void;
   children: ReactNode;
   className?: string;
 };
 
 type LinkProps = Props & {
   href: string;
+  onClick?: never;
 };
 
 type ButtonProps = Props & {
   onClick: () => void;
+  href?: never;
 };
 
 export const LinkButton = ({ children, className, href, onClick }: LinkProps | ButtonProps) => {

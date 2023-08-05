@@ -232,10 +232,12 @@ export const BlockListForm = ({ event, days }: Props) => {
           ))}
         </SelectBox>
       </form>
-      <LinkButton href={generateUrl(eventId, selectedDayCount, selectedBlock)}>
-        選択したブロックに移動
-      </LinkButton>
-      <LinkButton href={`/event/${event.id}/block_list`}>{event.id} ブロック一覧</LinkButton>
+      <div className="flex items-center justify-center">
+        <LinkButton href={generateUrl(eventId, selectedDayCount, selectedBlock)}>
+          選択したブロックに移動
+        </LinkButton>
+        <LinkButton href={`/event/${event.id}/block_list`}>{event.id} ブロック一覧</LinkButton>
+      </div>
     </div>
   );
 };

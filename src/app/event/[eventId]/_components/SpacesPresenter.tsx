@@ -13,8 +13,7 @@ export const SpacesPresenter = ({
   totalPage: number;
 }) => {
   const lastTweetDate = spaces
-    .flatMap((space) => space.tweets)
-    .map((tweet) => tweet.createdAt)
+    .flatMap((space) => space.tweet?.createdAt)
     .reduce((latest, current) => (current! > latest! ? current : latest), null);
   const lastUpdate = lastTweetDate?.toLocaleString("ja-JP") || "データなし";
   return (

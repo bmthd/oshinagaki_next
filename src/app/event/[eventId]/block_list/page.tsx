@@ -25,7 +25,8 @@ const page = async ({ params }: { params: { eventId: string } }) => {
                 {blocks.map((block) => {
                   return (
                     <li key={block.id} className="col-span-1 justify-content-center">
-                      <LinkButton href={`/event/${eventId}/day/${day.dayCount}/block/${block.id}`}>
+                      <LinkButton
+                        href={`/event/${eventId}/day/${day.dayCount}/block/${block.name}`}>
                         {`${eventId} ${day.dayCount}日目ブロック"${block.name}"お品書きまとめ`}
                       </LinkButton>
                     </li>

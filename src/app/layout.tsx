@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <Provider>
-      <html lang="ja" className={font.className}>
+      <html lang="ja" className={`bg-gray-100 text-blue-900 ${font.className}`}>
         <body>
           <Header />
           <ErrorBoundary fallback={<div>存在しないページです。</div>}>
