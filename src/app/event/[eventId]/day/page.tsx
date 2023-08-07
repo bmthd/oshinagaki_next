@@ -7,9 +7,10 @@ export const gennerateStaticParams = async ({
   params: { eventId: string };
 }) => {
   const days = await fetchDays(eventId);
-  return days.map((day) => {
-    return { eventId: eventId, dayCount: day.dayCount };
-  });
+  return days.map((day) => ({
+    eventId: eventId,
+    dayCount: day.dayCount.toString(),
+  }));
 };
 
 /**
