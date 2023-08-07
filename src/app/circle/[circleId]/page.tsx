@@ -3,6 +3,10 @@ import { convertToNumber } from "@/lib/util";
 import { fetchCircle, fetchSpacesByCircle } from "@/services/eventService";
 import { Suspense } from "react";
 
+export const generateStaticParams = async () => {
+    const circleCount = await fetchCircleCount();
+
+
 const Page = async ({ params }: { params: { circleId: string } }) => {
   const circleId = convertToNumber(params.circleId);
   if (!circleId) throw new Error("circleId is not number");
