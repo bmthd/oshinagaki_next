@@ -21,7 +21,7 @@ export const fetchDayCounts = cache(async (eventId: string) => {
       },
     },
   });
-  return days.map((day) => day.dayCount);
+  return days.map((day) => day.dayCount.toString());
 });
 
 export const fetchBlockNames = cache(async (eventId: string) => {
@@ -63,5 +63,5 @@ export const fetchCircleIds = cache(async () => {
       id: true,
     },
   });
-  return circles.map((circle) => circle.id);
+  return circles.map((circle) => circle.id.toString());
 });
