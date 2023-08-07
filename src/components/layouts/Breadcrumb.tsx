@@ -2,6 +2,7 @@
 
 import { TextLink } from "@/components/common";
 import { useSelectedLayoutSegments } from "next/navigation";
+import React from "react";
 import { FaAngleRight } from "react-icons/fa";
 
 /**
@@ -13,11 +14,14 @@ import { FaAngleRight } from "react-icons/fa";
  */
 export const Breadcrumb = () => {
   const segments = useSelectedLayoutSegments();
+
   const segmentsWithUrl = segments.map((segment, index) => {
     const url = segments.slice(0, index + 1).join("/");
     return { segment: segment, url: url };
   });
+
   const excludeSegments = ["event", "day", "block", "space", "circle", "wall"];
+
   const filteredSegments = segmentsWithUrl.filter(
     (segment) => !excludeSegments.includes(segment.segment)
   );
@@ -30,12 +34,12 @@ export const Breadcrumb = () => {
         </li>
         {filteredSegments.map((segment, index) => {
           return (
-            <>
+            <React.Fragment key={index}>
               <FaAngleRight className="text-gray-500 mx-4" size={20} />
-              <li key={index}>
+              <li>
                 <TextLink href={`/${segment.url}`}>{decodeURIComponent(segment.segment)}</TextLink>
               </li>
-            </>
+            </React.Fragment>
           );
         })}
       </ol>
