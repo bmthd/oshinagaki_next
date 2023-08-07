@@ -5,10 +5,6 @@ import { fetchEvent } from "@/services/eventService";
 import { Suspense } from "react";
 import { SpacesContainer } from "../_components";
 
-export const dynamic = "auto";
-
-export const dynamicParams = true;
-
 export const revalidate = 86400;
 
 export const generateStaticParams = async ({

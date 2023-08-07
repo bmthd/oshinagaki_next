@@ -40,7 +40,7 @@ const Home = async () => {
       <PaddingedText texts={description} />
       <div className="max-w-md m-auto">
         <LinkButton href={`/event/${eventId}/lanking`}>{eventId} 話題のサークル</LinkButton>
-        <LinkButton href="/recent">{eventId} 最新のお品書き</LinkButton>
+        <LinkButton href={`/event/${eventId}/recent`}>{eventId} 最新のお品書き</LinkButton>
         <TwitterWebAppLink />
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />

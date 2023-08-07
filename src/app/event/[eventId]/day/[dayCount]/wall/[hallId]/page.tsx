@@ -54,9 +54,9 @@ const Page = async ({
   params: { eventId: string; dayCount: string; hallId: string };
   searchParams?: { page?: string; size?: string };
 }) => {
+  const [eventId, dayCount, hallId] = [params.eventId, parseInt(params.dayCount), params.hallId];
   const page = convertToNumber(searchParams!.page!) || 1;
   const size = convertToNumber(searchParams!.size!) || 38;
-  const [eventId, dayCount, hallId] = [params.eventId, parseInt(params.dayCount), params.hallId];
   const hall = await fetchHall(hallId);
   const suspenseKey = `${eventId}-${dayCount}-${hallId}-${page}-${size}`;
   const pageTitle = `${eventId} ${dayCount}日目${hall?.name}ホール壁サークルお品書きまとめ`;

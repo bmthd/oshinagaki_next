@@ -54,7 +54,7 @@ const Page = async ({
   searchParams,
 }: {
   params: { eventId: string; dayCount: string; blockName: string };
-  searchParams?: { page?: "string"; size?: string };
+  searchParams?: { page?: string; size?: string };
 }) => {
   const [eventId, dayCount, blockName] = [
     params.eventId,
@@ -64,7 +64,6 @@ const Page = async ({
   const page = convertToNumber(searchParams!.page!) || 1;
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${dayCount}-${blockName}-${page}-${size}`;
-
   const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 
   return (
