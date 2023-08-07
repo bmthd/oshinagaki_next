@@ -45,6 +45,12 @@ export const generateStaticParams = async ({
   }));
 };
 
+/**
+ * /event/[eventId]/day/[dayCount]/wall/[hallId]
+ * ホールごとの壁サークルの一覧を表示するページ
+ * @param param0
+ * @returns
+ */
 const Page = async ({
   params,
   searchParams,

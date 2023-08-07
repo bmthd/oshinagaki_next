@@ -1,13 +1,8 @@
 import { BlockListFormContainer, WallList } from "@/components";
 import { Section, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
-import { fetchEvent } from "@/services/eventService";
 import { Suspense } from "react";
 import { SpacesContainer } from "../_components";
-
-export const dynamic = "auto";
-
-export const dynamicParams = true;
 
 export const revalidate = 86400;
 
@@ -31,8 +26,7 @@ const page = async ({
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${page}-${size}`;
 
-  const event = await fetchEvent(eventId);
-  const pageTitle = `${eventId} 話題のサークルランキング`;
+  const pageTitle = `${eventId} 最近更新されたサークル`;
 
   return (
     <Section className="m-2">

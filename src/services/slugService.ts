@@ -1,30 +1,34 @@
+import { cache } from "@/lib/nextCache";
 import prisma from "@/lib/prisma";
 
-export const fetchEventIds = async () => {
+export const fetchEventIds = cache(async () => {
   const events = await prisma.event.findMany({
     select: {
       id: true,
     },
   });
   return events.map((event) => event.id);
-};
+});
 
-export const fetchDayCounts = async (eventId: string) => {
+export const fetchDayCounts = cache(async (eventId: string) => {
   const days = await prisma.day.findMany({
+    select: {
+      dayCount: true,
+    },
     where: {
       event: {
         id: eventId,
       },
     },
-    select: {
-      dayCount: true,
-    },
   });
   return days.map((day) => day.dayCount);
-};
+});
 
-export const fetchBlockNames = async (eventId: string) => {
+export const fetchBlockNames = cache(async (eventId: string) => {
   const blocks = await prisma.block.findMany({
+    select: {
+      name: true,
+    },
     where: {
       event: {
         id: eventId,
@@ -32,10 +36,13 @@ export const fetchBlockNames = async (eventId: string) => {
     },
   });
   return blocks.map((block) => block.name);
-};
+});
 
-export const fetchHallIds = async (eventId: string) => {
+export const fetchHallIds = cache(async (eventId: string) => {
   const halls = await prisma.hall.findMany({
+    select: {
+      id: true,
+    },
     where: {
       blocks: {
         some: {
@@ -46,9 +53,15 @@ export const fetchHallIds = async (eventId: string) => {
       },
       use: true,
     },
+  });
+  return halls.map((hall) => hall.id);
+});
+
+export const fetchCircleIds = cache(async () => {
+  const circles = await prisma.circle.findMany({
     select: {
       id: true,
     },
   });
-  return halls.map((hall) => hall.id);
-};
+  return circles.map((circle) => circle.id);
+});

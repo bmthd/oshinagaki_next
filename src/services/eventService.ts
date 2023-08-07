@@ -1,6 +1,5 @@
+import { cache } from "@/lib/nextCache";
 import prisma, { Prisma } from "@/lib/prisma";
-import { unstable_cache } from "next/cache";
-import React from "react";
 import "server-only";
 
 export const fetchEvent = cache(async (id: string) => {
@@ -365,16 +364,3 @@ export const fetchSpaceCountByEvent = cache(async (eventId: string) => {
 
 export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpacesByBlock>;
 export type SpaceQueryResult = SpacesQueryResult[number];
-
-export function cache<T extends (...args: any[]) => any>(
-  fn: T,
-  options?: {
-    revalidate?: number | false;
-    tags?: string[];
-  }
-): T {
-  return ((...args: Parameters<T>) => {
-    const cacheKey = JSON.stringify(fn) + JSON.stringify(args);
-    return React.cache(unstable_cache(fn, [cacheKey], options))(...args);
-  }) as T;
-}

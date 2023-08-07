@@ -1,8 +1,6 @@
 import { fetchDay, fetchEvent } from "@/services/eventService";
 import { fetchDayCounts } from "@/services/slugService";
 
-export const dynamic = "force-dynamic";
-
 export const generateStaticParams = async ({
   params: { eventId },
 }: {

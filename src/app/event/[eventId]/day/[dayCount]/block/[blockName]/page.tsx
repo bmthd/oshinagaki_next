@@ -9,11 +9,20 @@ import { fetchBlockNames } from "@/services/slugService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-export const dynamic = "auto";
-
-export const dynamicParams = true;
-
 export const revalidate = 86400;
+
+export const generateStaticParams = async ({
+  params: { eventId, dayCount },
+}: {
+  params: { eventId: string; dayCount: string };
+}) => {
+  const blockNames = await fetchBlockNames(eventId);
+  return blockNames.map((blockName) => ({
+    eventId: eventId,
+    dayCount: dayCount,
+    blockName: blockName,
+  }));
+};
 
 export const generateMetadata = async ({
   params,
@@ -32,19 +41,6 @@ export const generateMetadata = async ({
     title: pageTitle,
     description: description,
   };
-};
-
-export const generateStaticParams = async ({
-  params: { eventId, dayCount },
-}: {
-  params: { eventId: string; dayCount: string };
-}) => {
-  const blockNames = await fetchBlockNames(eventId);
-  return blockNames.map((blockName) => ({
-    eventId: eventId,
-    dayCount: dayCount,
-    blockName: blockName,
-  }));
 };
 
 /**
