@@ -1,11 +1,11 @@
 "use client";
 
 import { HeadingLevelContext, useLevel } from "@/app/hooks/context";
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 
-interface Props extends ComponentPropsWithoutRef<"section"> {
+type Props = ComponentProps<"section"> & {
   children: ReactNode;
-}
+};
 
 export const Section = ({ children, ...props }: Props) => {
   const level = useLevel();

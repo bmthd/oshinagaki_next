@@ -59,6 +59,7 @@ model Event {
   venue  Venue?  @relation(fields: [venueId], references: [id])
 
   @@map("event")
+  @@index([id])
   @@index([venueId])
 }
 
@@ -106,7 +107,7 @@ model Tweet {
   favs       Int
   retweets   Int
   error      Boolean
-  spaceView SpaceView?
+  spaceView SpaceView? 
 
   @@map("tweet")
   @@index([spaceId])

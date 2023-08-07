@@ -1,5 +1,5 @@
-declare global {
-	interface Window {
-		twttr: any;
-	}
+export declare global {
+  interface Window {
+    twttr: any;
+  }
 }

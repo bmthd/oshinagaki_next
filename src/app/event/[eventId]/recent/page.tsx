@@ -1,5 +1,5 @@
 import { BlockListFormContainer, WallList } from "@/components";
-import { PaddingedText, Section, TitleHeading } from "@/components/common";
+import { Section, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent } from "@/services/eventService";
 import { Suspense } from "react";
@@ -33,17 +33,12 @@ const page = async ({
 
   const event = await fetchEvent(eventId);
   const pageTitle = `${eventId} 話題のサークルランキング`;
-  const description = [
-    "このページではTwitter上で話題のサークルをまとめています。",
-    "リツイート数の多い順に表示しています。",
-  ];
 
   return (
     <Section className="m-2">
       <TitleHeading>{pageTitle}</TitleHeading>
-      <PaddingedText texts={description} />
       <Suspense key={suspenseKey} fallback={<div>loading...</div>}>
-        <SpacesContainer eventId={eventId} page={page} size={size} type="lanking" />
+        <SpacesContainer eventId={eventId} page={page} size={size} type="recent" />
       </Suspense>
       <div className="max-w-md mx-auto">
         <WallList eventId={eventId} />

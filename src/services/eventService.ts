@@ -1,8 +1,7 @@
 import prisma, { Prisma } from "@/lib/prisma";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
+import React from "react";
 import "server-only";
-
-export const revalidate = 86400;
 
 export const fetchEvent = cache(async (id: string) => {
   const event = await prisma.event.findUniqueOrThrow({
@@ -106,6 +105,15 @@ export const fetchBlocks = cache(async (eventId: string) => {
   return blocks;
 });
 
+export const fetchCircle = cache(async (circleId: number) => {
+  const circle = await prisma.circle.findUniqueOrThrow({
+    where: {
+      id: circleId,
+    },
+  });
+  return circle;
+});
+
 export const fetchSpaceCount = cache(async (eventId: string) => {
   const count = await prisma.spaceView.count({
     where: {
@@ -184,7 +192,6 @@ export const fetchSpacesByHall = cache(
       skip: (pageNumber - 1) * pageSize,
       take: pageSize,
     });
-    console.log(spaces);
     return spaces;
   }
 );
@@ -244,6 +251,40 @@ export const fetchSpacesByLanking = cache(
   }
 );
 
+export const fetchSpacesByUpdate = cache(
+  async (eventId: string, pageNumber: number, pageSize: number) => {
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        day: {
+          event: {
+            id: eventId,
+          },
+        },
+      },
+      include: {
+        block: {
+          include: {
+            hall: true,
+          },
+        },
+        circle: true,
+        day: true,
+        tweet: true,
+      },
+      orderBy: [
+        {
+          tweet: {
+            createdAt: "desc",
+          },
+        },
+      ],
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return spaces;
+  }
+);
+
 export const fetchSpacesByCircle = cache(async (circleId: number) => {
   const spaces = await prisma.spaceView.findMany({
     where: {
@@ -252,9 +293,11 @@ export const fetchSpacesByCircle = cache(async (circleId: number) => {
     include: {
       block: {
         include: {
+          event: true,
           hall: true,
         },
       },
+
       circle: true,
       day: true,
       tweet: true,
@@ -322,3 +365,16 @@ export const fetchSpaceCountByEvent = cache(async (eventId: string) => {
 
 export type SpacesQueryResult = Prisma.PromiseReturnType<typeof fetchSpacesByBlock>;
 export type SpaceQueryResult = SpacesQueryResult[number];
+
+export function cache<T extends (...args: any[]) => any>(
+  fn: T,
+  options?: {
+    revalidate?: number | false;
+    tags?: string[];
+  }
+): T {
+  return ((...args: Parameters<T>) => {
+    const cacheKey = JSON.stringify(fn) + JSON.stringify(args);
+    return React.cache(unstable_cache(fn, [cacheKey], options))(...args);
+  }) as T;
+}

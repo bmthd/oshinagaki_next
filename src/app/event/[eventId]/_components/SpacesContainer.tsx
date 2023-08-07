@@ -6,29 +6,45 @@ import {
   fetchSpacesByBlock,
   fetchSpacesByHall,
   fetchSpacesByLanking,
+  fetchSpacesByUpdate,
 } from "@/services/eventService";
 
-type Props = {
+type Common = {
   eventId: string;
   page: number;
   size: number;
-  dayCount?: number;
-  blockName?: string;
-  hallId?: string;
 };
 
-type PropsWithBlock = Props & {
+type LankingProps = Common & {
+  dayCount?: never;
+  blockName?: never;
+  hallId?: never;
+  type: "lanking";
+};
+
+type RecentProps = Common & {
+  dayCount?: never;
+  blockName?: never;
+  hallId?: never;
+  type: "recent";
+};
+
+type PropsWithBlock = Common & {
   blockName: string;
   dayCount: number;
+  hallId?: never;
+  type?: never;
 };
 
-type PropsWithHall = Props & {
+type PropsWithHall = Common & {
   hallId: string;
   dayCount: number;
+  blockName?: never;
+  type?: never;
 };
 
 /**
- * blockNameまたはhallIdで指定されたサークル一覧を表示するコンポーネント
+ * blockNameまたはhallIdで指定されたスペース一覧を表示するコンポーネント
  * @param
  * @returns
  */
@@ -39,7 +55,8 @@ export const SpacesContainer = async ({
   hallId,
   page,
   size,
-}: PropsWithBlock | PropsWithHall | Props) => {
+  type,
+}: PropsWithBlock | PropsWithHall | LankingProps | RecentProps) => {
   if (blockName && dayCount) {
     const [count, spaces] = await Promise.all([
       fetchSpaceCountByBlock(eventId, dayCount, blockName),
@@ -54,10 +71,17 @@ export const SpacesContainer = async ({
     ]);
     const totalPage = Math.ceil(count / size);
     return <SpacesPresenter spaces={spaces} page={page} totalPage={totalPage} />;
-  } else {
+  } else if (type === "lanking") {
     const [count, spaces] = await Promise.all([
       fetchSpaceCountByEvent(eventId),
       fetchSpacesByLanking(eventId, page, size),
+    ]);
+    const totalPage = Math.ceil(count / size);
+    return <SpacesPresenter spaces={spaces} page={page} totalPage={totalPage} />;
+  } else if (type === "recent") {
+    const [count, spaces] = await Promise.all([
+      fetchSpaceCountByEvent(eventId),
+      fetchSpacesByUpdate(eventId, page, size),
     ]);
     const totalPage = Math.ceil(count / size);
     return <SpacesPresenter spaces={spaces} page={page} totalPage={totalPage} />;

@@ -1,3 +1,4 @@
+import { Section } from "@/components/common";
 import { Provider } from "@/components/common/Provider";
 import { Footer, Header } from "@/components/layouts";
 import { Metadata } from "next";
@@ -44,7 +45,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Header />
           <ErrorBoundary fallback={<div>存在しないページです。</div>}>
             <Suspense fallback={<div>loading...</div>}>
-              <div className="lg:w-main max-lg:w-auto lg:mx-auto max-lg:m-4">{children}</div>
+              <Section className="lg:w-main max-lg:w-auto lg:mx-auto max-lg:m-4">
+                {children}
+              </Section>
             </Suspense>
           </ErrorBoundary>
           <Footer />
