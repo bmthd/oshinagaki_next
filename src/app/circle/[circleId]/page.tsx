@@ -1,13 +1,13 @@
 import { DotHeading, Section, TextLink, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { fetchCircle, fetchSpacesByCircle } from "@/services/eventService";
-import { fetchCircleIds } from "@/services/slugService";
 import { Suspense } from "react";
 
-export const generateStaticParams = async () => {
-  const circleIds = await fetchCircleIds();
-  return circleIds.map((circleId) => ({ circleId: circleId }));
-};
+// ビルド時にサークルの数だけSQLが発行されるので、一旦コメントアウト
+// export const generateStaticParams = async () => {
+//   const circleIds = await fetchCircleIds();
+//   return circleIds.map((circleId) => ({ circleId: circleId }));
+// };
 
 const Page = async ({ params }: { params: { circleId: string } }) => {
   const circleId = convertToNumber(params.circleId);
