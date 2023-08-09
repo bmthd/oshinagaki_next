@@ -368,6 +368,11 @@ export const fetchSpaceCountByEvent = cache(async (eventId: string) => {
           id: eventId,
         },
       },
+      tweet: {
+        createdAt: {
+          not: null,
+        },
+      },
     },
   });
   return count;
