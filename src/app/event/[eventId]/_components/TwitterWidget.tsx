@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Script from "next/script";
 import { useEffect } from "react";
 
 export const TwitterWidgets = () => {
@@ -20,7 +19,7 @@ export const TwitterWidgets = () => {
       window.twttr?.widgets.load();
       document.head.removeChild(script);
     };
-  }, []);
+  }, [searchParams]);
 
-  return <Script src="https://platform.twitter.com/widgets.js" />;
+  return null;
 };

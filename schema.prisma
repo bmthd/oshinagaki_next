@@ -108,7 +108,7 @@ model Space {
   blockId       Int?    @map("block_id")
   circleId      Int?    @map("circle_id")
   dayId         Int?    @map("day_id")
-  tweetId       Int?    @unique @map("tweet_id")
+  tweetId       Int?    @map("tweet_id")
   block         Block?  @relation(fields: [blockId], references: [id])
   circle        Circle? @relation(fields: [circleId], references: [id])
   day           Day?    @relation(fields: [dayId], references: [id])
@@ -123,7 +123,7 @@ model Space {
 
 model Tweet {
   id         Int        @id @default(autoincrement())
-  text       String?
+  text       String?  @DATABASE_URL.VarChar(400)
   spaceId    Int?       @map("space_id")
   url        String?
   authorName String?    @map("author_name")
@@ -131,7 +131,7 @@ model Tweet {
   createdAt  DateTime?  @map("created_at")
   favs       Int
   retweets   Int
-  error      Boolean
+  error      Boolean @default(false)
   spaces     Space[]
   spaceView  SpaceView?
 
