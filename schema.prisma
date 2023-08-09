@@ -11,8 +11,8 @@ datasource DATABASE_URL {
 
 model Block {
   id         Int         @id @default(autoincrement())
-  name       String?
-  eventId    String?     @map("event_id")
+  name       String
+  eventId    String      @map("event_id")
   hallId     String      @map("hall_id")
   isWall     Boolean     @map("is_wall")
   event      Event?      @relation(fields: [eventId], references: [id])
@@ -41,8 +41,8 @@ model Circle {
 model Day {
   id         Int         @id @default(autoincrement())
   dayCount   Int         @map("day_count")
-  eventId    String?     @map("event_id")
-  event      Event?      @relation(fields: [eventId], references: [id])
+  eventId    String      @map("event_id")
+  event      Event       @relation(fields: [eventId], references: [id])
   spaceViews SpaceView[]
   spaces     Space[]
 
@@ -52,7 +52,7 @@ model Day {
 
 model Event {
   id        String    @id
-  eventName String?   @map("event_name")
+  eventName String    @map("event_name")
   venueId   Int?      @map("venue_id")
   lastDate  DateTime? @map("last_date")
   startDate DateTime? @map("start_date")
