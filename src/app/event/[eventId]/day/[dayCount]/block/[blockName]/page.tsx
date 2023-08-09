@@ -9,6 +9,8 @@ import { fetchBlockNames } from "@/services/slugService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export const revalidate = 86400;
 
 export const generateStaticParams = async ({

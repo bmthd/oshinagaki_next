@@ -4,6 +4,8 @@ import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
 import { SpacesContainer } from "../_components";
 
+export const dynamic = "force-dynamic";
+
 export const revalidate = 86400;
 
 export const generateStaticParams = async ({
