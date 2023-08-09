@@ -301,7 +301,13 @@ export const fetchSpacesByCircle = cache(async (circleId: number) => {
       day: true,
       tweet: true,
     },
-    orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
+    orderBy: {
+      block: {
+        event: {
+          startDate: "desc",
+        },
+      },
+    },
   });
   return spaces;
 });

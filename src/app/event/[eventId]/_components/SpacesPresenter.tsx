@@ -3,6 +3,11 @@ import { SpacesQueryResult } from "@/services/eventService";
 import { SpaceList } from "./SpaceList";
 import { SpaceListHeader } from "./SpaceListHeader";
 
+/**
+ * 複数のスペースを表示するべきページを構成するコンポーネント
+ * @param param0
+ * @returns
+ */
 export const SpacesPresenter = ({
   spaces,
   page,

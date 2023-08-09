@@ -44,7 +44,8 @@ type PropsWithHall = Common & {
 };
 
 /**
- * blockNameまたはhallIdで指定されたスペース一覧を表示するコンポーネント
+ * blockNameまたはhallId、もしくはランキングまたは直近の条件を受け取る。<p>
+ * 指定されたスペース一覧を取得し、表示するコンポーネント
  * @param
  * @returns
  */

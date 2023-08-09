@@ -1,7 +1,8 @@
 import { DotHeading, Section, TextLink, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
-import { fetchCircle, fetchSpacesByCircle } from "@/services/eventService";
+import { fetchCircle } from "@/services/eventService";
 import { Suspense } from "react";
+import { CircleSpaceList } from "./_components";
 
 // ビルド時にサークルの数だけSQLが発行されるので、一旦コメントアウト
 // export const generateStaticParams = async () => {
@@ -9,11 +10,17 @@ import { Suspense } from "react";
 //   return circleIds.map((circleId) => ({ circleId: circleId }));
 // };
 
+export const dynamic = "force-dynamic";
+
+/**
+ * サークルごとの過去の参加履歴を表示するページ
+ * @param param0
+ * @returns
+ */
 const Page = async ({ params }: { params: { circleId: string } }) => {
   const circleId = convertToNumber(params.circleId);
   if (!circleId) throw new Error("circleId is not number");
   const circle = await fetchCircle(circleId);
-  const spaces = await fetchSpacesByCircle(circleId);
   const pageTitle = `${circle?.name}のお品書きまとめ`;
 
   const circleName = circle?.name ? (
@@ -56,7 +63,9 @@ const Page = async ({ params }: { params: { circleId: string } }) => {
               {hpUrl}
             </div>
           )}
-          <Suspense fallback={<div>Loading...</div>}></Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <CircleSpaceList circleId={circleId} />
+          </Suspense>
         </Section>
       </div>
     </>
