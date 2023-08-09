@@ -17,16 +17,18 @@ export const WallList = async ({ eventId }: { eventId: string }) => {
       <TitleHeading>壁サークル一覧</TitleHeading>
       {/* <!-- 		壁サークルとは？ --> */}
 
-      <div className="flex justify-around">
+      <div className="grid grid-cols-2 gap-4">
         {days.map((day) => {
           return (
-            <div key={day.id} className="col-6 text-center">
-              <span>{day.dayCount}日目</span>
+            <div key={day.id} className="text-center">
+              <p className="p-2 font-bold text-xl">{day.dayCount}日目</p>
               <ul>
                 {halls.map((hall) => {
                   return (
-                    <li key={hall.id} className="d-flex justify-content-center">
-                      <LinkButton href={`/event/${event!.id}/day/${day.dayCount}/wall/${hall.id}`}>
+                    <li key={hall.id}>
+                      <LinkButton
+                        className="w-full mb-4"
+                        href={`/event/${event!.id}/day/${day.dayCount}/wall/${hall.id}`}>
                         {hall.name}ホール
                       </LinkButton>
                     </li>

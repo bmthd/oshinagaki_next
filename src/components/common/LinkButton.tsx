@@ -17,7 +17,7 @@ type ButtonProps = Props & {
 };
 
 export const LinkButton = ({ children, className, href, onClick }: LinkProps | ButtonProps) => {
-  const mergedClassName = `bg-primary hover:bg-primary-dark inline-flex items-center text-white font-bold font-md rounded-md p-4 m-2 ${className}`;
+  const mergedClassName = `bg-primary hover:bg-primary-dark inline-flex items-center justify-center text-white text-xl font-bold rounded-md p-4 ${className}`;
 
   if (!href) {
     return (

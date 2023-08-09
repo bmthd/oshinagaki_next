@@ -8,7 +8,7 @@ export const EventList = async () => {
       <TitleHeading>掲載イベント一覧</TitleHeading>
       <div className="flex flex-col items-center">
         {events.map((event) => (
-          <LinkButton href={`/event/${event.id}`} key={event.id}>
+          <LinkButton className="w-full m-2" href={`/event/${event.id}`} key={event.id}>
             {event.eventName}
           </LinkButton>
         ))}

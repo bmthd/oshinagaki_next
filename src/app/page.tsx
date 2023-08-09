@@ -19,10 +19,9 @@ const Home = async () => {
 
   const description = [
     `コミケ参加歴 ${year} 年の製作者が、使いやすいと思うサイトを実現しました。`,
-    "せっかく技術の粋を集めて作成したのにTwitterAPIの仕様変更のせいで一部機能が利用できなくなってしまいました。",
+    "TwitterAPIの仕様変更のせいで一部機能が利用できなくなってしまいました。",
     "約14000円支払っても月間1万ツイートしか取得できないため、絶望的です。",
-    "サークル参加のネタとしてNext.js App Routerでリプレースしたため課金せざるを得ませんでした。",
-    "なお、ツイートの取得は1度きりのため、データの取得は8月9日を予定しています。",
+    "モダンなWeb技術でリプレースしたため、せっかくなので課金してツイート収集を行います。",
     `最新イベント: ${event.eventName} 掲載数: ${circleCount}`,
   ];
 
@@ -38,10 +37,15 @@ const Home = async () => {
   return (
     <>
       <PaddingedText texts={description} />
-      <div className="max-w-md m-auto">
-        <LinkButton href={`/event/${eventId}/lanking`}>{eventId} 話題のサークル</LinkButton>
-        <LinkButton href={`/event/${eventId}/recent`}>{eventId} 最新のお品書き</LinkButton>
-        <TwitterWebAppLink />
+      <div className="flex flex-col max-w-md m-auto gap-4">
+        <div>
+          <LinkButton className="w-full my-2" href={`/event/${eventId}/lanking`}>
+            {eventId} 話題のサークル
+          </LinkButton>
+          <LinkButton className="w-full my-2" href={`/event/${eventId}/recent`}>
+            {eventId} 最新のお品書き
+          </LinkButton>
+        </div>
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />
         <EventList />

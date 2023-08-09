@@ -15,7 +15,12 @@ type Props = {
   days: Day[];
 };
 
-const useBlockListFormState = (event: Event, days: Day[]) => {
+/**
+ * イベントと日にち情報を受け取り、ブロック一覧フォームを表示するコンポーネント
+ * @param param0
+ * @returns
+ */
+export const BlockListForm = ({ event, days }: Props) => {
   const eventId = event.id;
   const [selectedDayCount, setSelectedDayCount] = useState("1");
   const [selectedDistrict, setSelectedDistrict] = useState(0);
@@ -36,37 +41,7 @@ const useBlockListFormState = (event: Event, days: Day[]) => {
     setSelectedBlock(block);
   };
 
-  return {
-    eventId,
-    selectedDayCount,
-    selectedDistrict,
-    selectedBlock,
-    days,
-    handleDistrictChange,
-    handleDayCountChange,
-    handleBlockChange,
-  };
-};
-
-const generateUrl = (eventId: string, dayCount: string, block: string) => {
-  return `/event/${eventId}/day/${dayCount}/block/${block}`;
-};
-
-/**
- * イベントと日にち情報を受け取り、ブロック一覧フォームを表示するコンポーネント
- * @param param0
- * @returns
- */
-export const BlockListForm = ({ event, days }: Props) => {
-  const {
-    eventId,
-    selectedDayCount,
-    selectedDistrict,
-    selectedBlock,
-    handleDistrictChange,
-    handleDayCountChange,
-    handleBlockChange,
-  } = useBlockListFormState(event, days);
+  const generatedUrl = `/event/${eventId}/day/${selectedDayCount}/block/${selectedBlock}`;
 
   const districts = [
     {
@@ -200,7 +175,9 @@ export const BlockListForm = ({ event, days }: Props) => {
   return (
     <div>
       <TitleHeading>ブロック一覧</TitleHeading>
-      <form onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}>
+      <form
+        className="flex flex-col gap-2"
+        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}>
         <label htmlFor="day" aria-label="日にち">
           日にち
         </label>
@@ -232,11 +209,13 @@ export const BlockListForm = ({ event, days }: Props) => {
           ))}
         </SelectBox>
       </form>
-      <div className="flex items-center justify-center">
-        <LinkButton href={generateUrl(eventId, selectedDayCount, selectedBlock)}>
+      <div className="flex flex-col items-center justify-center py-2">
+        <LinkButton className="w-full m-2" href={generatedUrl}>
           選択したブロックに移動
         </LinkButton>
-        <LinkButton href={`/event/${event.id}/block_list`}>{event.id} ブロック一覧</LinkButton>
+        <LinkButton className="w-full m-4" href={`/event/${event.id}/block_list`}>
+          {event.id} ブロック一覧
+        </LinkButton>
       </div>
     </div>
   );
