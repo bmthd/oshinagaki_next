@@ -1,6 +1,7 @@
 import { Section } from "@/components/common";
-import { Provider } from "@/components/common/Provider";
 import { Footer, Header } from "@/components/layouts";
+import { GoogleAnalytics } from "@/components/layouts/GoogleAnalytics";
+import { Provider } from "@/components/layouts/Provider";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <Provider>
       <html lang="ja" className={`bg-gray-100 text-blue-900 ${font.className}`}>
         <body>
+          <GoogleAnalytics />
           <Header />
           <ErrorBoundary fallback={<div>存在しないページです。</div>}>
             <Suspense fallback={<div>loading...</div>}>
