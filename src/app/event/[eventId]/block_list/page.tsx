@@ -17,23 +17,25 @@ const page = async ({ params }: { params: { eventId: string } }) => {
   return (
     <>
       <TitleHeading>{pageTitle}</TitleHeading>
-      <div className="border-dashed border-4 rounded-md border-blue-500 bg-blue-100">
-        {days.map((day) => {
+      <div className="border-dashed border-4 rounded-md border-blue-500 bg-blue-100 grid grid-cols-2">
+        {days.map((day, index) => {
           return (
-            <>
-              <ul className="grid grid-cols-2">
+            <div key={index} className="text-center">
+              <p className="p-2 font-bold text-xl">{day.dayCount}日目</p>
+              <ul className="flex flex-col gap-4 m-4">
                 {blocks.map((block) => {
                   return (
-                    <li key={block.id} className="col-span-1 justify-content-center">
+                    <li key={block.id} className="col-span-1 flex justify-center items-center">
                       <LinkButton
+                        className="w-full"
                         href={`/event/${eventId}/day/${day.dayCount}/block/${block.name}`}>
-                        {`${eventId} ${day.dayCount}日目ブロック"${block.name}"お品書きまとめ`}
+                        {`${day.dayCount}日目"${block.name}"ブロック`}
                       </LinkButton>
                     </li>
                   );
                 })}
               </ul>
-            </>
+            </div>
           );
         })}
       </div>

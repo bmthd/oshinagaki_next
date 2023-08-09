@@ -42,9 +42,10 @@ const page = async ({ params }: { params: { eventId: string } }) => {
       <TitleHeading>{title}</TitleHeading>
       <PaddingedText texts={description} />
       <Section className="max-w-md m-auto">
-        <div className="flex justify-center">
+        <div className="flex flex-col gap-4 py-4">
           <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
-          <LinkButton href={`/event/${eventId}/recent`}>{`${eventId} 最近更新`}</LinkButton>
+          <LinkButton
+            href={`/event/${eventId}/recent`}>{`${eventId} 最近更新されたサークル`}</LinkButton>
         </div>
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />

@@ -37,14 +37,11 @@ const Home = async () => {
   return (
     <>
       <PaddingedText texts={description} />
-      <div className="flex flex-col max-w-md m-auto gap-4">
-        <div>
-          <LinkButton className="w-full my-2" href={`/event/${eventId}/lanking`}>
-            {eventId} 話題のサークル
-          </LinkButton>
-          <LinkButton className="w-full my-2" href={`/event/${eventId}/recent`}>
-            {eventId} 最新のお品書き
-          </LinkButton>
+      <div className="max-w-md m-auto">
+        <div className="flex flex-col gap-4 py-4">
+          <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
+          <LinkButton
+            href={`/event/${eventId}/recent`}>{`${eventId} 最近更新されたサークル`}</LinkButton>
         </div>
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />

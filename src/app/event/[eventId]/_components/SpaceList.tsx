@@ -84,7 +84,7 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 
       <DotHeading>お品書き</DotHeading>
       {tweet ? (
-        <div className="flex justify-center">
+        <div className="flex flex-col justify-center">
           <TwitterCard tweet={tweet} />
         </div>
       ) : circle.twitterId ? (

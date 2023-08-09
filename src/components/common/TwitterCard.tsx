@@ -26,7 +26,12 @@ export const TwitterCard = ({ tweet }: { tweet: Tweet }) => {
         {tweet.text}
       </p>
       {`— (${tweet.authorId})`}
-      <a href={`${tweet.url}?ref_src=twsrc%5Etfw`}>{formatedDate}</a>
+      <a
+        className="text-blue-500 hover:text-blue-600"
+        target="_blank"
+        href={`${tweet.url}?ref_src=twsrc%5Etfw`}>
+        {formatedDate}
+      </a>
     </blockquote>
     // <NextTweet id={tweetId!} notFoundOnError fallback={<div>エラー</div>} />
     // <div
