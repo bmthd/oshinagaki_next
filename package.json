@@ -10,6 +10,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "studio": "prisma studio",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
