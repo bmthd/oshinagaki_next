@@ -1,7 +1,6 @@
 import { BlockListFormContainer, WallList } from "@/components";
 import { PaddingedText, Section, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
-import { fetchEvent } from "@/services/eventService";
 import { Suspense } from "react";
 import { SpacesContainer } from "../_components";
 
@@ -28,8 +27,6 @@ const page = async ({
   const page = convertToNumber(searchParams!.page!) || 1;
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${page}-${size}`;
-
-  const event = await fetchEvent(eventId);
   const pageTitle = `${eventId} 話題のサークルランキング`;
   const description = [
     "このページではTwitter上で話題のサークルをまとめています。",

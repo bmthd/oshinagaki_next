@@ -259,6 +259,11 @@ export const fetchSpacesByUpdate = cache(
             id: eventId,
           },
         },
+        tweet: {
+          createdAt: {
+            not: null,
+          },
+        },
       },
       include: {
         block: {
