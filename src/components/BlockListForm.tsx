@@ -17,31 +17,16 @@ type Props = {
  */
 export const BlockListForm = ({ event, days, districts }: Props) => {
   const eventId = event.id;
-  const [selectedDayCount, setSelectedDayCount] = useState("1");
+  const [selectedDayCount, setSelectedDayCount] = useState(1);
   const [selectedDistrict, setSelectedDistrict] = useState(0);
-  const [selectedBlock, setSelectedBlock] = useState("A");
-
-  const handleDayCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const dayCount = e.target.value;
-    setSelectedDayCount(dayCount);
-  };
-
-  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const districtId = Number(e.target.value);
-    setSelectedDistrict(districtId);
-  };
-
-  const handleBlockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const block = e.target.value;
-    setSelectedBlock(block);
-  };
+  const [selectedBlock, setSelectedBlock] = useState("");
 
   const generatedUrl = `/event/${eventId}/day/${selectedDayCount}/block/${selectedBlock}`;
 
   const dayOptions = days.map((day) => {
     return (
       <option key={day.id} value={day.dayCount}>
-        {day.dayCount}
+        {`${day.dayCount}日目`}
       </option>
     );
   });
@@ -49,20 +34,38 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
   const districtOptions = districts.map((district) => {
     return (
       <option key={district.id} value={district.id}>
-        {district.name}
+        {`${district.name}ホール`}
       </option>
     );
   });
 
-  const blockOptions = districts[selectedDistrict].halls.map((hall) => {
-    return hall.blocks.map((block) => {
-      return (
+  const blockOptions = districts
+    .find((district) => district.id === selectedDistrict)
+    ?.halls.flatMap((hall) =>
+      hall.blocks.map((block) => (
         <option key={block.id} value={block.name}>
           {block.name}
         </option>
-      );
-    });
-  });
+      ))
+    );
+
+  const handleDayCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const dayCount = Number(e.target.value);
+    setSelectedDayCount(dayCount);
+  };
+
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const districtId = Number(e.target.value);
+    setSelectedDistrict(districtId);
+    const block = districts.find((district) => district.id === districtId)?.halls[0].blocks[0]
+      .name!;
+    setSelectedBlock(block);
+  };
+
+  const handleBlockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const block = e.target.value;
+    setSelectedBlock(block);
+  };
 
   return (
     <div>
