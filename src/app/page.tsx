@@ -37,7 +37,7 @@ const Home = async () => {
   return (
     <>
       <PaddingedText texts={description} />
-      <div className="max-w-md m-auto">
+      <div className="flex flex-col max-w-md m-auto gap-8">
         <div className="flex flex-col gap-4 py-4">
           <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
           <LinkButton

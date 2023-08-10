@@ -12,6 +12,8 @@ import { CircleSpaceList } from "./_components";
 
 export const dynamic = "force-dynamic";
 
+export const revalidate = 86400;
+
 /**
  * サークルごとの過去の参加履歴を表示するページ
  * @param param0

@@ -84,8 +84,19 @@ model Hall {
   name   String  @unique
   use    Boolean
   blocks Block[]
+  districtId Int? @map("district_id")
+  district District? @relation(fields: [districtId], references: [id])
 
+  @@index([districtId])
   @@map("hall")
+}
+
+model District {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  halls  Hall[]
+
+  @@map("district")
 }
 
 model LoginUser {

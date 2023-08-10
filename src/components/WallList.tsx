@@ -1,5 +1,5 @@
 import { LinkButton, TitleHeading } from "@/components/common";
-import { fetchDays, fetchEvent, fetchHalls } from "@/services/eventService";
+import { fetchDays, fetchHalls } from "@/services/eventService";
 
 /**
  * 受け取ったイベントの壁サークル一覧ページへのリンクを表示する
@@ -9,7 +9,6 @@ import { fetchDays, fetchEvent, fetchHalls } from "@/services/eventService";
  * @returns
  */
 export const WallList = async ({ eventId }: { eventId: string }) => {
-  const event = await fetchEvent(eventId);
   const days = await fetchDays(eventId);
   const halls = await fetchHalls(eventId);
   return (
@@ -28,7 +27,7 @@ export const WallList = async ({ eventId }: { eventId: string }) => {
                     <li key={hall.id}>
                       <LinkButton
                         className="w-full mb-4"
-                        href={`/event/${event!.id}/day/${day.dayCount}/wall/${hall.id}`}>
+                        href={`/event/${eventId}/day/${day.dayCount}/wall/${hall.id}`}>
                         {hall.name}ホール
                       </LinkButton>
                     </li>

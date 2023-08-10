@@ -71,12 +71,68 @@ export const fetchHalls = cache(async (eventId: string) => {
       },
       use: true,
     },
+    include: {
+      blocks: {
+        where: {
+          event: {
+            id: eventId,
+          },
+        },
+      },
+      district: true,
+    },
     orderBy: {
       name: "asc",
     },
   });
   return halls;
 });
+
+export const fetchDistricts = cache(async (eventId: string) => {
+  const districts = await prisma.district.findMany({
+    where: {
+      halls: {
+        some: {
+          blocks: {
+            some: {
+              event: {
+                id: eventId,
+              },
+            },
+          },
+        },
+      },
+    },
+    include: {
+      halls: {
+        where: {
+          blocks: {
+            some: {
+              event: {
+                id: eventId,
+              },
+            },
+          },
+        },
+        include: {
+          blocks: {
+            where: {
+              event: {
+                id: eventId,
+              },
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+  return districts;
+});
+
+export type BlocksWithDistrict = Prisma.PromiseReturnType<typeof fetchDistricts>;
 
 export const fetchBlock = cache(async (eventId: string, blockName: string) => {
   const block = await prisma.block.findFirstOrThrow({

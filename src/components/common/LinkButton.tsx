@@ -21,7 +21,7 @@ export const LinkButton = ({ children, className, href, onClick }: LinkProps | B
 
   if (!href) {
     return (
-      <button className={mergedClassName} onClick={onClick}>
+      <button type="button" className={mergedClassName} onClick={onClick}>
         {children}
       </button>
     );

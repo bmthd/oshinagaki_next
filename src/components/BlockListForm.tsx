@@ -1,39 +1,34 @@
 "use client";
 
 import { LinkButton, SelectBox, TitleHeading } from "@/components/common";
+import { BlocksWithDistrict } from "@/services/eventService";
 import { Day, Event } from "@prisma/client";
 import { FormEvent, useState } from "react";
 
-interface District {
-  id: number;
-  name: string;
-  blocks: string[];
-}
-
 type Props = {
+  /**イベント名 */
   event: Event;
   days: Day[];
+  districts: BlocksWithDistrict;
 };
 
 /**
  * イベントと日にち情報を受け取り、ブロック一覧フォームを表示するコンポーネント
- * @param param0
- * @returns
  */
-export const BlockListForm = ({ event, days }: Props) => {
+export const BlockListForm = ({ event, days, districts }: Props) => {
   const eventId = event.id;
   const [selectedDayCount, setSelectedDayCount] = useState("1");
   const [selectedDistrict, setSelectedDistrict] = useState(0);
   const [selectedBlock, setSelectedBlock] = useState("A");
 
-  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const districtId = Number(e.target.value);
-    setSelectedDistrict(districtId);
-  };
-
   const handleDayCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const dayCount = e.target.value;
     setSelectedDayCount(dayCount);
+  };
+
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const districtId = Number(e.target.value);
+    setSelectedDistrict(districtId);
   };
 
   const handleBlockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -43,134 +38,31 @@ export const BlockListForm = ({ event, days }: Props) => {
 
   const generatedUrl = `/event/${eventId}/day/${selectedDayCount}/block/${selectedBlock}`;
 
-  const districts = [
-    {
-      id: 0,
-      name: "東123",
-      blocks: [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z",
-        "ア",
-        "イ",
-        "ウ",
-        "エ",
-        "オ",
-        "カ",
-        "キ",
-        "ク",
-        "ケ",
-        "コ",
-        "サ",
-      ],
-    },
-    {
-      id: 1,
-      name: "東456",
-      blocks: [
-        "シ",
-        "ス",
-        "セ",
-        "ソ",
-        "タ",
-        "チ",
-        "ツ",
-        "テ",
-        "ト",
-        "ナ",
-        "ニ",
-        "ヌ",
-        "ネ",
-        "ノ",
-        "ハ",
-        "パ",
-        "ヒ",
-        "ピ",
-        "フ",
-        "プ",
-        "ヘ",
-        "ペ",
-        "ホ",
-        "ポ",
-        "マ",
-        "ミ",
-        "ム",
-        "メ",
-        "モ",
-        "ヤ",
-        "ユ",
-        "ヨ",
-        "ラ",
-        "リ",
-        "ル",
-        "レ",
-        "ロ",
-      ],
-    },
-    {
-      id: 2,
-      name: "西12",
-      blocks: [
-        "あ",
-        "い",
-        "う",
-        "え",
-        "お",
-        "か",
-        "き",
-        "く",
-        "け",
-        "こ",
-        "さ",
-        "し",
-        "す",
-        "せ",
-        "そ",
-        "た",
-        "ち",
-        "つ",
-        "て",
-        "と",
-        "な",
-        "に",
-        "ぬ",
-        "ね",
-        "の",
-        "は",
-        "ひ",
-        "ふ",
-        "へ",
-        "ほ",
-        "ま",
-        "み",
-        "む",
-        "め",
-      ],
-    },
-  ];
+  const dayOptions = days.map((day) => {
+    return (
+      <option key={day.id} value={day.dayCount}>
+        {day.dayCount}
+      </option>
+    );
+  });
+
+  const districtOptions = districts.map((district) => {
+    return (
+      <option key={district.id} value={district.id}>
+        {district.name}
+      </option>
+    );
+  });
+
+  const blockOptions = districts[selectedDistrict].halls.map((hall) => {
+    return hall.blocks.map((block) => {
+      return (
+        <option key={block.id} value={block.name}>
+          {block.name}
+        </option>
+      );
+    });
+  });
 
   return (
     <div>
@@ -182,38 +74,26 @@ export const BlockListForm = ({ event, days }: Props) => {
           日にち
         </label>
         <SelectBox value={selectedDayCount} onChange={handleDayCountChange}>
-          {days.map((day) => (
-            <option key={day.id} value={day.dayCount}>
-              {day.dayCount}日目
-            </option>
-          ))}
+          {dayOptions}
         </SelectBox>
         <label htmlFor="district" aria-label="地区">
           地区
         </label>
         <SelectBox value={selectedDistrict} onChange={handleDistrictChange}>
-          {districts.map((district) => (
-            <option key={district.id} value={district.id}>
-              {district.name}
-            </option>
-          ))}
+          {districtOptions}
         </SelectBox>
         <label htmlFor="block" aria-label="ブロック">
           ブロック
         </label>
         <SelectBox value={selectedBlock} onChange={handleBlockChange}>
-          {districts[selectedDistrict].blocks.map((block) => (
-            <option key={block} value={block}>
-              {block}
-            </option>
-          ))}
+          {blockOptions}
         </SelectBox>
       </form>
       <div className="flex flex-col items-center justify-center py-2">
         <LinkButton className="w-full m-2" href={generatedUrl}>
           選択したブロックに移動
         </LinkButton>
-        <LinkButton className="w-full m-4" href={`/event/${event.id}/block_list`}>
+        <LinkButton className="w-full m-4" href={`/event/${eventId}/block_list`}>
           {event.id} ブロック一覧
         </LinkButton>
       </div>
