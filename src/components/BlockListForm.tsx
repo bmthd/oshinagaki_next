@@ -3,7 +3,7 @@
 import { LinkButton, SelectBox, TitleHeading } from "@/components/common";
 import { BlocksWithDistrict } from "@/services/eventService";
 import { Day, Event } from "@prisma/client";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 type Props = {
   /**イベント名 */
@@ -17,11 +17,16 @@ type Props = {
  */
 export const BlockListForm = ({ event, days, districts }: Props) => {
   const eventId = event.id;
-  const [selectedDayCount, setSelectedDayCount] = useState(1);
-  const [selectedDistrict, setSelectedDistrict] = useState(0);
-  const [selectedBlock, setSelectedBlock] = useState("");
+  const [dayCount, setDayCount] = useState(1);
+  const [district, setDistrict] = useState(0);
+  const [block, setBlock] = useState("A");
 
-  const generatedUrl = `/event/${eventId}/day/${selectedDayCount}/block/${selectedBlock}`;
+  useEffect(() => {
+    setDistrict(districts[0].id);
+    setBlock(districts[0].halls[0].blocks[0].name);
+  }, [districts]);
+
+  const generatedUrl = `/event/${eventId}/day/${dayCount}/block/${block}`;
 
   const dayOptions = days.map((day) => {
     return (
@@ -40,7 +45,7 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
   });
 
   const blockOptions = districts
-    .find((district) => district.id === selectedDistrict)
+    .find((d) => d.id === district)
     ?.halls.flatMap((hall) =>
       hall.blocks.map((block) => (
         <option key={block.id} value={block.name}>
@@ -50,21 +55,21 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
     );
 
   const handleDayCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const dayCount = Number(e.target.value);
-    setSelectedDayCount(dayCount);
+    const selectedDayCount = Number(e.target.value);
+    setDayCount(selectedDayCount);
   };
 
   const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const districtId = Number(e.target.value);
-    setSelectedDistrict(districtId);
+    setDistrict(districtId);
     const block = districts.find((district) => district.id === districtId)?.halls[0].blocks[0]
       .name!;
-    setSelectedBlock(block);
+    setBlock(block);
   };
 
   const handleBlockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const block = e.target.value;
-    setSelectedBlock(block);
+    setBlock(block);
   };
 
   return (
@@ -76,19 +81,19 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
         <label htmlFor="day" aria-label="日にち">
           日にち
         </label>
-        <SelectBox value={selectedDayCount} onChange={handleDayCountChange}>
+        <SelectBox value={dayCount} onChange={handleDayCountChange}>
           {dayOptions}
         </SelectBox>
         <label htmlFor="district" aria-label="地区">
           地区
         </label>
-        <SelectBox value={selectedDistrict} onChange={handleDistrictChange}>
+        <SelectBox value={district} onChange={handleDistrictChange}>
           {districtOptions}
         </SelectBox>
         <label htmlFor="block" aria-label="ブロック">
           ブロック
         </label>
-        <SelectBox value={selectedBlock} onChange={handleBlockChange}>
+        <SelectBox value={block} onChange={handleBlockChange}>
           {blockOptions}
         </SelectBox>
       </form>

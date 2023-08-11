@@ -41,7 +41,7 @@ const page = async ({ params }: { params: { eventId: string } }) => {
     <>
       <TitleHeading>{title}</TitleHeading>
       <PaddingedText texts={description} />
-      <Section className="max-w-md m-auto">
+      <Section className="flex flex-col gap-8 max-w-md m-auto">
         <div className="flex flex-col gap-4 py-4">
           <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
           <LinkButton
