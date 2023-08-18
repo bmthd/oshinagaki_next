@@ -1,7 +1,7 @@
 import { Section } from "@/components/common";
 import { Footer, Header } from "@/components/layouts";
 import { GoogleAnalytics } from "@/components/layouts/GoogleAnalytics";
-import { Provider } from "@/components/layouts/Provider";
+import { Providers } from "@/components/layouts/Providers";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <Provider>
+    <Providers>
       <html lang="ja" className={`bg-gray-100 text-blue-900 ${font.className}`}>
         <body>
           <GoogleAnalytics />
@@ -55,6 +55,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Footer />
         </body>
       </html>
-    </Provider>
+    </Providers>
   );
 }
