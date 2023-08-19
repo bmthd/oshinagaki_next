@@ -1,8 +1,8 @@
 "use client";
 
 import { LinkButton, SelectBox, TitleHeading } from "@/components/common";
+import { Day, Event } from "@/lib/prisma";
 import { BlocksWithDistrict } from "@/services/eventService";
-import { Day, Event } from "@prisma/client";
 import { FormEvent, useEffect, useState } from "react";
 
 type Props = {
@@ -30,8 +30,8 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
 
   const dayOptions = days.map((day) => {
     return (
-      <option key={day.id} value={day.dayCount}>
-        {`${day.dayCount}日目`}
+      <option key={day.id} value={day.count}>
+        {`${day.count}日目`}
       </option>
     );
   });

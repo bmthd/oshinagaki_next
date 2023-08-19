@@ -1,5 +1,4 @@
-import { BlockListFormContainer } from "@/components/BlockListFormContainer";
-import { WallList } from "@/components/WallList";
+import { BlockListFormContainer, WallList } from "@/components";
 import { LinkButton, PaddingedText, Section, TitleHeading } from "@/components/common";
 import { fetchEvent } from "@/services/eventService";
 

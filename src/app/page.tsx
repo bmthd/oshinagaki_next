@@ -1,6 +1,4 @@
-import { BlockListFormContainer } from "@/components/BlockListFormContainer";
-import { EventList } from "@/components/EventList";
-import { WallList } from "@/components/WallList";
+import { BlockListFormContainer, EventList, WallList } from "@/components";
 import { LinkButton, PaddingedText } from "@/components/common";
 import { fetchLatestEvent, fetchSpaceCount } from "@/services/eventService";
 import { FaTwitter } from "react-icons/fa";
@@ -22,7 +20,7 @@ const Home = async () => {
     "TwitterAPIの仕様変更のせいで一部機能が利用できなくなってしまいました。",
     "約14000円支払っても月間1万ツイートしか取得できないため、絶望的です。",
     "モダンなWeb技術でリプレースしたため、せっかくなので課金してツイート収集を行います。",
-    `最新イベント: ${event.eventName} 掲載数: ${circleCount}`,
+    `最新イベント: ${event.name} 掲載数: ${circleCount}`,
   ];
 
   const TwitterWebAppLink = () => {

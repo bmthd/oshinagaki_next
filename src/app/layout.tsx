@@ -1,7 +1,5 @@
 import { Section } from "@/components/common";
-import { Footer, Header } from "@/components/layouts";
-import { GoogleAnalytics } from "@/components/layouts/GoogleAnalytics";
-import { Providers } from "@/components/layouts/Providers";
+import { Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";

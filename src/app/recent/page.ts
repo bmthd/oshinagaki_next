@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 /**
  * Redirects to the latest event.
  */
-const page = async () => {
+const Page = async () => {
   const event = await fetchLatestEvent();
   const latest = event.id;
   if (latest) {
@@ -14,4 +14,4 @@ const page = async () => {
   }
 };
 
-export default page;
+export default Page;

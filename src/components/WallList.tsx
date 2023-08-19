@@ -20,14 +20,14 @@ export const WallList = async ({ eventId }: { eventId: string }) => {
         {days.map((day) => {
           return (
             <div key={day.id} className="text-center">
-              <p className="p-2 font-bold text-xl">{day.dayCount}日目</p>
+              <p className="p-2 font-bold text-xl">{day.count}日目</p>
               <ul>
                 {halls.map((hall) => {
                   return (
                     <li key={hall.id}>
                       <LinkButton
                         className="w-full mb-4"
-                        href={`/event/${eventId}/day/${day.dayCount}/wall/${hall.id}`}>
+                        href={`/event/${eventId}/day/${day.count}/wall/${hall.id}`}>
                         {hall.name}ホール
                       </LinkButton>
                     </li>

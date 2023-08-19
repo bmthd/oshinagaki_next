@@ -1,30 +1,17 @@
 import { PaddingedText, TextField, TitleHeading } from "@/components/common";
 import sendMail from "@/lib/nodemailer";
-import { FormEvent } from "react";
 
-interface SubmitData {
-  email: string;
-  message: string;
-}
-
-interface CustomFormData extends FormData {
-  append<T extends string | Blob>(name: keyof SubmitData, value: T, fileName?: string): void;
-}
-
-const formData = new FormData() as CustomFormData;
-
-const page = () => {
+const Page = () => {
   const texts = [
     "当サイトへのご意見、ご要望をこちらのフォームより受付しております。",
     "個人運営のため、回答にはお時間を頂く場合がありますので予めご了承ください。",
     "以下を入力して送信ボタンをクリックしてください。",
   ];
 
-  const onAction = async (formData: FormEvent<HTMLFormElement>) => {
+  const onAction = async (formData: FormData) => {
     "use server";
-    formData.preventDefault();
-    const email = formData.currentTarget.email.value;
-    const message = formData.currentTarget.message.value;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
     await sendMail(email, message);
   };
 
@@ -32,7 +19,7 @@ const page = () => {
     <>
       <TitleHeading>お問い合わせ</TitleHeading>
       <PaddingedText texts={texts} />
-      <form onSubmit={onAction}>
+      <form action={onAction}>
         <div className="mb-4 max-w-sm">
           <label htmlFor="email" className="block text-gray-700 mb-2">
             メールアドレス
@@ -68,4 +55,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

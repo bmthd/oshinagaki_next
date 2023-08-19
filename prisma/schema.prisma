@@ -53,7 +53,7 @@ model Day {
 
 model Event {
   id        String    @id
-  name String
+  name      String
   venueId   Int?      @map("venue_id")
   lastDate  DateTime? @map("last_date")
   startDate DateTime? @map("start_date")
