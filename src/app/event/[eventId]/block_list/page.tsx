@@ -9,7 +9,7 @@ export const generateStaticParams = async () => {
   }));
 };
 
-const page = async ({ params }: { params: { eventId: string } }) => {
+const Page = async ({ params }: { params: { eventId: string } }) => {
   const eventId = params.eventId;
   const blocks = await fetchBlocks(eventId);
   const days = await fetchDays(eventId);
@@ -21,15 +21,15 @@ const page = async ({ params }: { params: { eventId: string } }) => {
         {days.map((day, index) => {
           return (
             <div key={index} className="text-center">
-              <p className="p-2 font-bold text-xl">{day.dayCount}日目</p>
+              <p className="p-2 font-bold text-xl">{day.count}日目</p>
               <ul className="flex flex-col gap-4 m-4">
                 {blocks.map((block) => {
                   return (
                     <li key={block.id} className="col-span-1 flex justify-center items-center">
                       <LinkButton
                         className="w-full"
-                        href={`/event/${eventId}/day/${day.dayCount}/block/${block.name}`}>
-                        {`${day.dayCount}日目"${block.name}"ブロック`}
+                        href={`/event/${eventId}/day/${day.count}/block/${block.name}`}>
+                        {`${day.count}日目"${block.name}"ブロック`}
                       </LinkButton>
                     </li>
                   );
@@ -42,4 +42,4 @@ const page = async ({ params }: { params: { eventId: string } }) => {
     </>
   );
 };
-export default page;
+export default Page;

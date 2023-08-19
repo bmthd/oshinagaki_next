@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import "server-only";
 
 export const fetchTweetUrl = async (eventId: string, circleName: string) => {
   const space = await prisma.spaceView.findFirstOrThrow({

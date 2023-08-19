@@ -1,4 +1,5 @@
-import { fetchBlocks, fetchDays, fetchEvents } from "@/services/eventService";
+import { fetchBlocks, fetchDays } from "@/services/eventService";
+import { fetchCircleIds, fetchEventIds, fetchHallIds } from "@/services/slugService";
 import { MetadataRoute } from "next";
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
@@ -7,30 +8,51 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     { url: `${domain}` },
     { url: `${domain}/event` },
     { url: `${domain}/about` },
-    { url: `${domain}/contact` },
+    { url: `${domain}/form` },
   ];
-  const events = await fetchEvents();
+  const eventIds = await fetchEventIds();
 
   const eventUrls = Promise.all(
-    events.flatMap(async (event) => {
-      const days = await fetchDays(event.id);
-      const blocks = await fetchBlocks(event.id);
+    eventIds.flatMap(async (eventId) => {
+      const [days, blocks, halls] = await Promise.all([
+        fetchDays(eventId),
+        fetchBlocks(eventId),
+        fetchHallIds(eventId),
+      ]);
 
       const dayUrls = days.flatMap((day) => {
+        const dayCount = day.count;
         const blockUrls = blocks.map((block) => {
           return {
-            url: `${domain}/event/${event.id}/day/${day.count}/block/${block.id}`,
+            url: `${domain}/event/${eventId}/day/${dayCount}/block/${block.id}`,
           };
         });
 
-        return [{ url: `${domain}/event/${event.id}/day/${day.count}` }, ...blockUrls];
+        const hallUrls = halls.map((hallId) => {
+          return {
+            url: `${domain}/event/${eventId}/day/${dayCount}/wall/${hallId}`,
+          };
+        });
+
+        return [{ url: `${domain}/event/${eventId}/day/${dayCount}` }, ...blockUrls, ...hallUrls];
       });
 
-      return [{ url: `${domain}/event/${event.id}` }, ...dayUrls];
+      return [
+        { url: `${domain}/event/${eventId}` },
+        { url: `${domain}/event/${eventId}/lanking` },
+        { url: `${domain}/event/${eventId}/recent` },
+        ...dayUrls,
+      ];
     })
   ).then((urls) => urls.flat());
 
-  const allUrls = [...urls, ...(await eventUrls)];
+  const circles = await fetchCircleIds();
+
+  const circleUrls = circles.map((circleId) => {
+    return { url: `${domain}/circle/${circleId}` };
+  });
+
+  const allUrls = [...urls, ...(await eventUrls), ...circleUrls];
 
   return allUrls;
 };

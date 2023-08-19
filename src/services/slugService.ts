@@ -1,5 +1,6 @@
 import { cache } from "@/lib/nextCache";
 import prisma from "@/lib/prisma";
+import "server-only";
 
 export const fetchEventIds = cache(async () => {
   const events = await prisma.event.findMany({
