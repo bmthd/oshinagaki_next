@@ -15,8 +15,8 @@ export const generateStaticParams = async ({
 
 export const generateMetadata = async ({ params }: { params: { eventId: string } }) => {
   const event = await fetchEvent(params.eventId);
-  const pageTitle = `${event.eventName}のお品書きまとめ`;
-  const description = `${event.eventName}のサークル一覧です。`;
+  const pageTitle = `${event.name}のお品書きまとめ`;
+  const description = `${event.name}のサークル一覧です。`;
   return {
     title: pageTitle,
     description: description,
@@ -32,7 +32,7 @@ export const generateMetadata = async ({ params }: { params: { eventId: string }
 const page = async ({ params }: { params: { eventId: string } }) => {
   const event = await fetchEvent(params.eventId);
   const eventId = event.id;
-  const title = `${event.eventName}のお品書きまとめ`;
+  const title = `${event.name}のお品書きまとめ`;
   const description = [
     `${eventId}の参加サークルをまとめたページです。`,
     "人気のサークルは壁サークルから、ジャンル毎やお近くのサークルをお探しの場合はブロック一覧から探してみてください。",
