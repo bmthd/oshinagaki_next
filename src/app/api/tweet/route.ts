@@ -1,11 +1,15 @@
 import { fetchTweetUrl } from "@/services/apiService";
 import { NextResponse } from "next/server";
 
+/**
+ * イベントIDとサークル名を受け取り、そのサークルのツイートURLを返す。
+ * @param req
+ * @returns
+ */
 export const GET = async (req: Request) => {
-  // parameterとしてサークル名を受け取り、そのサークルのツイートURLを返す。
   const { searchParams } = new URL(req.url);
-  const circleName = searchParams.get("circleName");
-  const eventId = searchParams.get("eventId");
+  const circleName = searchParams.get("circle_name");
+  const eventId = searchParams.get("event_id");
   if (!circleName || !eventId) {
     return NextResponse.json({
       error: true,
