@@ -27,13 +27,16 @@ const page = async ({ params }: { params: { eventId: string } }) => {
 
   return (
     <>
-      <span>{event?.eventName}</span>
+      <span>{event?.name}</span>
       <ul>
-        {days.map((day) => (
-          <li key={day.id}>
-            <TextLink href={`/event/${eventId}/day/${day.dayCount}`}>{day.dayCount}日目</TextLink>
-          </li>
-        ))}
+        {days.map((day) => {
+          const dayCount = day.count;
+          return (
+            <li key={day.id}>
+              <TextLink href={`/event/${eventId}/day/${dayCount}`}>{dayCount}日目</TextLink>
+            </li>
+          );
+        })}
       </ul>
     </>
   );

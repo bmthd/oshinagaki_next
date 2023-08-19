@@ -11,8 +11,8 @@ export const CircleSpaceList = async ({ circleId }: { circleId: number }) => {
         const block = circleSpace.block!;
         const event = block!.event!;
         const day = circleSpace.day!;
-        const eventName = event.eventName;
-        const placement = `${day?.dayCount}日目${block?.hall.name}${block?.name}-${circleSpace.spaceNumber}${circleSpace.ab}`;
+        const eventName = event.name;
+        const placement = `${day?.count}日目${block?.hall.name}${block?.name}-${circleSpace.spaceNumber}${circleSpace.ab}`;
         const tweet = circleSpace.tweet;
         return (
           <React.Fragment key={circleSpace.id}>

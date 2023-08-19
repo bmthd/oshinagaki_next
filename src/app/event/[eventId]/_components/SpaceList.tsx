@@ -59,7 +59,7 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 
   const tweet = space.tweet;
 
-  const title = `${day?.dayCount}日目${block?.hall.name}${block?.name}-${space.spaceNumber}${space.ab}`;
+  const title = `${day?.count}日目${block?.hall.name}${block?.name}-${space.spaceNumber}${space.ab}`;
 
   const circleInfo = !circle ? (
     <span>サークルデータなし</span>

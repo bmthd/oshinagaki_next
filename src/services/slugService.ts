@@ -13,7 +13,7 @@ export const fetchEventIds = cache(async () => {
 export const fetchDayCounts = cache(async (eventId: string) => {
   const days = await prisma.day.findMany({
     select: {
-      dayCount: true,
+      count: true,
     },
     where: {
       event: {
@@ -21,7 +21,7 @@ export const fetchDayCounts = cache(async (eventId: string) => {
       },
     },
   });
-  return days.map((day) => day.dayCount.toString());
+  return days.map((day) => day.count.toString());
 });
 
 export const fetchBlockNames = cache(async (eventId: string) => {

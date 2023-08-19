@@ -33,7 +33,7 @@ export const fetchDay = cache(async (eventId: string, dayCount: number) => {
       event: {
         id: eventId,
       },
-      dayCount: dayCount,
+      count: dayCount,
     },
   });
   return day;
@@ -190,7 +190,7 @@ export const fetchSpacesByBlock = cache(
           event: {
             id: eventId,
           },
-          dayCount: dayCount,
+          count: dayCount,
         },
         block: {
           name: blockName,
@@ -223,7 +223,7 @@ export const fetchSpacesByHall = cache(
           event: {
             id: eventId,
           },
-          dayCount: dayCount,
+          count: dayCount,
         },
         block: {
           name: blockName,
@@ -381,7 +381,7 @@ export const fetchSpaceCountByBlock = cache(
           event: {
             id: eventId,
           },
-          dayCount: dayCount,
+          count: dayCount,
         },
         block: {
           name: blockName,
@@ -401,7 +401,7 @@ export const fetchSpaceCountByHall = cache(
           event: {
             id: eventId,
           },
-          dayCount: dayCount,
+          count: dayCount,
         },
         block: {
           name: blockName,

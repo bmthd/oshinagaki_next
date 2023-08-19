@@ -26,8 +26,8 @@ const Page = async ({ params }: { params: { eventId: string; dayCount: string } 
   const day = await fetchDay(params.eventId, dayCount);
   return (
     <>
-      <span>{event?.eventName}</span>
-      <span>{day?.dayCount}日目</span>
+      <span>{event?.name}</span>
+      <span>{day?.count}日目</span>
     </>
   );
 };

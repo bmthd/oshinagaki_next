@@ -36,7 +36,7 @@ export const generateMetadata = async ({
   ];
   const [event, hall] = await Promise.all([fetchEvent(eventId), fetchHall(hallId)]);
   const pageTitle = `${eventId} ${dayCount}日目${hall?.name}お品書きまとめ`;
-  const description = `${event.eventName} ${dayCount}日目${hall?.name}のサークル一覧です。`;
+  const description = `${event.name} ${dayCount}日目${hall?.name}のサークル一覧です。`;
   return {
     title: pageTitle,
     description: description,

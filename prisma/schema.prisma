@@ -41,7 +41,7 @@ model Circle {
 
 model Day {
   id         Int         @id @default(autoincrement())
-  dayCount   Int         @map("day_count")
+  count      Int
   eventId    String      @map("event_id")
   event      Event       @relation(fields: [eventId], references: [id])
   spaceViews SpaceView[]
@@ -53,7 +53,7 @@ model Day {
 
 model Event {
   id        String    @id
-  eventName String    @map("event_name")
+  name String
   venueId   Int?      @map("venue_id")
   lastDate  DateTime? @map("last_date")
   startDate DateTime? @map("start_date")
@@ -81,21 +81,21 @@ model FfUser {
 }
 
 model Hall {
-  id     String  @id
-  name   String  @unique
-  use    Boolean
-  blocks Block[]
-  districtId Int? @map("district_id")
-  district District? @relation(fields: [districtId], references: [id])
+  id         String    @id
+  name       String    @unique
+  use        Boolean
+  blocks     Block[]
+  districtId Int?      @map("district_id")
+  district   District? @relation(fields: [districtId], references: [id])
 
   @@index([districtId])
   @@map("hall")
 }
 
 model District {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  halls  Hall[]
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  halls Hall[]
 
   @@map("district")
 }
@@ -135,7 +135,7 @@ model Space {
 
 model Tweet {
   id         Int        @id @default(autoincrement())
-  text       String?  @DATABASE_URL.VarChar(400)
+  text       String?    @DATABASE_URL.VarChar(400)
   spaceId    Int?       @map("space_id")
   url        String?
   authorName String?    @map("author_name")
@@ -143,7 +143,7 @@ model Tweet {
   createdAt  DateTime?  @map("created_at")
   favs       Int
   retweets   Int
-  error      Boolean @default(false)
+  error      Boolean    @default(false)
   spaces     Space[]
   spaceView  SpaceView?
 

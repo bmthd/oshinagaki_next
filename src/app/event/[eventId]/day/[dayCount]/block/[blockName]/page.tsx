@@ -38,7 +38,7 @@ export const generateMetadata = async ({
   ];
   const event = await fetchEvent(eventId);
   const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
-  const description = `${event.eventName} ${dayCount}日目ブロック\"${blockName}\"のサークル一覧です。`;
+  const description = `${event.name} ${dayCount}日目ブロック\"${blockName}\"のサークル一覧です。`;
   return {
     title: pageTitle,
     description: description,
