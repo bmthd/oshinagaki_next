@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 
-const sendMail = async (email: string, message: string) => {
+const sendMail = async (email: string, message: string): Promise<boolean> => {
   const transporter = createTransport({
     service: "gmail",
     auth: {
@@ -16,7 +16,17 @@ const sendMail = async (email: string, message: string) => {
     text: message,
   };
 
-  await transporter.sendMail(mailOptions);
+  const result = await transporter
+    .sendMail(mailOptions)
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+
+  return result;
 };
 
 export default sendMail;

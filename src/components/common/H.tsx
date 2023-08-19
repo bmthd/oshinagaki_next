@@ -1,6 +1,6 @@
 "use client";
 
-import { useLevel } from "@/app/hooks/context";
+import { useLevel } from "@/hooks/context";
 import { HTMLProps, ReactNode } from "react";
 
 interface Props extends HTMLProps<HTMLHeadingElement> {

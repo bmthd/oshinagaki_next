@@ -1,6 +1,6 @@
 "use client";
 
-import { HeadingLevelContext, useLevel } from "@/app/hooks/context";
+import { HeadingLevelContext, useLevel } from "@/hooks/context";
 import { ComponentProps, ReactNode } from "react";
 
 type Props = ComponentProps<"section"> & {

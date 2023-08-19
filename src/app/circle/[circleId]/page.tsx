@@ -1,8 +1,8 @@
+import { CircleSpaceList } from "@/app/circle/[circleId]/_components/CircleSpaceList";
 import { DotHeading, Section, TextLink, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { fetchCircle } from "@/services/eventService";
 import { Suspense } from "react";
-import { CircleSpaceList } from "./_components";
 
 // ビルド時にサークルの数だけSQLが発行されるので、一旦コメントアウト
 // export const generateStaticParams = async () => {

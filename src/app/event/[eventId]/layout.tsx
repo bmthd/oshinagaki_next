@@ -1,4 +1,4 @@
-import { GoogleAnalytics } from "@/components/layouts/GoogleAnalytics";
+import { GoogleAnalytics } from "@/components/layouts";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

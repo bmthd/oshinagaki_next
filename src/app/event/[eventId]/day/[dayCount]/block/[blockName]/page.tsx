@@ -1,8 +1,6 @@
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
-import { BlockListFormContainer } from "@/components/BlockListFormContainer";
-import { WallList } from "@/components/WallList";
-import { TitleHeading } from "@/components/common";
-import { Section } from "@/components/common/Section";
+import { BlockListFormContainer, WallList } from "@/components";
+import { Section, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent } from "@/services/eventService";
 import { fetchBlockNames } from "@/services/slugService";

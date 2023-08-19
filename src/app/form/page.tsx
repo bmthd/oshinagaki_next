@@ -1,5 +1,6 @@
 import { PaddingedText, TextField, TitleHeading } from "@/components/common";
 import sendMail from "@/lib/nodemailer";
+import { failAlert, successAlert } from "./alert";
 
 const Page = () => {
   const texts = [
@@ -12,7 +13,8 @@ const Page = () => {
     "use server";
     const email = formData.get("email") as string;
     const message = formData.get("message") as string;
-    await sendMail(email, message);
+    const result = await sendMail(email, message);
+    result ? successAlert() : failAlert();
   };
 
   return (

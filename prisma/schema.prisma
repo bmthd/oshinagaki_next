@@ -42,6 +42,7 @@ model Circle {
 model Day {
   id         Int         @id @default(autoincrement())
   count      Int
+  date       DateTime?
   eventId    String      @map("event_id")
   event      Event       @relation(fields: [eventId], references: [id])
   spaceViews SpaceView[]

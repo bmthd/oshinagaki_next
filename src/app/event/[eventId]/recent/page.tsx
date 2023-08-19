@@ -1,8 +1,8 @@
+import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { BlockListFormContainer, WallList } from "@/components";
 import { Section, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
-import { SpacesContainer } from "../_components";
 
 export const dynamic = "force-dynamic";
 
