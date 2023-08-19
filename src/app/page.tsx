@@ -13,8 +13,6 @@ const Home = async () => {
   const circleCount = await fetchSpaceCount(eventId);
   const now = new Date();
   const year = now.getFullYear() - 2014;
-  console.log(event);
-  console.log(typeof event);
 
   const description = [
     `コミケ参加歴 ${year} 年の製作者が、使いやすいと思うサイトを実現しました。`,

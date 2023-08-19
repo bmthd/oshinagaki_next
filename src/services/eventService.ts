@@ -353,13 +353,15 @@ export const fetchSpacesByCircle = cache(async (circleId: number) => {
     include: {
       block: {
         include: {
-          event: true,
           hall: true,
         },
       },
-
       circle: true,
-      day: true,
+      day: {
+        include: {
+          event: true,
+        },
+      },
       tweet: true,
     },
     orderBy: {

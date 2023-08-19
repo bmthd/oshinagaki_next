@@ -10,9 +10,7 @@ import { Suspense } from "react";
 //   return circleIds.map((circleId) => ({ circleId: circleId }));
 // };
 
-export const dynamic = "force-dynamic";
-
-export const revalidate = 86400;
+export const dynamic = "dynamic";
 
 /**
  * サークルごとの過去の参加履歴を表示するページ
@@ -25,27 +23,27 @@ const Page = async ({ params }: { params: { circleId: string } }) => {
   const circle = await fetchCircle(circleId);
   const pageTitle = `${circle?.name}のお品書きまとめ`;
 
-  const circleName = circle?.name ? (
-    <TextLink href={`/circle/${circle!.id}`} className="font-bold whitespace-pre-wrap">
-      {circle!.name}
+  const circleName = circle.name ? (
+    <TextLink href={`/circle/${circle.id}`} className="font-bold whitespace-pre-wrap">
+      {circle.name}
     </TextLink>
   ) : (
     <p>データなし</p>
   );
 
-  const pixivUrl = circle?.pixivUrl && (
-    <TextLink href={circle!.pixivUrl} className="whitespace-pre-wrap">
+  const pixivUrl = circle.pixivUrl && (
+    <TextLink href={circle.pixivUrl} className="whitespace-pre-wrap">
       Pixiv
     </TextLink>
   );
 
-  const hpUrl = circle?.hpUrl && (
-    <TextLink href={circle!.hpUrl} className="whitespace-pre-wrap">
+  const hpUrl = circle.hpUrl && (
+    <TextLink href={circle.hpUrl} className="whitespace-pre-wrap">
       ホームページ
     </TextLink>
   );
 
-  const author = circle?.author ? <span>{circle!.author}</span> : <span>データなし</span>;
+  const author = circle.author ? <span>{circle.author}</span> : <span>データなし</span>;
 
   return (
     <>
@@ -65,9 +63,11 @@ const Page = async ({ params }: { params: { circleId: string } }) => {
               {hpUrl}
             </div>
           )}
+          {/* <ErrorBoundary fallback={<div>取得に失敗しました。</div>}> */}
           <Suspense fallback={<div>Loading...</div>}>
             <CircleSpaceList circleId={circleId} />
           </Suspense>
+          {/* </ErrorBoundary> */}
         </Section>
       </div>
     </>
