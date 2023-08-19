@@ -20,7 +20,7 @@ export const generateStaticParams = async ({
  * @param param0
  * @returns
  */
-const page = async ({ params }: { params: { eventId: string } }) => {
+const Page = async ({ params }: { params: { eventId: string } }) => {
   const eventId = params.eventId;
   const event = await fetchEvent(eventId);
   const days = await fetchDays(eventId);
@@ -41,4 +41,4 @@ const page = async ({ params }: { params: { eventId: string } }) => {
     </>
   );
 };
-export default page;
+export default Page;
