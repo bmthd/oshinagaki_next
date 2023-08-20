@@ -10,7 +10,7 @@ import { Suspense } from "react";
 //   return circleIds.map((circleId) => ({ circleId: circleId }));
 // };
 
-export const dynamic = "dynamic";
+// export const dynamic = "dynamic";
 
 /**
  * サークルごとの過去の参加履歴を表示するページ
