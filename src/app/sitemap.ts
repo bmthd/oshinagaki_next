@@ -24,7 +24,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
         const dayCount = day.count;
         const blockUrls = blocks.map((block) => {
           return {
-            url: `${domain}/event/${eventId}/day/${dayCount}/block/${block.id}`,
+            url: `${domain}/event/${eventId}/day/${dayCount}/block/${block.name}`,
           };
         });
 
