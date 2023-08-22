@@ -77,7 +77,8 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
       <TitleHeading>ブロック一覧</TitleHeading>
       <form
         className="flex flex-col gap-2"
-        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}>
+        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}
+      >
         <label htmlFor="day" aria-label="日にち">
           日にち
         </label>

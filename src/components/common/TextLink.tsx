@@ -14,7 +14,8 @@ export const TextLink = ({ href, children, className, ...props }: Props) => {
       href={href}
       className={`text-blue-500 hover:text-blue-600 underline ${className}`}
       target={blank ? "_blank" : undefined}
-      {...props}>
+      {...props}
+    >
       {children}
     </Link>
   );

@@ -48,7 +48,8 @@ const Page = () => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="w-32 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            className="w-32 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
             送信
           </button>
         </div>

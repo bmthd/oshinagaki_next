@@ -11,7 +11,8 @@ export const SpaceList = ({ spaces }: { spaces: SpacesQueryResult }) => {
   return (
     <ul
       className="grid xl:grid-cols-4 max-xl:grid-cols-2 max-md:grid-cols-1 gap-2
-    		border-dashed border-4 rounded-md border-blue-500 bg-blue-100">
+    		border-dashed border-4 rounded-md border-blue-500 bg-blue-100"
+    >
       {spaces.map((space) => {
         return <SpaceInfo key={space.id} space={space} />;
       })}

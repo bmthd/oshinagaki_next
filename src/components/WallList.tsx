@@ -27,7 +27,8 @@ export const WallList = async ({ eventId }: { eventId: string }) => {
                     <li key={hall.id}>
                       <LinkButton
                         className="w-full mb-4"
-                        href={`/event/${eventId}/day/${day.count}/wall/${hall.id}`}>
+                        href={`/event/${eventId}/day/${day.count}/wall/${hall.id}`}
+                      >
                         {hall.name}ホール
                       </LinkButton>
                     </li>

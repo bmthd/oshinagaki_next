@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  
   experimental: {
     serverActions: true,
     turbo: {
       resolveAlias: {
-        underscore: 'lodash',
-        mocha: { browser: 'mocha/browser-entry.js' },
+        underscore: "lodash",
+        mocha: { browser: "mocha/browser-entry.js" },
       },
     },
     outputFileTracingExcludes: {
