@@ -1,7 +1,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-const GET = (request: NextRequest) => {
+export const GET = (request: NextRequest) => {
   const path = request.nextUrl.searchParams.get("path");
   const tag = request.nextUrl.searchParams.get("tag");
 
@@ -15,5 +15,3 @@ const GET = (request: NextRequest) => {
     return NextResponse.json({ revalidated: true, now: Date.now() });
   }
 };
-
-export default GET;

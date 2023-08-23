@@ -23,7 +23,7 @@ export const GET = async (req: Request) => {
       message: "tweetUrl is not found",
     });
   }
-  return new Response(tweetUrl, {
+  return new Response(JSON.stringify(tweetUrl), {
     headers: {
       "content-type": "text/plain",
     },
