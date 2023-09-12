@@ -284,57 +284,6 @@ export const fetchSpacesByBlock = async (
   )(eventId, dayCount, blockName, pageNumber, pageSize);
 };
 
-// export const fetchSpacesByHall = async (
-//   eventId: string,
-//   dayCount: number,
-//   hallId: string,
-//   pageNumber = 1,
-//   pageSize = 38
-// ) => {
-//   return cache(
-//     async (eventId: string, dayCount: number, hallId: string, pageNumber = 1, pageSize = 38) => {
-//       const { blockName, start, end } = generateWallParams(hallId);
-//       const spaces = await prisma.spaceView.findMany({
-//         where: {
-//           day: {
-//             event: {
-//               id: eventId,
-//             },
-//             count: dayCount,
-//           },
-//           block: {
-//             name: blockName,
-//           },
-//           spaceNumber: {
-//             gte: start,
-//             lte: end,
-//           },
-//         },
-//         include: {
-//           block: {
-//             include: {
-//               hall: true,
-//             },
-//           },
-//           circle: true,
-//           day: true,
-//           tweet: true,
-//         },
-//         orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
-//         skip: (pageNumber - 1) * pageSize,
-//         take: pageSize,
-//       });
-//       return spaces;
-//     },
-//     {
-//       tags: [
-//         "fetchSpacesByHall",
-//         `fetchSpacesByHall:${eventId}:${dayCount}:${hallId}:${pageNumber}:${pageSize}`,
-//       ],
-//     }
-//   )(eventId, dayCount, hallId, pageNumber, pageSize);
-// };
-
 export const fetchSpacesByHall = async (
   eventId: string,
   dayCount: number,
@@ -345,10 +294,7 @@ export const fetchSpacesByHall = async (
   return cache(
     async (eventId: string, dayCount: number, hallId: string, pageNumber = 1, pageSize = 38) => {
       const { blockName, start, end } = generateWallParams(hallId);
-      const spaces = await prisma.space.findMany({
-        select: {
-          id: true,
-        },
+      const spaces = await prisma.spaceView.findMany({
         where: {
           day: {
             event: {
@@ -364,36 +310,21 @@ export const fetchSpacesByHall = async (
             lte: end,
           },
         },
+        include: {
+          block: {
+            include: {
+              hall: true,
+            },
+          },
+          circle: true,
+          day: true,
+          tweet: true,
+        },
+        orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
         skip: (pageNumber - 1) * pageSize,
         take: pageSize,
       });
-
-      const spaceIds = spaces.flatMap((space) => space.id);
-      console.log(spaceIds);
-
-      const spaceWithTweet = spaceIds.map(async (spaceId) => {
-        return await prisma.tweet
-          .findFirst({
-            where: {
-              spaceId: spaceId,
-            },
-            orderBy: {
-              createdAt: "desc",
-            },
-          })
-          .space({
-            include: {
-              block: {
-                include: {
-                  hall: true,
-                },
-              },
-              circle: true,
-              day: true,
-            },
-          });
-      });
-      return await Promise.all(spaceWithTweet);
+      return spaces;
     },
     {
       tags: [
@@ -437,6 +368,11 @@ export const fetchSpacesByLanking = async (
           day: {
             event: {
               id: eventId,
+            },
+          },
+          tweet: {
+            NOT: {
+              retweets: 0,
             },
           },
         },
