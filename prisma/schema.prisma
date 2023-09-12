@@ -125,7 +125,7 @@ model Space {
   block         Block?  @relation(fields: [blockId], references: [id])
   circle        Circle? @relation(fields: [circleId], references: [id])
   day           Day?    @relation(fields: [dayId], references: [id])
-  tweet         Tweet?  @relation(fields: [tweetId], references: [id])
+  tweets        Tweet[]
 
   @@index([blockId])
   @@index([circleId])
@@ -145,7 +145,7 @@ model Tweet {
   favs       Int
   retweets   Int
   error      Boolean    @default(false)
-  spaces     Space[]
+  space      Space?     @relation(fields: [spaceId], references: [id])
   spaceView  SpaceView?
 
   @@index([spaceId])
