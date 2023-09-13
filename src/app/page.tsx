@@ -15,10 +15,11 @@ const Home = async () => {
   const year = now.getFullYear() - 2014;
 
   const description = [
+    "コミックマーケットのサークルやお品書き情報をまとめたサイトです。",
     `コミケ参加歴 ${year} 年の製作者が、使いやすいと思うサイトを実現しました。`,
-    "TwitterAPIの仕様変更のせいで一部機能が利用できなくなってしまいました。",
-    "約14000円支払っても月間1万ツイートしか取得できないため、絶望的です。",
-    "モダンなWeb技術でリプレースしたため、せっかくなので課金してツイート収集を行います。",
+    "TwitterAPIの仕様変更により、ツイートの取得並びにフォロー情報が取得できなくなりました。",
+    "C102では有料プランに登録し、ツイートの取得を試みましたが一部しか取得できませんでした。",
+    "現在は過去の情報の掲載のみ行っています。",
     `最新イベント: ${event.name} 掲載数: ${circleCount}`,
   ];
 
@@ -38,8 +39,7 @@ const Home = async () => {
         <div className="flex flex-col gap-4 py-4">
           <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
           <LinkButton
-            href={`/event/${eventId}/recent`}
-          >{`${eventId} 最近更新されたサークル`}</LinkButton>
+            href={`/event/${eventId}/recent`}>{`${eventId} 最近更新されたサークル`}</LinkButton>
         </div>
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />

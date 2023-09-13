@@ -28,7 +28,7 @@ export const generateMetadata = async ({ params }: { params: { eventId: string }
  * @param params 受け取るURLパラメータ
  * @returns
  */
-const page = async ({ params }: { params: { eventId: string } }) => {
+const Page = async ({ params }: { params: { eventId: string } }) => {
   const event = await fetchEvent(params.eventId);
   const eventId = event.id;
   const title = `${event.name}のお品書きまとめ`;
@@ -44,8 +44,7 @@ const page = async ({ params }: { params: { eventId: string } }) => {
         <div className="flex flex-col gap-4 py-4">
           <LinkButton href={`/event/${eventId}/lanking`}>{`${eventId} 話題のサークル`}</LinkButton>
           <LinkButton
-            href={`/event/${eventId}/recent`}
-          >{`${eventId} 最近更新されたサークル`}</LinkButton>
+            href={`/event/${eventId}/recent`}>{`${eventId} 最近更新されたサークル`}</LinkButton>
         </div>
         <WallList eventId={eventId} />
         <BlockListFormContainer eventId={eventId} />
@@ -53,4 +52,4 @@ const page = async ({ params }: { params: { eventId: string } }) => {
     </>
   );
 };
-export default page;
+export default Page;

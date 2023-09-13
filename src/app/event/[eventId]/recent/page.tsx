@@ -1,6 +1,6 @@
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { BlockListFormContainer, WallList } from "@/components";
-import { Section, TitleHeading } from "@/components/common";
+import { Section, Spinner, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
 
@@ -16,7 +16,7 @@ export const generateStaticParams = async ({
   return [{ eventId: eventId }];
 };
 
-const page = async ({
+const Page = async ({
   params,
   searchParams,
 }: {
@@ -33,7 +33,7 @@ const page = async ({
   return (
     <Section className="m-2">
       <TitleHeading>{pageTitle}</TitleHeading>
-      <Suspense key={suspenseKey} fallback={<div>loading...</div>}>
+      <Suspense key={suspenseKey} fallback={<Spinner />}>
         <SpacesContainer eventId={eventId} page={page} size={size} type="recent" />
       </Suspense>
       <div className="max-w-md mx-auto">
@@ -44,4 +44,4 @@ const page = async ({
   );
 };
 
-export default page;
+export default Page;

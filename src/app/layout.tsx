@@ -1,20 +1,10 @@
-import { Section } from "@/components/common";
+import { Section, Spinner } from "@/components/common";
 import { Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import "./global.css";
-
-const font = BIZ_UDPGothic({
-  weight: "400",
-  style: "normal",
-  display: "swap",
-  preload: true,
-  fallback: ["sans-serif"],
-  adjustFontFallback: true,
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "コミケお品書きツイートまとめサイト",
@@ -36,6 +26,16 @@ export const metadata: Metadata = {
   },
 };
 
+const font = BIZ_UDPGothic({
+  weight: "400",
+  style: "normal",
+  display: "swap",
+  preload: true,
+  fallback: ["sans-serif"],
+  adjustFontFallback: true,
+  subsets: ["latin"],
+});
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <Providers>
@@ -43,13 +43,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <body>
           <GoogleAnalytics />
           <Header />
-          <ErrorBoundary fallback={<div>存在しないページです。</div>}>
-            <Suspense fallback={<div>loading...</div>}>
-              <Section className="lg:w-main max-lg:w-auto lg:mx-auto max-lg:m-4">
-                {children}
-              </Section>
-            </Suspense>
-          </ErrorBoundary>
+          <Section className="lg:w-main max-lg:w-auto lg:mx-auto lg:my-4 max-lg:m-4">
+            <ErrorBoundary fallback={<div>存在しないページです。</div>}>
+              <Suspense fallback={<Spinner />}>{children}</Suspense>
+            </ErrorBoundary>
+          </Section>
           <Footer />
         </body>
       </html>

@@ -1,6 +1,6 @@
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { BlockListFormContainer, WallList } from "@/components";
-import { TitleHeading } from "@/components/common";
+import { Spinner, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent, fetchHall } from "@/services/eventService";
 import { fetchHallIds } from "@/services/slugService";
@@ -67,7 +67,7 @@ const Page = async ({
     <>
       <div className="m-2">
         <TitleHeading>{pageTitle}</TitleHeading>
-        <Suspense key={suspenseKey} fallback={<div>Loading...</div>}>
+        <Suspense key={suspenseKey} fallback={<Spinner />}>
           <SpacesContainer
             eventId={eventId}
             dayCount={dayCount}

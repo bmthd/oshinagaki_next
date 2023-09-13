@@ -11,8 +11,7 @@ export const SpaceList = ({ spaces }: { spaces: SpacesQueryResult }) => {
   return (
     <ul
       className="grid xl:grid-cols-4 max-xl:grid-cols-2 max-md:grid-cols-1 gap-2
-    		border-dashed border-4 rounded-md border-blue-500 bg-blue-100"
-    >
+    		border-dashed border-4 rounded-md border-blue-500 bg-blue-100">
       {spaces.map((space) => {
         return <SpaceInfo key={space.id} space={space} />;
       })}
@@ -26,9 +25,7 @@ export const SpaceList = ({ spaces }: { spaces: SpacesQueryResult }) => {
  * @returns
  */
 const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
-  const circle = space.circle;
-  const block = space.block;
-  const day = space.day;
+  const [circle, block, day, tweet] = [space.circle, space.block, space.day, space.tweet];
 
   const circleName = circle?.name ? (
     <TextLink href={`/circle/${circle!.id}`} className="font-bold whitespace-pre-wrap">
@@ -57,8 +54,6 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
       ホームページ
     </TextLink>
   );
-
-  const tweet = space.tweet;
 
   const title = `${day?.count}日目${block?.hall.name}${block?.name}-${space.spaceNumber}${space.ab}`;
 

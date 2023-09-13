@@ -5,6 +5,7 @@ export { Pagenation } from "./Pagenation";
 export { Section } from "./Section";
 export { SelectBox } from "./SelectBox";
 export { ShareButtons } from "./ShareButtons";
+export { Spinner } from "./Spinner";
 export { TextField } from "./TextField";
 export { TextLink } from "./TextLink";
 export { TitleHeading } from "./TitleHeading";

@@ -1,6 +1,6 @@
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { BlockListFormContainer, WallList } from "@/components";
-import { PaddingedText, Section, TitleHeading } from "@/components/common";
+import { PaddingedText, Section, Spinner, TitleHeading } from "@/components/common";
 import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
 
@@ -16,7 +16,7 @@ export const generateStaticParams = async ({
   return [{ eventId: eventId }];
 };
 
-const page = async ({
+const Page = async ({
   params,
   searchParams,
 }: {
@@ -37,7 +37,7 @@ const page = async ({
     <Section className="m-2">
       <TitleHeading>{pageTitle}</TitleHeading>
       <PaddingedText texts={description} />
-      <Suspense key={suspenseKey} fallback={<div>loading...</div>}>
+      <Suspense key={suspenseKey} fallback={<Spinner />}>
         <SpacesContainer eventId={eventId} page={page} size={size} type="lanking" />
       </Suspense>
       <div className="max-w-md mx-auto">
@@ -48,4 +48,4 @@ const page = async ({
   );
 };
 
-export default page;
+export default Page;
