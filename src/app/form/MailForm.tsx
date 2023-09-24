@@ -1,15 +1,17 @@
 "use client";
 import { TextField } from "@/components/common";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { processFormData } from "./serverAction";
 
 export const MailForm = () => {
   const [isSending, setIsSending] = useState(false);
+  const ref = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (formData: FormData) => {
     setIsSending(true);
     const result = await processFormData(formData);
     if (result) {
+      ref.current?.reset();
       alert("送信しました。");
     } else {
       alert("送信に失敗しました。");
@@ -18,7 +20,7 @@ export const MailForm = () => {
   };
 
   return (
-    <form action={handleSubmit}>
+    <form ref={ref} action={handleSubmit}>
       <div className="mb-4 max-w-sm">
         <label htmlFor="email" className="block text-gray-700 mb-2">
           メールアドレス
