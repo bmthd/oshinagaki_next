@@ -2,21 +2,19 @@ import { SpaceList, SpaceListHeader } from "@/app/event/[eventId]/_components";
 import { Pagenation } from "@/components";
 import { SpacesQueryResult } from "@/services/eventService";
 
+type Props = {
+  spaces: SpacesQueryResult;
+  page: number;
+  totalPage: number;
+};
+
 /**
  * 複数のスペースを表示するべきページを構成するコンポーネント
  * @package
  * @param param0
  * @returns
  */
-export const SpacesPresenter = ({
-  spaces,
-  page,
-  totalPage,
-}: {
-  spaces: SpacesQueryResult;
-  page: number;
-  totalPage: number;
-}) => {
+export const SpacesPresenter = ({ spaces, page, totalPage }: Props) => {
   const lastTweetDate = spaces
     .flatMap((space) => space.tweet?.createdAt)
     .reduce((latest, current) => (current! > latest! ? current : latest), null);
