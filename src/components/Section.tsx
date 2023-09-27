@@ -1,5 +1,4 @@
 "use client";
-
 import { HeadingLevelContext, useLevel } from "@/hooks/context";
 import { ComponentProps, ReactNode } from "react";
 

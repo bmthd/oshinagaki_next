@@ -1,6 +1,6 @@
+import { BlockListFormContainer, WallList } from "@/app/_components";
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
-import { BlockListFormContainer, WallList } from "@/components";
-import { Section, Spinner, TitleHeading } from "@/components/common";
+import { Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent } from "@/services/eventService";
 import { fetchBlockNames } from "@/services/slugService";

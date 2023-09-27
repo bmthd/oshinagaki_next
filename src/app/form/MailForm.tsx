@@ -1,5 +1,5 @@
 "use client";
-import { TextField } from "@/components/common";
+import { TextField } from "@/components";
 import { useRef, useState } from "react";
 import { processFormData } from "./serverAction";
 

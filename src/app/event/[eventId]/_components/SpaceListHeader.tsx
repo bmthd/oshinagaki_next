@@ -4,6 +4,7 @@ import { SpacesQueryResult } from "@/services/eventService";
  * スペースの配列を受け取り見出しを表示するコンポーネント
  * タイトルは、ブロック名、スペース番号、サークル名の順で表示
  * リンクは対応するサークルのページ内リンク
+ * @package
  * @param param0
  * @returns
  */

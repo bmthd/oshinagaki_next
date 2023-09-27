@@ -1,5 +1,4 @@
 "use client";
-
 import { Tweet } from "@/lib/prisma";
 import { useEffect, useRef } from "react";
 
@@ -29,8 +28,7 @@ export const TwitterCard = ({ tweet }: { tweet: Tweet }) => {
       <a
         className="text-blue-500 hover:text-blue-600"
         target="_blank"
-        href={`${tweet.url}?ref_src=twsrc%5Etfw`}
-      >
+        href={`${tweet.url}?ref_src=twsrc%5Etfw`}>
         {formatedDate}
       </a>
     </blockquote>

@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkButton, TitleHeading } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { FaTwitter } from "react-icons/fa";
 

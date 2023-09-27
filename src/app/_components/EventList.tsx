@@ -1,4 +1,4 @@
-import { LinkButton, TitleHeading } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components";
 import { fetchEvents } from "@/services/eventService";
 
 export const EventList = async () => {

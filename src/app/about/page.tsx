@@ -1,6 +1,6 @@
-import { DotHeading, PaddingedText, Section, TextLink, TitleHeading } from "@/components/common";
+import { DotHeading, PaddingedText, Section, TextLink, TitleHeading } from "@/components";
 
-const page = () => {
+const Page = () => {
   const texts = [
     "以前、はてなブログで壁サークルのお品書きを手作業でまとめていました。",
     "好評でしたが、作業量があまりにも膨大で多くの時間が必要だったため、やめてしまいました。",
@@ -54,4 +54,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

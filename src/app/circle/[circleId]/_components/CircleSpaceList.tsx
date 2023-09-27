@@ -1,4 +1,4 @@
-import { DotHeading, Section, TitleHeading, TwitterCard } from "@/components/common";
+import { DotHeading, Section, TitleHeading, TwitterCard } from "@/components";
 import { fetchSpacesByCircle } from "@/services/eventService";
 
 export const CircleSpaceList = async ({ circleId }: { circleId: number }) => {

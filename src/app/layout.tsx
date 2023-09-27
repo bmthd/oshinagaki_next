@@ -1,4 +1,4 @@
-import { Section, Spinner } from "@/components/common";
+import { Section, Spinner } from "@/components";
 import { Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
@@ -39,7 +39,7 @@ const font = BIZ_UDPGothic({
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <Providers>
-      <html lang="ja" className={`bg-gray-100 text-blue-900 ${font.className}`}>
+      <html lang="ja" className={`bg-gray-100 text-blue-900 scroll-smooth ${font.className}`}>
         <body>
           <GoogleAnalytics />
           <Header />

@@ -1,8 +1,7 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-import { FaTwitter, FaFacebook, FaLine, FaClipboard } from "react-icons/fa";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { FaClipboard, FaFacebook, FaLine, FaTwitter } from "react-icons/fa";
 
 export const ShareButtons = () => {
   const [title, setTitle] = useState("");

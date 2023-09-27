@@ -1,4 +1,4 @@
-import { TextLink } from "@/components/common";
+import { TextLink } from "@/components";
 import { fetchDays, fetchEvent } from "@/services/eventService";
 import { fetchDayCounts } from "@/services/slugService";
 

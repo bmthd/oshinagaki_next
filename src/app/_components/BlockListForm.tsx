@@ -1,6 +1,5 @@
 "use client";
-
-import { LinkButton, SelectBox, TitleHeading } from "@/components/common";
+import { LinkButton, SelectBox, TitleHeading } from "@/components";
 import { Day, Event } from "@/lib/prisma";
 import { BlocksWithDistrict } from "@/services/eventService";
 import { FormEvent, useEffect, useState } from "react";
@@ -77,8 +76,7 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
       <TitleHeading>ブロック一覧</TitleHeading>
       <form
         className="flex flex-col gap-2"
-        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}
-      >
+        onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault()}>
         <label htmlFor="day" aria-label="日にち">
           日にち
         </label>

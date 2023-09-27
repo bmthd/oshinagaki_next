@@ -1,10 +1,10 @@
-import { Pagenation } from "@/components/common";
+import { SpaceList, SpaceListHeader } from "@/app/event/[eventId]/_components";
+import { Pagenation } from "@/components";
 import { SpacesQueryResult } from "@/services/eventService";
-import { SpaceList } from "./SpaceList";
-import { SpaceListHeader } from "./SpaceListHeader";
 
 /**
  * 複数のスペースを表示するべきページを構成するコンポーネント
+ * @package
  * @param param0
  * @returns
  */

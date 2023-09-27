@@ -1,4 +1,4 @@
-import { LinkButton, TitleHeading } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components";
 import { fetchBlocks, fetchDays } from "@/services/eventService";
 import { fetchEventIds } from "@/services/slugService";
 
@@ -28,8 +28,7 @@ const Page = async ({ params }: { params: { eventId: string } }) => {
                     <li key={block.id} className="col-span-1 flex justify-center items-center">
                       <LinkButton
                         className="w-full"
-                        href={`/event/${eventId}/day/${day.count}/block/${block.name}`}
-                      >
+                        href={`/event/${eventId}/day/${day.count}/block/${block.name}`}>
                         {`${day.count}日目"${block.name}"ブロック`}
                       </LinkButton>
                     </li>

@@ -1,6 +1,6 @@
 "use client";
 
-import { TextLink } from "@/components/common";
+import { TextLink } from "@/components";
 import { useSelectedLayoutSegments } from "next/navigation";
 import React from "react";
 import { FaAngleRight } from "react-icons/fa";

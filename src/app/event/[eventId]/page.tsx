@@ -1,5 +1,5 @@
-import { BlockListFormContainer, WallList } from "@/components";
-import { LinkButton, PaddingedText, Section, TitleHeading } from "@/components/common";
+import { BlockListFormContainer, WallList } from "@/app/_components";
+import { LinkButton, PaddingedText, Section, TitleHeading } from "@/components";
 import { fetchEvent } from "@/services/eventService";
 
 export const revalidate = 86400;

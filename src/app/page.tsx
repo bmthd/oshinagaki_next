@@ -1,5 +1,5 @@
-import { BlockListFormContainer, EventList, WallList } from "@/components";
-import { LinkButton, PaddingedText } from "@/components/common";
+import { BlockListFormContainer, EventList, WallList } from "@/app/_components";
+import { LinkButton, PaddingedText } from "@/components";
 import { fetchLatestEvent, fetchSpaceCount } from "@/services/eventService";
 import { FaTwitter } from "react-icons/fa";
 

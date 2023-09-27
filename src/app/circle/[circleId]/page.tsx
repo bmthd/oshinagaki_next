@@ -1,5 +1,5 @@
 import { CircleSpaceList } from "@/app/circle/[circleId]/_components/CircleSpaceList";
-import { DotHeading, Section, TextLink, TitleHeading } from "@/components/common";
+import { DotHeading, Section, TextLink, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { fetchCircle } from "@/services/eventService";
 import { Suspense } from "react";

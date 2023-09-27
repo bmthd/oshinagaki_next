@@ -1,4 +1,4 @@
-import { LinkButton, TitleHeading } from "@/components/common";
+import { LinkButton, TitleHeading } from "@/components";
 import { fetchDays, fetchHalls } from "@/services/eventService";
 
 /**
@@ -27,8 +27,7 @@ export const WallList = async ({ eventId }: { eventId: string }) => {
                     <li key={hall.id}>
                       <LinkButton
                         className="w-full mb-4"
-                        href={`/event/${eventId}/day/${day.count}/wall/${hall.id}`}
-                      >
+                        href={`/event/${eventId}/day/${day.count}/wall/${hall.id}`}>
                         {hall.name}ホール
                       </LinkButton>
                     </li>

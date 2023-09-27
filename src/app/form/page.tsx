@@ -1,4 +1,4 @@
-import { PaddingedText, TitleHeading } from "@/components/common";
+import { PaddingedText, TitleHeading } from "@/components";
 import { MailForm } from "./MailForm";
 
 const Page = () => {

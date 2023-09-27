@@ -1,5 +1,5 @@
-import { BlockListForm } from "@/components";
 import { fetchDays, fetchDistricts, fetchEvent } from "@/services/eventService";
+import { BlockListForm } from "./BlockListForm";
 
 /**
  * ブロック一覧を選択するフォームを表示するコンポーネント

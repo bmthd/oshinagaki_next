@@ -1,4 +1,4 @@
-import { DotHeading, Section, TextLink, TitleHeading, TwitterCard } from "@/components/common";
+import { DotHeading, Section, TextLink, TitleHeading, TwitterCard } from "@/components";
 import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
 
 /**

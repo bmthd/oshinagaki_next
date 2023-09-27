@@ -1,6 +1,6 @@
+import { BlockListFormContainer, WallList } from "@/app/_components";
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
-import { BlockListFormContainer, WallList } from "@/components";
-import { PaddingedText, Section, Spinner, TitleHeading } from "@/components/common";
+import { PaddingedText, Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
 

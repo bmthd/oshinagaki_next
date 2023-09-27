@@ -1,4 +1,4 @@
-import { Spinner } from "@/components/common";
+import { Spinner } from "@/components";
 
 const Loading = () => {
   return <Spinner className="w-16 h-16 text-blue-500" />;

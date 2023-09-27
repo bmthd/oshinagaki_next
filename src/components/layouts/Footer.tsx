@@ -1,4 +1,4 @@
-import { TextLink } from "@/components/common";
+import { TextLink } from "@/components";
 import { PageTopButton } from "./PageTopButton";
 
 export const Footer = () => {

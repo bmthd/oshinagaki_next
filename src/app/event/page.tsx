@@ -1,4 +1,4 @@
-import { EventList } from "@/components/EventList";
+import { EventList } from "@/app/_components";
 import Head from "next/head";
 
 /**
@@ -6,7 +6,7 @@ import Head from "next/head";
  * イベント一覧を表示するページ
  * @returns
  */
-const page = () => {
+const Page = () => {
   return (
     <>
       <Head>
@@ -17,4 +17,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
