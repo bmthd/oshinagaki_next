@@ -8,15 +8,11 @@ export const dynamic = "force-dynamic";
 
 export const revalidate = 86400;
 
-export const generateStaticParams = async ({
-  params: { eventId },
-}: {
-  params: { eventId: string };
-}) => {
+export const generateStaticParams = ({ params: { eventId } }: { params: { eventId: string } }) => {
   return [{ eventId: eventId }];
 };
 
-const Page = async ({
+const Page = ({
   params,
   searchParams,
 }: {
