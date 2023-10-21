@@ -1,5 +1,5 @@
-import { Section, Spinner } from "@/components";
-import { Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
+import { Spinner } from "@/components";
+import { Container, Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -43,11 +43,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <body>
           <GoogleAnalytics />
           <Header />
-          <Section className="lg:w-main max-lg:w-auto lg:mx-auto lg:my-4 max-lg:m-4">
+          <Container>
             <ErrorBoundary fallback={<div>存在しないページです。</div>}>
               <Suspense fallback={<Spinner />}>{children}</Suspense>
             </ErrorBoundary>
-          </Section>
+          </Container>
           <Footer />
         </body>
       </html>

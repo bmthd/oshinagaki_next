@@ -4,7 +4,6 @@ export const GoogleAnalytics = () => {
   return (
     <>
       <script async src={trackingURL} />
-
       <script
         dangerouslySetInnerHTML={{
           __html: `
