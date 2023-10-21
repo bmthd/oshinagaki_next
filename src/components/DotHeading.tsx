@@ -1,4 +1,4 @@
-import { H } from "./H";
+import { H } from "./structure/H";
 
 interface Props {
   children: React.ReactNode;

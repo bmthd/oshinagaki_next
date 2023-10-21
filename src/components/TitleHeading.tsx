@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { H } from "./H";
+import { H } from "./structure/H";
 interface Props {
   children: ReactNode;
   className?: string;

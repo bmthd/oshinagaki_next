@@ -1,11 +1,15 @@
 "use client";
-import { useLevel } from "@/hooks/context";
+import { useLevel } from "@/components/structure/context";
 import { HTMLProps, ReactNode } from "react";
 
-interface Props extends HTMLProps<HTMLHeadingElement> {
+type Props = HTMLProps<HTMLHeadingElement> & {
   children: ReactNode;
-}
+};
 
+/**
+ * ページの階層に応じてH1~H6を返す
+ * @returns HTMLHeadingElement H1~H6
+ */
 export const H = ({ children, ...props }: Props) => {
   const level = useLevel();
   switch (level) {

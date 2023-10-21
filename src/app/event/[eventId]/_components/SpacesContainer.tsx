@@ -9,7 +9,6 @@ import {
   fetchSpacesByLanking,
   fetchSpacesByUpdate,
 } from "@/services/eventService";
-import { Space } from "@prisma/client";
 
 type Common = {
   eventId: string;
@@ -49,7 +48,7 @@ type SpaceData = [number, SpacesQueryResult];
 
 const fetchSpacesData = async ({
   ...props
-  }: PropsWithBlock | PropsWithHall | LankingProps | RecentProps):Promise<SpaceData> => {
+}: PropsWithBlock | PropsWithHall | LankingProps | RecentProps): Promise<SpaceData> => {
   const { eventId, dayCount, blockName, hallId, page, size, type } = props;
   if (blockName && dayCount) {
     return await Promise.all([
@@ -62,7 +61,7 @@ const fetchSpacesData = async ({
       fetchSpacesByHall(eventId, dayCount, hallId, page, size),
     ]);
   } else if (type === "lanking") {
-    return  await Promise.all([
+    return await Promise.all([
       fetchSpaceCountByEvent(eventId),
       fetchSpacesByLanking(eventId, page, size),
     ]);
@@ -84,7 +83,7 @@ const fetchSpacesData = async ({
  * @returns
  */
 export const SpacesContainer = async ({
-...props
+  ...props
 }: PropsWithBlock | PropsWithHall | LankingProps | RecentProps) => {
   const { page, size } = props;
   const [count, spaces] = await fetchSpacesData(props);
