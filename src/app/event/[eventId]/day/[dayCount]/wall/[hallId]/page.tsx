@@ -1,6 +1,6 @@
 import { BlockListFormContainer, WallList } from "@/app/_components";
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
-import { Spinner, TitleHeading } from "@/components";
+import { Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent, fetchHall } from "@/services/eventService";
 import { fetchHallIds } from "@/services/slugService";
@@ -65,7 +65,7 @@ const Page = async ({
 
   return (
     <>
-      <div className="m-2">
+      <Section className="m-2">
         <TitleHeading>{pageTitle}</TitleHeading>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
           <SpacesContainer
@@ -80,7 +80,7 @@ const Page = async ({
           <WallList eventId={eventId} />
           <BlockListFormContainer eventId={eventId} />
         </div>
-      </div>
+      </Section>
     </>
   );
 };
