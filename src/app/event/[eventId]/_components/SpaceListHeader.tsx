@@ -5,7 +5,6 @@ import { SpacesQueryResult } from "@/services/eventService";
  * タイトルは、ブロック名、スペース番号、サークル名の順で表示
  * リンクは対応するサークルのページ内リンク
  * @package
- * @param param0
  * @returns
  */
 export const SpaceListHeader = ({ spaces }: { spaces: SpacesQueryResult }) => {
@@ -18,13 +17,13 @@ export const SpaceListHeader = ({ spaces }: { spaces: SpacesQueryResult }) => {
             space.circle?.name ? space.circle?.name : ""
           }`;
           return (
-            <li
-              key={space.id}
-              className="flex items-center col-span-1 w-auto h-10 max-md:h-8 py-1 px-2 m-1 bg-primary hover:bg-primary-dark border border-gray-300 rounded-md">
+            <li key={space.id}>
               <a
                 href={link}
-                className="max-md:text-xs text-white font-bold text-ellipsis whitespace-nowrap overflow-hidden">
-                {circleName}
+                className="flex items-center col-span-1 w-auto h-10 max-md:h-8 py-1 px-2 m-1 bg-primary hover:bg-primary-dark border border-gray-300 rounded-md">
+                <span className="max-md:text-xs text-white font-bold text-ellipsis whitespace-nowrap overflow-hidden">
+                  {circleName}
+                </span>
               </a>
             </li>
           );
