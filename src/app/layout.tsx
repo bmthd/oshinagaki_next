@@ -1,5 +1,6 @@
 import { Spinner } from "@/components";
-import { Container, Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
+import { Container, Footer, Header, Providers } from "@/components/layouts";
+import { GoogleTagManager } from "@next/third-parties/dist/google";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -41,7 +42,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <Providers>
       <html lang="ja" className={`bg-gray-100 text-blue-900 scroll-smooth ${font.className}`}>
         <body>
-          <GoogleAnalytics />
+          <GoogleTagManager
+            gtmId={process.env.TRACKING_ID!}
+            auth=""
+            dataLayer={[]}
+            preview=""
+            dataLayerName=""
+          />
           <Header />
           <Container>
             <ErrorBoundary fallback={<div>存在しないページです。</div>}>

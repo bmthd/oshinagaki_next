@@ -1,34 +1,27 @@
 "use client";
 
-import { NextPage } from "next";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const RedirectPage: NextPage = () => {
-  useEffect(() => {
-    window.location.href = getRedirectUrl();
-  }, []);
-  return <div>Redirecting...</div>;
+const auth_url = "https://twitter.com/i/oauth2/authorize";
+const params = {
+  response_type: "code",
+  client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
+  redirect_uri: "https://oshinagaki.bmth.dev/api/auth/callback/twitter",
+  scope: "offline.access%20users.read%20follows.read",
+  state: "state",
+  code_challenge: "challenge",
+  code_challenge_method: "plain",
 };
 
-const getRedirectUrl = () => {
-  const auth_url = "https://twitter.com/i/oauth2/authorize";
-  const params = {
-    response_type: "code",
-    client_id: process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID,
-    redirect_uri: "https://oshinagaki-front.vercel.app/api/auth/callback/twitter",
-    scope: "offline.access%20users.read%20follows.read",
-    state: "state",
-    code_challenge: "challenge",
-    code_challenge_method: "plain",
-  };
+const queryString = Object.entries(params)
+  .map(([key, value]) => `${key}=${value}`)
+  .join("&");
 
-  const queryString = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
-    .join("&");
+const redirectUrl = `${auth_url}?${queryString}`;
 
-  const redirectUrl = `${auth_url}?${queryString}`;
-
-  return redirectUrl;
+const Page = () => {
+  const router = useRouter();
+  router.push(redirectUrl);
 };
 
-export default RedirectPage;
+export default Page;
