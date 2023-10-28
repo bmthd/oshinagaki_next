@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
@@ -15,14 +15,13 @@ const Image = () => {
       <div
         style={{
           fontSize: 48,
-          background: "white",
+          background: "#87cefa",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-        }}
-      >
+        }}>
         {siteName}
       </div>
     ),
