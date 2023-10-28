@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
+  // デフォルトのフォーマッターに prettier を指定
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // 保存時に prettier によって整形
+  "editor.formatOnSave": true,
+  // タブ幅を 2 に設定
+  "editor.tabSize": 2,
+  // タブにはスペースを使用
+  "editor.insertSpaces": true,
+  // 改行コードはを LF に設定
+  "files.eol": "auto",
+  // ファイル末尾には自動的に空行を挿入
+  "files.insertFinalNewline": true,
+  "terminal.integrated.env.windows": {
+    "PSExecutionPolicyPreference": "RemoteSigned"
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
+}
