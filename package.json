@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.8.4",
-    "@next/third-parties": "13.5.6-canary.4",
+    "@next/third-parties": "14.0.0",
     "@prisma/client": "^5.2.0",
     "@types/node": "20.3.1",
     "@types/react": "18.2.13",

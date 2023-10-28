@@ -41,13 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <Providers>
       <html lang="ja" className={`bg-gray-100 text-blue-900 scroll-smooth ${font.className}`}>
         <body>
-          {/* <GoogleTagManager
-            gtmId={process.env.TRACKING_ID!}
-            auth=""
-            dataLayer={[]}
-            preview=""
-            dataLayerName=""
-          /> */}
+          {/* <GoogleTagManager gtmId={process.env.TRACKING_ID!} /> */}
           <GoogleAnalytics />
           <Header />
           <Container>
