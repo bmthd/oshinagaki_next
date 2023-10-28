@@ -1,5 +1,12 @@
 import { Spinner } from "@/components";
-import { Container, Footer, GoogleAnalytics, Header, Providers } from "@/components/layouts";
+import {
+  Container,
+  Footer,
+  GoogleAnalytics,
+  Header,
+  PageTopButton,
+  Providers,
+} from "@/components/layouts";
 import { Metadata } from "next";
 import { BIZ_UDPGothic } from "next/font/google";
 import { ReactNode, Suspense } from "react";
@@ -50,6 +57,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </ErrorBoundary>
           </Container>
           <Footer />
+          <PageTopButton />
         </body>
       </html>
     </Providers>
