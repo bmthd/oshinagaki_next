@@ -1,25 +1,42 @@
 import { TextLink } from "@/components";
-import { PageTopButton } from "./PageTopButton";
+
+type LinkItem = {
+  href: string;
+  text: string;
+};
+
+type LinkItems = LinkItem[];
+
+const linkItems: LinkItems[] = [
+  [
+    { href: "/", text: "TOP" },
+    { href: "/event/latest", text: "最新のイベント" },
+    { href: "/twitter-webapp", text: "フォロワーのお品書き" },
+  ],
+  [
+    { href: "/about", text: "このサイトについて" },
+    { href: "/form", text: "お問い合わせ" },
+  ],
+];
 
 export const Footer = () => {
   return (
     <footer className="bg-primary h-48 flex flex-col">
       <nav className="flex flex-col justify-center mt-8">
-        <div className="flex justify-center">
-          <TextLink href="/"> TOP </TextLink>
-          <span className="mx-2">|</span>
-          <TextLink href="/event/latest"> 最新のイベント </TextLink>
-          <span className="mx-2">|</span>
-          <TextLink href="/twitter-webapp"> フォロワーのお品書き</TextLink>
-        </div>
-        <div className="flex justify-center">
-          <TextLink href="/about">このサイトについて</TextLink>
-          <span className="mx-2">|</span>
-          <TextLink href="/form">お問い合わせ</TextLink>
-        </div>
+        {linkItems.map((items, i) => (
+          <div key={i} className="flex justify-center">
+            {items.map((item, j) => (
+              <>
+                <TextLink key={j} href={item.href}>
+                  {item.text}
+                </TextLink>
+                {items.length - 1 !== j && <span className="mx-2">|</span>}
+              </>
+            ))}
+          </div>
+        ))}
       </nav>
-      <p className="text-center mt-4">bmth All rights reserved</p>
-      <PageTopButton />
+      <small className="text-center mt-4">bmth All rights reserved</small>
     </footer>
   );
 };
