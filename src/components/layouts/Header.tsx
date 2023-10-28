@@ -1,5 +1,6 @@
+import { Breadcrumb } from "@/components/layouts/Breadcrumb";
+import { H } from "@/components/structure/H";
 import Link from "next/link";
-import { Breadcrumb } from "./Breadcrumb";
 
 export const Header = () => {
   const title = (
@@ -11,11 +12,11 @@ export const Header = () => {
   return (
     <>
       <header className="flex items-center justify-center bg-primary text-white h-48">
-        <h1 className="lg:text-5xl max-lg:text-4xl font-bold">
+        <H className="lg:text-5xl max-lg:text-4xl font-bold">
           <Link href="/" className="flex max-lg:flex-col items-center">
             {title}
           </Link>
-        </h1>
+        </H>
       </header>
       <Breadcrumb />
     </>
