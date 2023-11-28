@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 86400;
 
 export const generateStaticParams = ({ params: { eventId } }: { params: { eventId: string } }) => {
-  return [{ eventId: eventId }];
+  return [{ eventId }];
 };
 
 const Page = ({
@@ -23,7 +23,7 @@ const Page = ({
   const page = convertToNumber(searchParams!.page!) || 1;
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${page}-${size}`;
-  const pageTitle = `${eventId} 話題のサークルランキング`;
+  const title = `${eventId} 話題のサークルランキング`;
   const description = [
     "このページではTwitter上で話題のサークルをまとめています。",
     "リツイート数の多い順に表示しています。",
@@ -31,11 +31,11 @@ const Page = ({
 
   return (
     <>
-      <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{title}</TitleHeading>
       <PaddingedText texts={description} />
       <Section>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
-          <SpacesContainer eventId={eventId} page={page} size={size} type="lanking" />
+          <SpacesContainer {...{ eventId, page, size, type: "lanking" }} />
         </Suspense>
         <div className="max-w-md mx-auto">
           <WallList eventId={eventId} />

@@ -21,7 +21,7 @@ const Page = async ({ params }: { params: { circleId: string } }) => {
   const circleId = convertToNumber(params.circleId);
   if (!circleId) throw new Error("circleId is not number");
   const circle = await fetchCircle(circleId);
-  const pageTitle = `${circle?.name}のお品書きまとめ`;
+  const title = `${circle?.name}のお品書きまとめ`;
 
   const circleName = circle.name ? (
     <TextLink href={`/circle/${circle.id}`} className="font-bold whitespace-pre-wrap">
@@ -48,7 +48,7 @@ const Page = async ({ params }: { params: { circleId: string } }) => {
   return (
     <>
       <div className="m-2">
-        <TitleHeading>{pageTitle}</TitleHeading>
+        <TitleHeading>{title}</TitleHeading>
         <Section>
           <DotHeading>サークル名</DotHeading>
           {circleName}

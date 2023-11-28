@@ -88,5 +88,5 @@ export const SpacesContainer = async ({
   const { page, size } = props;
   const [count, spaces] = await fetchSpacesData(props);
   const totalPage = Math.ceil(count / size);
-  return <SpacesPresenter spaces={spaces} page={page} totalPage={totalPage} />;
+  return <SpacesPresenter {...{ spaces, page, totalPage }} />;
 };

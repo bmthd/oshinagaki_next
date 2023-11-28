@@ -24,14 +24,14 @@ const Page = ({
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${page}-${size}`;
 
-  const pageTitle = `${eventId} 最近更新されたサークル`;
+  const title = `${eventId} 最近更新されたサークル`;
 
   return (
     <>
-      <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{title}</TitleHeading>
       <Section>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
-          <SpacesContainer eventId={eventId} page={page} size={size} type="recent" />
+          <SpacesContainer {...{ eventId, page, size, type: "recent" }} />
         </Suspense>
         <div className="max-w-md mx-auto">
           <WallList eventId={eventId} />

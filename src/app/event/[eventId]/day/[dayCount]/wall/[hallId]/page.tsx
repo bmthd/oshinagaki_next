@@ -18,9 +18,9 @@ export const generateStaticParams = async ({
 }) => {
   const hallIds = await fetchHallIds(eventId);
   return hallIds.map((hallId) => ({
-    eventId: eventId,
-    dayCount: dayCount,
-    hallId: hallId,
+    eventId,
+    dayCount,
+    hallId,
   }));
 };
 
@@ -35,11 +35,11 @@ export const generateMetadata = async ({
     decodeURIComponent(params.hallId),
   ];
   const [event, hall] = await Promise.all([fetchEvent(eventId), fetchHall(hallId)]);
-  const pageTitle = `${eventId} ${dayCount}日目${hall?.name}お品書きまとめ`;
+  const title = `${eventId} ${dayCount}日目${hall?.name}お品書きまとめ`;
   const description = `${event.name} ${dayCount}日目${hall?.name}のサークル一覧です。`;
   return {
-    title: pageTitle,
-    description: description,
+    title,
+    description,
   };
 };
 
@@ -61,19 +61,21 @@ const Page = async ({
   const size = convertToNumber(searchParams!.size!) || 38;
   const hall = await fetchHall(hallId);
   const suspenseKey = `${eventId}-${dayCount}-${hallId}-${page}-${size}`;
-  const pageTitle = `${eventId} ${dayCount}日目${hall?.name}ホール壁サークルお品書きまとめ`;
+  const title = `${eventId} ${dayCount}日目${hall?.name}ホール壁サークルお品書きまとめ`;
 
   return (
     <>
-      <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{title}</TitleHeading>
       <Section>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
           <SpacesContainer
-            eventId={eventId}
-            dayCount={dayCount}
-            hallId={hallId}
-            page={page}
-            size={size}
+            {...{
+              eventId,
+              dayCount,
+              hallId,
+              page,
+              size,
+            }}
           />
         </Suspense>
         <div className="max-w-md mx-auto">

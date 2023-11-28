@@ -5,7 +5,7 @@ import { fetchEventIds } from "@/services/slugService";
 export const generateStaticParams = async () => {
   const eventIds = await fetchEventIds();
   return eventIds.map((eventId) => ({
-    eventId: eventId,
+    eventId,
   }));
 };
 
@@ -13,10 +13,10 @@ const Page = async ({ params }: { params: { eventId: string } }) => {
   const eventId = params.eventId;
   const blocks = await fetchBlocks(eventId);
   const days = await fetchDays(eventId);
-  const pageTitle = `${eventId}のブロック一覧`;
+  const title = `${eventId}のブロック一覧`;
   return (
     <>
-      <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{title}</TitleHeading>
       <div className="border-dashed border-4 rounded-md border-blue-500 bg-blue-100 grid grid-cols-2">
         {days.map((day, index) => {
           return (

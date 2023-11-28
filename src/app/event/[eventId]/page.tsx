@@ -14,11 +14,11 @@ export const generateStaticParams = async ({
 
 export const generateMetadata = async ({ params }: { params: { eventId: string } }) => {
   const event = await fetchEvent(params.eventId);
-  const pageTitle = `${event.name}のお品書きまとめ`;
+  const title = `${event.name}のお品書きまとめ`;
   const description = `${event.name}のサークル一覧です。`;
   return {
-    title: pageTitle,
-    description: description,
+    title,
+    description,
   };
 };
 

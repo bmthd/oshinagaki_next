@@ -18,9 +18,9 @@ export const generateStaticParams = async ({
 }) => {
   const blockNames = await fetchBlockNames(eventId);
   return blockNames.map((blockName) => ({
-    eventId: eventId,
-    dayCount: dayCount,
-    blockName: blockName,
+    eventId,
+    dayCount,
+    blockName,
   }));
 };
 
@@ -35,11 +35,11 @@ export const generateMetadata = async ({
     decodeURIComponent(params.blockName),
   ];
   const event = await fetchEvent(eventId);
-  const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
+  const title = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
   const description = `${event.name} ${dayCount}日目ブロック\"${blockName}\"のサークル一覧です。`;
   return {
-    title: pageTitle,
-    description: description,
+    title,
+    description,
   };
 };
 
@@ -64,19 +64,21 @@ const Page = async ({
   const page = convertToNumber(searchParams!.page!) || 1;
   const size = convertToNumber(searchParams!.size!) || 38;
   const suspenseKey = `${eventId}-${dayCount}-${blockName}-${page}-${size}`;
-  const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
+  const title = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 
   return (
     <>
-      <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{title}</TitleHeading>
       <Section>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
           <SpacesContainer
-            eventId={params.eventId}
-            dayCount={dayCount}
-            blockName={blockName}
-            page={page}
-            size={size}
+            {...{
+              eventId,
+              dayCount,
+              blockName,
+              page,
+              size,
+            }}
           />
         </Suspense>
         <div className="max-w-md mx-auto">
