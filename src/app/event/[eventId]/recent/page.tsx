@@ -27,16 +27,18 @@ const Page = ({
   const pageTitle = `${eventId} 最近更新されたサークル`;
 
   return (
-    <Section className="m-2">
+    <>
       <TitleHeading>{pageTitle}</TitleHeading>
-      <Suspense key={suspenseKey} fallback={<Spinner />}>
-        <SpacesContainer eventId={eventId} page={page} size={size} type="recent" />
-      </Suspense>
-      <div className="max-w-md mx-auto">
-        <WallList eventId={eventId} />
-        <BlockListFormContainer eventId={eventId} />
-      </div>
-    </Section>
+      <Section>
+        <Suspense key={suspenseKey} fallback={<Spinner />}>
+          <SpacesContainer eventId={eventId} page={page} size={size} type="recent" />
+        </Suspense>
+        <div className="max-w-md mx-auto">
+          <WallList eventId={eventId} />
+          <BlockListFormContainer eventId={eventId} />
+        </div>
+      </Section>
+    </>
   );
 };
 

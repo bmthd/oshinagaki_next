@@ -67,22 +67,24 @@ const Page = async ({
   const pageTitle = `${eventId} ${dayCount}日目ブロック\"${blockName}\"お品書きまとめ`;
 
   return (
-    <Section className="m-2">
+    <>
       <TitleHeading>{pageTitle}</TitleHeading>
-      <Suspense key={suspenseKey} fallback={<Spinner />}>
-        <SpacesContainer
-          eventId={params.eventId}
-          dayCount={dayCount}
-          blockName={blockName}
-          page={page}
-          size={size}
-        />
-      </Suspense>
-      <div className="max-w-md mx-auto">
-        <WallList eventId={eventId} />
-        <BlockListFormContainer eventId={eventId} />
-      </div>
-    </Section>
+      <Section>
+        <Suspense key={suspenseKey} fallback={<Spinner />}>
+          <SpacesContainer
+            eventId={params.eventId}
+            dayCount={dayCount}
+            blockName={blockName}
+            page={page}
+            size={size}
+          />
+        </Suspense>
+        <div className="max-w-md mx-auto">
+          <WallList eventId={eventId} />
+          <BlockListFormContainer eventId={eventId} />
+        </div>
+      </Section>
+    </>
   );
 };
 export default Page;

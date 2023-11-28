@@ -30,17 +30,19 @@ const Page = ({
   ];
 
   return (
-    <Section className="m-2">
+    <>
       <TitleHeading>{pageTitle}</TitleHeading>
       <PaddingedText texts={description} />
-      <Suspense key={suspenseKey} fallback={<Spinner />}>
-        <SpacesContainer eventId={eventId} page={page} size={size} type="lanking" />
-      </Suspense>
-      <div className="max-w-md mx-auto">
-        <WallList eventId={eventId} />
-        <BlockListFormContainer eventId={eventId} />
-      </div>
-    </Section>
+      <Section>
+        <Suspense key={suspenseKey} fallback={<Spinner />}>
+          <SpacesContainer eventId={eventId} page={page} size={size} type="lanking" />
+        </Suspense>
+        <div className="max-w-md mx-auto">
+          <WallList eventId={eventId} />
+          <BlockListFormContainer eventId={eventId} />
+        </div>
+      </Section>
+    </>
   );
 };
 

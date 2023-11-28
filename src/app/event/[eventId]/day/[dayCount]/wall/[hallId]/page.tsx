@@ -65,8 +65,8 @@ const Page = async ({
 
   return (
     <>
-      <Section className="m-2">
-        <TitleHeading>{pageTitle}</TitleHeading>
+      <TitleHeading>{pageTitle}</TitleHeading>
+      <Section>
         <Suspense key={suspenseKey} fallback={<Spinner />}>
           <SpacesContainer
             eventId={eventId}

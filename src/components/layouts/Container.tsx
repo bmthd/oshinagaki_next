@@ -6,5 +6,9 @@ import { ReactNode } from "react";
  * @returns section
  */
 export const Container = ({ children }: { children: ReactNode }) => {
-  return <Section className="container mx-auto lg:my-4">{children}</Section>;
+  return (
+    <Section className="container flex flex-col justify-center items-center mx-auto lg:my-4 p-4">
+      {children}
+    </Section>
+  );
 };
