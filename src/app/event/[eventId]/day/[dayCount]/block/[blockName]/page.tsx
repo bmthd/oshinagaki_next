@@ -7,7 +7,7 @@ import { fetchBlockNames } from "@/services/slugService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const revalidate = 86400;
 

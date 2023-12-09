@@ -4,7 +4,7 @@ import { PaddingedText, Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const revalidate = 86400;
 
