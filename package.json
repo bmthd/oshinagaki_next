@@ -12,7 +12,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "studio": "prisma studio",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "knip": "pnpx knip"
   },
   "dependencies": {
     "@auth/core": "^0.8.4",
