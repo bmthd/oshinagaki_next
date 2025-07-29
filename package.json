@@ -12,8 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "studio": "prisma studio",
-    "preinstall": "npx only-allow pnpm",
-    "knip": "pnpx knip"
+    "knip": "bunx knip"
   },
   "dependencies": {
     "@auth/core": "^0.8.4",
@@ -56,9 +55,10 @@
     "storybook": "^7.0.24",
     "typescript": "^5.1.6"
   },
-  "packageManager": "pnpm@8.6.12",
+  "packageManager": "bun@1.2.17",
   "engines": {
-    "npm": "🔥Do not use npm, use pnpm instead.",
-    "yarn": "🔥Do not use yarn, use pnpm instead."
+    "npm": "🔥Do not use npm, use bun instead.",
+    "yarn": "🔥Do not use yarn, use bun instead.",
+    "pnpm": "🔥Do not use pnpm, use bun instead."
   }
 }
