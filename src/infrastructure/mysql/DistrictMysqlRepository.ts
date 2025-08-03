@@ -1,55 +1,53 @@
-import { cache } from "@/lib/nextCache";
-import prisma from "@/lib/prisma";
 import { DistrictRepository, DistrictWithHalls } from "@/domain/district/DistrictRepository";
+import { cacheDecorator } from "@/lib/nextCache";
+import prisma from "@/lib/prisma";
 import "server-only";
 
 export class DistrictMysqlRepository implements DistrictRepository {
+  @cacheDecorator({
+    tags: ["fetchDistricts"],
+  })
   async findManyByEvent(eventId: string): Promise<DistrictWithHalls[]> {
-    return cache(
-      async (eventId: string) => {
-        const districts = await prisma.district.findMany({
-          where: {
-            halls: {
+    const districts = await prisma.district.findMany({
+      where: {
+        halls: {
+          some: {
+            blocks: {
               some: {
-                blocks: {
-                  some: {
-                    event: {
-                      id: eventId,
-                    },
-                  },
+                event: {
+                  id: eventId,
+                },
+              },
+            },
+          },
+        },
+      },
+      include: {
+        halls: {
+          where: {
+            blocks: {
+              some: {
+                event: {
+                  id: eventId,
                 },
               },
             },
           },
           include: {
-            halls: {
+            blocks: {
               where: {
-                blocks: {
-                  some: {
-                    event: {
-                      id: eventId,
-                    },
-                  },
-                },
-              },
-              include: {
-                blocks: {
-                  where: {
-                    event: {
-                      id: eventId,
-                    },
-                  },
+                event: {
+                  id: eventId,
                 },
               },
             },
           },
-          orderBy: {
-            name: "asc",
-          },
-        });
-        return districts;
+        },
       },
-      { tags: ["fetchDistricts", `fetchDistricts:${eventId}`] }
-    )(eventId);
+      orderBy: {
+        name: "asc",
+      },
+    });
+    return districts;
   }
 }

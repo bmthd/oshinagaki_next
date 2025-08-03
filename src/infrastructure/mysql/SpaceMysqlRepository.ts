@@ -1,9 +1,14 @@
-import { cache } from "@/lib/nextCache";
+import { cacheDecorator } from "@/lib/nextCache";
 import prisma from "@/lib/prisma";
 import { SpaceRepository, SpaceWithRelations } from "@/domain/space/SpaceRepository";
 import "server-only";
 
 export class SpaceMysqlRepository implements SpaceRepository {
+  @cacheDecorator({
+    tags: [
+      "fetchSpacesByBlock",
+    ],
+  })
   async findManyByBlock(
     eventId: string,
     dayCount: number,
@@ -11,49 +16,44 @@ export class SpaceMysqlRepository implements SpaceRepository {
     pageNumber = 1,
     pageSize = 38
   ): Promise<SpaceWithRelations[]> {
-    return cache(
-      async (eventId: string, dayCount: number, blockName: string, pageNumber = 1, pageSize = 38) => {
-        const spaces = await prisma.spaceView.findMany({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-              count: dayCount,
-            },
-            block: {
-              name: blockName,
-            },
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-          include: {
-            block: {
-              include: {
-                hall: true,
-              },
-            },
-            circle: true,
-            day: {
-              include: {
-                event: true,
-              },
-            },
-            tweet: true,
-          },
-          orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
-          skip: (pageNumber - 1) * pageSize,
-          take: pageSize,
-        });
-        return spaces;
+          count: dayCount,
+        },
+        block: {
+          name: blockName,
+        },
       },
-      {
-        tags: [
-          "fetchSpacesByBlock",
-          `fetchSpacesByBlock:${eventId}:${dayCount}:${blockName}:${pageNumber}:${pageSize}`,
-        ],
-      }
-    )(eventId, dayCount, blockName, pageNumber, pageSize);
+      include: {
+        block: {
+          include: {
+            hall: true,
+          },
+        },
+        circle: true,
+        day: {
+          include: {
+            event: true,
+          },
+        },
+        tweet: true,
+      },
+      orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return spaces;
   }
 
+  @cacheDecorator({
+    tags: [
+      "fetchSpacesByHall",
+    ],
+  })
   async findManyByHall(
     eventId: string,
     dayCount: number,
@@ -61,264 +61,237 @@ export class SpaceMysqlRepository implements SpaceRepository {
     pageNumber = 1,
     pageSize = 38
   ): Promise<SpaceWithRelations[]> {
-    return cache(
-      async (eventId: string, dayCount: number, hallId: string, pageNumber = 1, pageSize = 38) => {
-        const { blockName, start, end } = this.generateWallParams(hallId);
-        const spaces = await prisma.spaceView.findMany({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-              count: dayCount,
-            },
-            block: {
-              name: blockName,
-            },
-            spaceNumber: {
-              gte: start,
-              lte: end,
-            },
+    const { blockName, start, end } = this.generateWallParams(hallId);
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-          include: {
-            block: {
-              include: {
-                hall: true,
-              },
-            },
-            circle: true,
-            day: {
-              include: {
-                event: true,
-              },
-            },
-            tweet: true,
-          },
-          orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
-          skip: (pageNumber - 1) * pageSize,
-          take: pageSize,
-        });
-        return spaces;
+          count: dayCount,
+        },
+        block: {
+          name: blockName,
+        },
+        spaceNumber: {
+          gte: start,
+          lte: end,
+        },
       },
-      {
-        tags: [
-          "fetchSpacesByHall",
-          `fetchSpacesByHall:${eventId}:${dayCount}:${hallId}:${pageNumber}:${pageSize}`,
-        ],
-      }
-    )(eventId, dayCount, hallId, pageNumber, pageSize);
+      include: {
+        block: {
+          include: {
+            hall: true,
+          },
+        },
+        circle: true,
+        day: {
+          include: {
+            event: true,
+          },
+        },
+        tweet: true,
+      },
+      orderBy: [{ block: { name: "asc" } }, { spaceNumber: "asc" }, { ab: "asc" }],
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return spaces;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpacesByLanking"],
+  })
   async findManyByLanking(
     eventId: string,
     pageNumber: number,
     pageSize: number
   ): Promise<SpaceWithRelations[]> {
-    return cache(
-      async (eventId: string, pageNumber: number, pageSize: number) => {
-        const spaces = await prisma.spaceView.findMany({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-            },
-            tweet: {
-              NOT: {
-                retweets: 0,
-              },
-            },
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-          include: {
-            block: {
-              include: {
-                hall: true,
-              },
-            },
-            circle: true,
-            day: {
-              include: {
-                event: true,
-              },
-            },
-            tweet: true,
+        },
+        tweet: {
+          NOT: {
+            retweets: 0,
           },
-          orderBy: [
-            {
-              tweet: {
-                retweets: "desc",
-              },
-            },
-          ],
-          skip: (pageNumber - 1) * pageSize,
-          take: pageSize,
-        });
-        return spaces;
+        },
       },
-      { tags: ["fetchSpacesByLanking", `fetchSpacesByLanking:${eventId}:${pageNumber}:${pageSize}`] }
-    )(eventId, pageNumber, pageSize);
+      include: {
+        block: {
+          include: {
+            hall: true,
+          },
+        },
+        circle: true,
+        day: {
+          include: {
+            event: true,
+          },
+        },
+        tweet: true,
+      },
+      orderBy: [
+        {
+          tweet: {
+            retweets: "desc",
+          },
+        },
+      ],
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return spaces;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpacesByUpdate"],
+  })
   async findManyByUpdate(
     eventId: string,
     pageNumber: number,
     pageSize: number
   ): Promise<SpaceWithRelations[]> {
-    return cache(
-      async (eventId: string, pageNumber: number, pageSize: number) => {
-        const spaces = await prisma.spaceView.findMany({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-            },
-            tweet: {
-              createdAt: {
-                not: null,
-              },
-            },
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-          include: {
-            block: {
-              include: {
-                hall: true,
-              },
-            },
-            circle: true,
-            day: {
-              include: {
-                event: true,
-              },
-            },
-            tweet: true,
+        },
+        tweet: {
+          createdAt: {
+            not: null,
           },
-          orderBy: [
-            {
-              tweet: {
-                createdAt: "desc",
-              },
-            },
-          ],
-          skip: (pageNumber - 1) * pageSize,
-          take: pageSize,
-        });
-        return spaces;
+        },
       },
-      { tags: ["fetchSpacesByUpdate", `fetchSpacesByUpdate:${eventId}:${pageNumber}:${pageSize}`] }
-    )(eventId, pageNumber, pageSize);
+      include: {
+        block: {
+          include: {
+            hall: true,
+          },
+        },
+        circle: true,
+        day: {
+          include: {
+            event: true,
+          },
+        },
+        tweet: true,
+      },
+      orderBy: [
+        {
+          tweet: {
+            createdAt: "desc",
+          },
+        },
+      ],
+      skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+    });
+    return spaces;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpacesByCircle"],
+  })
   async findManyByCircle(circleId: number): Promise<SpaceWithRelations[]> {
-    return cache(
-      async (circleId: number) => {
-        const spaces = await prisma.spaceView.findMany({
-          where: {
-            circleId: circleId,
-          },
+    const spaces = await prisma.spaceView.findMany({
+      where: {
+        circleId: circleId,
+      },
+      include: {
+        block: {
           include: {
-            block: {
-              include: {
-                hall: true,
-              },
-            },
-            circle: true,
-            day: {
-              include: {
-                event: true,
-              },
-            },
-            tweet: true,
+            hall: true,
           },
-          orderBy: {
-            block: {
-              event: {
-                startDate: "desc",
-              },
-            },
+        },
+        circle: true,
+        day: {
+          include: {
+            event: true,
           },
-        });
-        return spaces;
+        },
+        tweet: true,
       },
-      { tags: ["fetchSpacesByCircle", `fetchSpacesByCircle:${circleId}`] }
-    )(circleId);
+      orderBy: {
+        block: {
+          event: {
+            startDate: "desc",
+          },
+        },
+      },
+    });
+    return spaces;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpaceCountByBlock"],
+  })
   async countByBlock(eventId: string, dayCount: number, blockName: string): Promise<number> {
-    return cache(
-      async (eventId: string, dayCount: number, blockName: string) => {
-        const count = await prisma.spaceView.count({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-              count: dayCount,
-            },
-            block: {
-              name: blockName,
-            },
+    const count = await prisma.spaceView.count({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-        });
-        return count;
+          count: dayCount,
+        },
+        block: {
+          name: blockName,
+        },
       },
-      {
-        tags: [
-          "fetchSpaceCountByBlock",
-          `fetchSpaceCountByBlock:${eventId}:${dayCount}:${blockName}`,
-        ],
-      }
-    )(eventId, dayCount, blockName);
+    });
+    return count;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpaceCountByHall"],
+  })
   async countByHall(eventId: string, dayCount: number, hallId: string): Promise<number> {
-    return cache(
-      async (eventId: string, dayCount: number, hallId: string) => {
-        const { blockName, start, end } = this.generateWallParams(hallId);
-        const count = await prisma.spaceView.count({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-              count: dayCount,
-            },
-            block: {
-              name: blockName,
-            },
-            spaceNumber: {
-              gte: start,
-              lte: end,
-            },
+    const { blockName, start, end } = this.generateWallParams(hallId);
+    const count = await prisma.spaceView.count({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-        });
-        return count;
+          count: dayCount,
+        },
+        block: {
+          name: blockName,
+        },
+        spaceNumber: {
+          gte: start,
+          lte: end,
+        },
       },
-      { tags: ["fetchSpaceCountByHall", `fetchSpaceCountByHall:${eventId}:${dayCount}:${hallId}`] }
-    )(eventId, dayCount, hallId);
+    });
+    return count;
   }
 
+  @cacheDecorator({
+    tags: ["fetchSpaceCountByEvent"],
+  })
   async countByEvent(eventId: string): Promise<number> {
-    return cache(
-      async (eventId: string) => {
-        const count = await prisma.spaceView.count({
-          where: {
-            day: {
-              event: {
-                id: eventId,
-              },
-            },
-            tweet: {
-              createdAt: {
-                not: null,
-              },
-            },
+    const count = await prisma.spaceView.count({
+      where: {
+        day: {
+          event: {
+            id: eventId,
           },
-        });
-        return count;
+        },
+        tweet: {
+          createdAt: {
+            not: null,
+          },
+        },
       },
-      { tags: ["fetchSpaceCountByEvent", `fetchSpaceCountByEvent:${eventId}`] }
-    )(eventId);
+    });
+    return count;
   }
 
   private generateWallParams(hallId: string): { blockName: string; start: number; end: number } {

@@ -1,79 +1,73 @@
-import { cache } from "@/lib/nextCache";
-import prisma from "@/lib/prisma";
 import { HallRepository, HallWithBlocks } from "@/domain/hall/HallRepository";
+import { cacheDecorator } from "@/lib/nextCache";
+import prisma from "@/lib/prisma";
 import { Hall } from "@prisma/client";
 import "server-only";
 
 export class HallMysqlRepository implements HallRepository {
+  @cacheDecorator({
+    tags: ["fetchHall"],
+  })
   async findById(id: string): Promise<Hall> {
-    return cache(
-      async (hallId: string) => {
-        const hall = await prisma.hall.findUniqueOrThrow({
-          where: {
-            id: hallId,
-          },
-        });
-        return hall;
+    const hall = await prisma.hall.findUniqueOrThrow({
+      where: {
+        id: id,
       },
-      { tags: ["fetchHall", `fetchHall:${id}`] }
-    )(id);
+    });
+    return hall;
   }
 
+  @cacheDecorator({
+    tags: ["fetchHalls"],
+  })
   async findManyByEvent(eventId: string): Promise<HallWithBlocks[]> {
-    return cache(
-      async (eventId: string) => {
-        const halls = await prisma.hall.findMany({
-          where: {
-            blocks: {
-              some: {
-                event: {
-                  id: eventId,
-                },
-              },
+    const halls = await prisma.hall.findMany({
+      where: {
+        blocks: {
+          some: {
+            event: {
+              id: eventId,
             },
-            use: true,
           },
-          include: {
-            blocks: {
-              where: {
-                event: {
-                  id: eventId,
-                },
-              },
-            },
-            district: true,
-          },
-          orderBy: {
-            name: "asc",
-          },
-        });
-        return halls;
+        },
+        use: true,
       },
-      { tags: ["fetchHalls", `fetchHalls:${eventId}`] }
-    )(eventId);
+      include: {
+        blocks: {
+          where: {
+            event: {
+              id: eventId,
+            },
+          },
+        },
+        district: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+    return halls;
   }
 
+  @cacheDecorator({
+    tags: ["fetchHallIds"],
+  })
   async findIdsByEvent(eventId: string): Promise<string[]> {
-    return cache(
-      async (eventId: string) => {
-        const halls = await prisma.hall.findMany({
-          select: {
-            id: true,
-          },
-          where: {
-            blocks: {
-              some: {
-                event: {
-                  id: eventId,
-                },
-              },
-            },
-            use: true,
-          },
-        });
-        return halls.map((hall) => hall.id);
+    const halls = await prisma.hall.findMany({
+      select: {
+        id: true,
       },
-      { tags: ["fetchHallIds", `fetchHallIds:${eventId}`] }
-    )(eventId);
+      where: {
+        blocks: {
+          some: {
+            event: {
+              id: eventId,
+            },
+          },
+        },
+        use: true,
+      },
+    });
+    return halls.map((hall) => hall.id);
   }
 }

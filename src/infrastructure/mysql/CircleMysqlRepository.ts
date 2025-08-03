@@ -1,35 +1,31 @@
-import { cache } from "@/lib/nextCache";
-import prisma from "@/lib/prisma";
 import { CircleRepository } from "@/domain/circle/CircleRepository";
+import { cacheDecorator } from "@/lib/nextCache";
+import prisma from "@/lib/prisma";
 import { Circle } from "@prisma/client";
 import "server-only";
 
 export class CircleMysqlRepository implements CircleRepository {
+  @cacheDecorator({
+    tags: ["fetchCircle"],
+  })
   async findById(id: number): Promise<Circle> {
-    return cache(
-      async (circleId: number) => {
-        const circle = await prisma.circle.findUniqueOrThrow({
-          where: {
-            id: circleId,
-          },
-        });
-        return circle;
+    const circle = await prisma.circle.findUniqueOrThrow({
+      where: {
+        id: id,
       },
-      { tags: ["fetchCircle", `fetchCircle:${id}`] }
-    )(id);
+    });
+    return circle;
   }
 
+  @cacheDecorator({
+    tags: ["fetchCircleIds"],
+  })
   async findAllIds(): Promise<string[]> {
-    return cache(
-      async () => {
-        const circles = await prisma.circle.findMany({
-          select: {
-            id: true,
-          },
-        });
-        return circles.map((circle) => circle.id.toString());
+    const circles = await prisma.circle.findMany({
+      select: {
+        id: true,
       },
-      { tags: ["fetchCircleIds"] }
-    )();
+    });
+    return circles.map((circle) => circle.id.toString());
   }
 }
