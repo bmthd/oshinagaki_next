@@ -1,4 +1,4 @@
-import { SpacesQueryResult } from "@/services/eventService";
+import { SpacesQueryResult } from "@/application/SpaceApplicationService";
 
 /**
  * スペースの配列を受け取り見出しを表示するコンポーネント

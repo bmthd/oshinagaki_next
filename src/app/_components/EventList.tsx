@@ -1,5 +1,5 @@
 import { LinkButton, TitleHeading } from "@/components";
-import { fetchEvents } from "@/services/eventService";
+import { fetchEvents } from "@/application/EventApplicationService";
 
 export const EventList = async () => {
   const events = await fetchEvents();

@@ -1,6 +1,7 @@
 import { TextLink } from "@/components";
-import { fetchDays, fetchEvent } from "@/services/eventService";
-import { fetchDayCounts, fetchEventIds } from "@/services/slugService";
+import { fetchEvent } from "@/application/EventApplicationService";
+import { fetchDays, fetchDayCounts } from "@/application/DayApplicationService";
+import { fetchEventIds } from "@/application/EventApplicationService";
 
 export const generateStaticParams = async () => {
   const eventIds = await fetchEventIds();
