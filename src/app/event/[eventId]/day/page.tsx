@@ -1,16 +1,11 @@
 import { TextLink } from "@/components";
 import { fetchDays, fetchEvent } from "@/services/eventService";
-import { fetchDayCounts } from "@/services/slugService";
+import { fetchDayCounts, fetchEventIds } from "@/services/slugService";
 
-export const generateStaticParams = async ({
-  params: { eventId },
-}: {
-  params: { eventId: string };
-}) => {
-  const dayCounts = await fetchDayCounts(eventId);
-  return dayCounts.map((dayCount) => ({
+export const generateStaticParams = async () => {
+  const eventIds = await fetchEventIds();
+  return eventIds.map((eventId) => ({
     eventId,
-    dayCount,
   }));
 };
 
@@ -20,8 +15,8 @@ export const generateStaticParams = async ({
  * @param param0
  * @returns
  */
-const Page = async ({ params }: { params: { eventId: string } }) => {
-  const eventId = params.eventId;
+const Page = async (props: { params: Promise<{ eventId: string }> }) => {
+  const { eventId } = await props.params;
   const event = await fetchEvent(eventId);
   const days = await fetchDays(eventId);
 

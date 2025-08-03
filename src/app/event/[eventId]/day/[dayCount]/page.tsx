@@ -1,16 +1,21 @@
 import { fetchDay, fetchEvent } from "@/services/eventService";
-import { fetchDayCounts } from "@/services/slugService";
+import { fetchDayCounts, fetchEventIds } from "@/services/slugService";
 
-export const generateStaticParams = async ({
-  params: { eventId },
-}: {
-  params: { eventId: string };
-}) => {
-  const dayCounts = await fetchDayCounts(eventId);
-  return dayCounts.map((dayCount) => ({
-    eventId,
-    dayCount,
-  }));
+export const generateStaticParams = async () => {
+  const eventIds = await fetchEventIds();
+  const allParams = [];
+  
+  for (const eventId of eventIds) {
+    const dayCounts = await fetchDayCounts(eventId);
+    for (const dayCount of dayCounts) {
+      allParams.push({
+        eventId,
+        dayCount,
+      });
+    }
+  }
+  
+  return allParams;
 };
 
 /**
@@ -20,10 +25,11 @@ export const generateStaticParams = async ({
  * @param params 受け取るURLパラメータ
  * @returns
  */
-const Page = async ({ params }: { params: { eventId: string; dayCount: string } }) => {
-  const dayCount = parseInt(params.dayCount);
-  const event = await fetchEvent(params.eventId);
-  const day = await fetchDay(params.eventId, dayCount);
+const Page = async (props: { params: Promise<{ eventId: string; dayCount: string }> }) => {
+  const { eventId, dayCount: dayCountString } = await props.params;
+  const dayCount = parseInt(dayCountString);
+  const event = await fetchEvent(eventId);
+  const day = await fetchDay(eventId, dayCount);
   return (
     <>
       <span>{event?.name}</span>

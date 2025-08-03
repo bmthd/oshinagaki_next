@@ -3,7 +3,7 @@ import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
 import { fetchEvent, fetchHall } from "@/services/eventService";
-import { fetchHallIds } from "@/services/slugService";
+import { fetchHallIds, fetchEventIds, fetchDayCounts } from "@/services/slugService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -11,24 +11,32 @@ export const dynamic = "force-dynamic";
 
 export const revalidate = 86400;
 
-export const generateStaticParams = async ({
-  params: { eventId, dayCount },
-}: {
-  params: { eventId: string; dayCount: string };
-}) => {
-  const hallIds = await fetchHallIds(eventId);
-  return hallIds.map((hallId) => ({
-    eventId,
-    dayCount,
-    hallId,
-  }));
+export const generateStaticParams = async () => {
+  const eventIds = await fetchEventIds();
+  const allParams = [];
+  
+  for (const eventId of eventIds) {
+    const dayCounts = await fetchDayCounts(eventId);
+    const hallIds = await fetchHallIds(eventId);
+    
+    for (const dayCount of dayCounts) {
+      for (const hallId of hallIds) {
+        allParams.push({
+          eventId,
+          dayCount,
+          hallId,
+        });
+      }
+    }
+  }
+  
+  return allParams;
 };
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: { eventId: string; dayCount: string; hallId: string };
+export const generateMetadata = async (props: {
+  params: Promise<{ eventId: string; dayCount: string; hallId: string }>;
 }): Promise<Metadata> => {
+  const params = await props.params;
   const [eventId, dayCount, hallId] = [
     params.eventId,
     parseInt(params.dayCount),
@@ -49,16 +57,17 @@ export const generateMetadata = async ({
  * @param param0
  * @returns
  */
-const Page = async ({
-  params,
-  searchParams,
-}: {
-  params: { eventId: string; dayCount: string; hallId: string };
-  searchParams?: { page?: string; size?: string };
+const Page = async (props: {
+  params: Promise<{ eventId: string; dayCount: string; hallId: string }>;
+  searchParams?: Promise<{ page?: string; size?: string }>;
 }) => {
+  const [params, searchParams] = await Promise.all([
+    props.params,
+    props.searchParams || Promise.resolve({ page: undefined, size: undefined })
+  ]);
   const [eventId, dayCount, hallId] = [params.eventId, parseInt(params.dayCount), params.hallId];
-  const page = convertToNumber(searchParams!.page!) || 1;
-  const size = convertToNumber(searchParams!.size!) || 38;
+  const page = convertToNumber(searchParams?.page || '') || 1;
+  const size = convertToNumber(searchParams?.size || '') || 38;
   const hall = await fetchHall(hallId);
   const suspenseKey = `${eventId}-${dayCount}-${hallId}-${page}-${size}`;
   const title = `${eventId} ${dayCount}日目${hall?.name}ホール壁サークルお品書きまとめ`;

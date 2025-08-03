@@ -8,20 +8,18 @@ export const dynamic = "force-dynamic";
 
 export const revalidate = 86400;
 
-export const generateStaticParams = ({ params: { eventId } }: { params: { eventId: string } }) => {
-  return [{ eventId: eventId }];
-};
 
-const Page = ({
-  params,
-  searchParams,
-}: {
-  params: { eventId: string };
-  searchParams?: { page?: string; size?: string };
+const Page = async (props: {
+  params: Promise<{ eventId: string }>;
+  searchParams?: Promise<{ page?: string; size?: string }>;
 }) => {
-  const eventId = params.eventId;
-  const page = convertToNumber(searchParams!.page!) || 1;
-  const size = convertToNumber(searchParams!.size!) || 38;
+  const [params, searchParams] = await Promise.all([
+    props.params,
+    props.searchParams || Promise.resolve({ page: undefined, size: undefined })
+  ]);
+  const { eventId } = params;
+  const page = convertToNumber(searchParams?.page || '') || 1;
+  const size = convertToNumber(searchParams?.size || '') || 38;
   const suspenseKey = `${eventId}-${page}-${size}`;
 
   const title = `${eventId} 最近更新されたサークル`;

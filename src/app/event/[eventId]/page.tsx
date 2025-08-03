@@ -1,19 +1,20 @@
 import { BlockListFormContainer, WallList } from "@/app/_components";
 import { LinkButton, PaddingedText, Section, TitleHeading } from "@/components";
 import { fetchEvent } from "@/services/eventService";
+import { fetchEventIds } from "@/services/slugService";
 
 export const revalidate = 86400;
 
-export const generateStaticParams = async ({
-  params: { eventId },
-}: {
-  params: { eventId: string };
-}) => {
-  return [{ eventId: eventId }];
+export const generateStaticParams = async () => {
+  const eventIds = await fetchEventIds();
+  return eventIds.map((eventId) => ({
+    eventId,
+  }));
 };
 
-export const generateMetadata = async ({ params }: { params: { eventId: string } }) => {
-  const event = await fetchEvent(params.eventId);
+export const generateMetadata = async (props: { params: Promise<{ eventId: string }> }) => {
+  const { eventId } = await props.params;
+  const event = await fetchEvent(eventId);
   const title = `${event.name}のお品書きまとめ`;
   const description = `${event.name}のサークル一覧です。`;
   return {
@@ -28,9 +29,9 @@ export const generateMetadata = async ({ params }: { params: { eventId: string }
  * @param params 受け取るURLパラメータ
  * @returns
  */
-const Page = async ({ params }: { params: { eventId: string } }) => {
-  const event = await fetchEvent(params.eventId);
-  const eventId = event.id;
+const Page = async (props: { params: Promise<{ eventId: string }> }) => {
+  const { eventId } = await props.params;
+  const event = await fetchEvent(eventId);
   const title = `${event.name}のお品書きまとめ`;
   const description = [
     `${eventId}の参加サークルをまとめたページです。`,

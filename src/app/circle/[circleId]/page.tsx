@@ -17,8 +17,9 @@ import { Suspense } from "react";
  * @param param0
  * @returns
  */
-const Page = async ({ params }: { params: { circleId: string } }) => {
-  const circleId = convertToNumber(params.circleId);
+const Page = async (props: { params: Promise<{ circleId: string }> }) => {
+  const { circleId: circleIdString } = await props.params;
+  const circleId = convertToNumber(circleIdString);
   if (!circleId) throw new Error("circleId is not number");
   const circle = await fetchCircle(circleId);
   const title = `${circle?.name}のお品書きまとめ`;

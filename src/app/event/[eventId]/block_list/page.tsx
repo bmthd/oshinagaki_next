@@ -9,8 +9,8 @@ export const generateStaticParams = async () => {
   }));
 };
 
-const Page = async ({ params }: { params: { eventId: string } }) => {
-  const eventId = params.eventId;
+const Page = async (props: { params: Promise<{ eventId: string }> }) => {
+  const { eventId } = await props.params;
   const blocks = await fetchBlocks(eventId);
   const days = await fetchDays(eventId);
   const title = `${eventId}のブロック一覧`;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const auth_url = "https://twitter.com/i/oauth2/authorize";
 const params = {
@@ -21,7 +22,12 @@ const redirectUrl = `${auth_url}?${queryString}`;
 
 const Page = () => {
   const router = useRouter();
-  router.push(redirectUrl);
+  
+  useEffect(() => {
+    router.push(redirectUrl);
+  }, [router]);
+  
+  return <div>Redirecting...</div>;
 };
 
 export default Page;
