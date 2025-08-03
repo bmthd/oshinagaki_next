@@ -1,7 +1,7 @@
 "use client";
 import { LinkButton, SelectBox, TitleHeading } from "@/components";
 import { Day, Event } from "@/lib/prisma";
-import { BlocksWithDistrict } from "@/services/eventService";
+import { BlocksWithDistrict } from "@/application/DistrictApplicationService";
 import { FormEvent, useEffect, useState } from "react";
 
 type Props = {
@@ -47,7 +47,7 @@ export const BlockListForm = ({ event, days, districts }: Props) => {
     .find((d) => d.id === district)
     ?.halls.flatMap((hall) =>
       hall.blocks.map((block) => (
-        <option key={block.id} value={block.name}>
+        <option key={block.name} value={block.name}>
           {block.name}
         </option>
       ))

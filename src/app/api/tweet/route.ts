@@ -1,4 +1,4 @@
-import { fetchTweetUrl } from "@/services/apiService";
+import { fetchTweetUrl } from "@/application/TweetApplicationService";
 import { NextResponse } from "next/server";
 
 /**

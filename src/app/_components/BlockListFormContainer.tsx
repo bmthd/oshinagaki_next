@@ -1,4 +1,6 @@
-import { fetchDays, fetchDistricts, fetchEvent } from "@/services/eventService";
+import { fetchEvent } from "@/application/EventApplicationService";
+import { fetchDays } from "@/application/DayApplicationService";
+import { fetchDistricts } from "@/application/DistrictApplicationService";
 import { BlockListForm } from "./BlockListForm";
 
 /**

@@ -1,5 +1,8 @@
-import { fetchBlocks, fetchDays } from "@/services/eventService";
-import { fetchCircleIds, fetchEventIds, fetchHallIds } from "@/services/slugService";
+import { fetchEventIds } from "@/application/EventApplicationService";
+import { fetchBlocks } from "@/application/BlockApplicationService";
+import { fetchDays } from "@/application/DayApplicationService";
+import { fetchCircleIds } from "@/application/CircleApplicationService";
+import { fetchHallIds } from "@/application/HallApplicationService";
 import { MetadataRoute } from "next";
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {

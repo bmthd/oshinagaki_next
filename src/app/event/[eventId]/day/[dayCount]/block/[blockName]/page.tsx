@@ -2,8 +2,9 @@ import { BlockListFormContainer, WallList } from "@/app/_components";
 import { SpacesContainer } from "@/app/event/[eventId]/_components";
 import { Section, Spinner, TitleHeading } from "@/components";
 import { convertToNumber } from "@/lib/util";
-import { fetchEvent } from "@/services/eventService";
-import { fetchBlockNames, fetchEventIds, fetchDayCounts } from "@/services/slugService";
+import { fetchEvent, fetchEventIds } from "@/application/EventApplicationService";
+import { fetchBlockNames } from "@/application/BlockApplicationService";
+import { fetchDayCounts } from "@/application/DayApplicationService";
 import { Metadata } from "next";
 import { Suspense } from "react";
 

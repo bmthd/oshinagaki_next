@@ -1,5 +1,5 @@
 import { DotHeading, Section, TextLink, TitleHeading, TwitterCard } from "@/components";
-import { SpaceQueryResult, SpacesQueryResult } from "@/services/eventService";
+import { SpaceQueryResult, SpacesQueryResult } from "@/application/SpaceApplicationService";
 
 /**
  * スペース情報を表示するコンポーネント
@@ -37,11 +37,8 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
 
   const author = circle?.author ? <span>{circle!.author}</span> : <span>データなし</span>;
 
-  const webcatalogUrl = space.webcatalogUrl && (
-    <TextLink href={space.webcatalogUrl} className="whitespace-pre-wrap">
-      WEBカタログ
-    </TextLink>
-  );
+  // webcatalogUrlは現在利用不可
+  const webcatalogUrl = null;
 
   const pixivUrl = circle?.pixivUrl && (
     <TextLink href={circle!.pixivUrl} className="whitespace-pre-wrap">
@@ -55,7 +52,7 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
     </TextLink>
   );
 
-  const title = `${day?.count}日目${block?.hall.name}${block?.name}-${space.spaceNumber}${space.ab}`;
+  const title = `${day?.count}日目${block?.hall?.name || ""}${block?.name}-${space.spaceNumber}${space.ab}`;
 
   const circleInfo = !circle ? (
     <span>サークルデータなし</span>
@@ -68,7 +65,7 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
       {author}
 
       <DotHeading>リンク</DotHeading>
-      {!space.webcatalogUrl && !circle.pixivUrl && !circle.hpUrl ? (
+      {!webcatalogUrl && !circle.pixivUrl && !circle.hpUrl ? (
         <span>データなし</span>
       ) : (
         <div className="flex flex-col">
@@ -83,13 +80,6 @@ const SpaceInfo = ({ space }: { space: SpaceQueryResult }) => {
         <div className="flex flex-col justify-center">
           <TwitterCard tweet={tweet} />
         </div>
-      ) : circle.twitterId ? (
-        <>
-          <a href={`https://twitter.com/${space.circle?.twitterId}`} target="_blank">
-            {`@${space.circle?.twitterId}`}
-          </a>
-          <p>このサークルはまだお品書きを公開していないようです。</p>
-        </>
       ) : (
         <span>データなし</span>
       )}

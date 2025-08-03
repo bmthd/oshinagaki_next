@@ -8,7 +8,7 @@ import {
   fetchSpacesByHall,
   fetchSpacesByLanking,
   fetchSpacesByUpdate,
-} from "@/services/eventService";
+} from "@/application/SpaceApplicationService";
 
 type Common = {
   eventId: string;

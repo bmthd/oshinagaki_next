@@ -1,4 +1,4 @@
-import { fetchLatestEvent } from "@/services/eventService";
+import { fetchLatestEvent } from "@/application/EventApplicationService";
 import { redirect } from "next/navigation";
 
 /**

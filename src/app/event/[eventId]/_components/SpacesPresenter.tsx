@@ -1,6 +1,6 @@
 import { SpaceList, SpaceListHeader } from "@/app/event/[eventId]/_components";
 import { Pagenation } from "@/components";
-import { SpacesQueryResult } from "@/services/eventService";
+import { SpacesQueryResult } from "@/application/SpaceApplicationService";
 
 type Props = {
   spaces: SpacesQueryResult;
