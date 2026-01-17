@@ -1,13 +1,28 @@
 import { unstable_cache } from "next/cache";
 
-export function cache<T extends (...args: any[]) => any>(
-  fn: T,
-  options?: {
-    revalidate?: number | false;
-    tags?: string[];
-  }
-): T {
-  return ((...args: Parameters<T>) => {
-    return unstable_cache(fn, undefined, options)(...args);
-  }) as T;
+interface CacheDecoratorOptions {
+  revalidate?: number | false;
+  tags?: string[];
+}
+
+export function cacheDecorator(options?: CacheDecoratorOptions): MethodDecorator {
+  return function (
+    target: any,
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor
+  ): PropertyDescriptor {
+    const originalMethod = descriptor.value;
+    
+    descriptor.value = function (...args: any[]) {
+      const cacheKey = `${target.constructor.name}.${String(propertyKey)}`;
+      const cachedFn = unstable_cache(
+        originalMethod.bind(this),
+        [cacheKey, ...args.map(arg => String(arg))],
+        options
+      );
+      return cachedFn(...args);
+    };
+    
+    return descriptor;
+  };
 }

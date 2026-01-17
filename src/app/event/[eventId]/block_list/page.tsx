@@ -1,6 +1,7 @@
 import { LinkButton, TitleHeading } from "@/components";
-import { fetchBlocks, fetchDays } from "@/services/eventService";
-import { fetchEventIds } from "@/services/slugService";
+import { fetchBlocks } from "@/application/BlockApplicationService";
+import { fetchDays } from "@/application/DayApplicationService";
+import { fetchEventIds } from "@/application/EventApplicationService";
 
 export const generateStaticParams = async () => {
   const eventIds = await fetchEventIds();

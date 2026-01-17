@@ -1,5 +1,6 @@
 import { LinkButton, TitleHeading } from "@/components";
-import { fetchDays, fetchHalls } from "@/services/eventService";
+import { fetchDays } from "@/application/DayApplicationService";
+import { fetchHalls } from "@/application/HallApplicationService";
 
 /**
  * 受け取ったイベントの壁サークル一覧ページへのリンクを表示する

@@ -1,5 +1,5 @@
 import { DotHeading, Section, TitleHeading, TwitterCard } from "@/components";
-import { fetchSpacesByCircle } from "@/services/eventService";
+import { fetchSpacesByCircle } from "@/application/SpaceApplicationService";
 
 export const CircleSpaceList = async ({ circleId }: { circleId: number }) => {
   const spaces = await fetchSpacesByCircle(circleId);
@@ -11,7 +11,7 @@ export const CircleSpaceList = async ({ circleId }: { circleId: number }) => {
         const day = space.day!;
         const event = day.event;
         const eventName = event?.name;
-        const placement = `${day.count}日目${block?.hall.name || ""}${block?.name}-${
+        const placement = `${day.count}日目${block?.hall?.name || ""}${block?.name}-${
           space.spaceNumber
         }${space.ab}`;
         const tweet = space.tweet;

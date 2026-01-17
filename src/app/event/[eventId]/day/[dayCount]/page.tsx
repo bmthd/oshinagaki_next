@@ -1,5 +1,5 @@
-import { fetchDay, fetchEvent } from "@/services/eventService";
-import { fetchDayCounts, fetchEventIds } from "@/services/slugService";
+import { fetchEvent, fetchEventIds } from "@/application/EventApplicationService";
+import { fetchDay, fetchDayCounts } from "@/application/DayApplicationService";
 
 export const generateStaticParams = async () => {
   const eventIds = await fetchEventIds();

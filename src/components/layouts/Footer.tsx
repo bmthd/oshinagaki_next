@@ -1,4 +1,5 @@
 import { TextLink } from "@/components";
+import { Fragment } from "react";
 
 type LinkItem = {
   href: string;
@@ -26,12 +27,12 @@ export const Footer = () => {
         {linkItems.map((items, i) => (
           <div key={i} className="flex justify-center">
             {items.map((item, j) => (
-              <>
+              <Fragment key={item.href}>
                 <TextLink key={j} href={item.href}>
                   {item.text}
                 </TextLink>
                 {items.length - 1 !== j && <span className="mx-2">|</span>}
-              </>
+              </Fragment>
             ))}
           </div>
         ))}
